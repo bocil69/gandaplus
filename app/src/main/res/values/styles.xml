@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MD3 AMOLED Base Theme — parent WAJIB MaterialComponents agar ExtendedFAB, CircularProgress, dll bisa inflate -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/md3_primary</item>
+        <item name="colorPrimaryVariant">@color/md3_primary_container</item>
+        <item name="colorOnPrimary">@color/md3_on_primary</item>
+        <item name="colorSecondary">@color/md3_secondary</item>
+        <item name="colorOnSecondary">@color/md3_on_secondary</item>
+        <item name="colorSurface">@color/md3_surface</item>
+        <item name="colorOnSurface">@color/md3_on_surface</item>
+        <item name="colorError">@color/md3_error</item>
+        <item name="android:colorBackground">@color/md3_surface</item>
+        <item name="android:windowBackground">@color/md3_surface</item>
+        <item name="android:statusBarColor">@color/md3_surface</item>
+        <item name="android:navigationBarColor">@color/md3_surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/md3_on_surface</item>
+        <item name="popupMenuStyle">@style/MD3PopupMenu</item>
+        <!-- MD3 shape system -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeSmall</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeMedium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeLarge</item>
+    </style>
+
+    <style name="UITheme" parent="AppTheme" />
+
+    <style name="UITheme.HasActionBar" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/md3_primary</item>
+        <item name="colorPrimaryVariant">@color/md3_surface_container_high</item>
+        <item name="colorOnPrimary">@color/md3_on_primary</item>
+        <item name="android:colorBackground">@color/md3_surface</item>
+        <item name="android:windowBackground">@color/md3_surface</item>
+        <item name="android:statusBarColor">@color/md3_surface</item>
+        <item name="android:navigationBarColor">@color/md3_surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/md3_on_surface</item>
+    </style>
+
+    <style name="TransparentTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="VAAlertTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/md3_primary</item>
+        <item name="colorAccent">@color/md3_primary</item>
+        <item name="android:background">@color/md3_surface_container</item>
+        <item name="android:textColor">@color/md3_on_surface</item>
+    </style>
+
+    <style name="AVLoadingIndicatorView">
+        <item name="minWidth">48dip</item>
+        <item name="maxWidth">48dip</item>
+        <item name="minHeight">48dip</item>
+        <item name="maxHeight">48dip</item>
+        <item name="indicatorName">BallPulseIndicator</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
+
+    <style name="VACustomTheme" parent="VAAlertTheme">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- MD3 Shape System -->
+    <style name="ShapeSmall" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="ShapeMedium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="ShapeLarge" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- MD3 Card Style -->
+    <style name="MD3Card">
+        <item name="android:background">@color/md3_surface_container</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <!-- MD3 Popup Menu -->
+    <style name="MD3PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@color/md3_surface_container_high</item>
+        <item name="android:textColor">@color/md3_on_surface</item>
+    </style>
+
+    <!-- Settings row -->
+    <style name="SettingsItemText">
+        <item name="android:textColor">@color/md3_on_surface</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="SettingsSubText">
+        <item name="android:textColor">@color/md3_on_surface_variant</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="CloneOnboardingCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/md3_surface_container</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/md3_outline_variant</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="CloneOnboardingSectionLabel">
+        <item name="android:textColor">@color/md3_primary</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.12</item>
+    </style>
+
+    <style name="CloneOnboardingFieldLabel">
+        <item name="android:textColor">@color/md3_on_surface_variant</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+
+    <style name="CloneOnboardingHelperText" parent="SettingsSubText">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="CloneOnboardingEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">14dp</item>
+        <item name="android:background">@drawable/bg_md3_input_field</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:textColor">@color/md3_on_surface</item>
+        <item name="android:textColorHint">@color/md3_outline</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="CloneOnboardingMultilineEditText" parent="CloneOnboardingEditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minLines">2</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CloneOnboardingButtonPrimary" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/md3_on_primary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="backgroundTint">@color/md3_primary</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="CloneOnboardingButtonSecondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/md3_primary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="backgroundTint">@color/md3_surface_container_high</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="strokeColor">@color/md3_primary_low</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="CloneOnboardingButtonTonal" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/md3_on_surface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">13sp</item>
+        <item name="backgroundTint">@color/md3_surface_container_high</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="strokeColor">@color/md3_outline_variant</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+</resources>

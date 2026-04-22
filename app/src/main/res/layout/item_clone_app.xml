@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:lv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="#131821"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="8dp"
+    android:outlineAmbientShadowColor="#004D64"
+    android:outlineSpotShadowColor="#1A4FC3F7">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_app_checked"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_no_check" />
+
+        <io.virtualapp.widgets.LabelView
+            android:id="@+id/item_app_clone_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:visibility="invisible"
+            lv:lv_background_color="@color/md3_primary"
+            lv:lv_fill_triangle="true"
+            lv:lv_gravity="BOTTOM_LEFT"
+            lv:lv_text="2"
+            lv:lv_text_all_caps="false"
+            lv:lv_text_color="@color/md3_on_primary"
+            lv:lv_text_size="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="24dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="24dp">
+
+            <ImageView
+                android:id="@+id/item_app_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="12dp" />
+
+            <io.virtualapp.widgets.MarqueeTextView
+                android:id="@+id/item_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textColor="@color/md3_on_surface"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </FrameLayout>
+</androidx.cardview.widget.CardView>

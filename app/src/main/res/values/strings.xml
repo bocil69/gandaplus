@@ -1,0 +1,134 @@
+<resources>
+    <string name="app_name">Ganda Plus</string>
+    <string name="wait">Please wait…</string>
+    <string name="desktop">Desktop</string>
+    <string name="add_app">Add App</string>
+    <string name="preparing">Opening the app…</string>
+    <string name="delete">Delete</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="app_settings">App Settings</string>
+    <string name="new_user">New User</string>
+    <string name="enable">Enable</string>
+    <string name="save">Save</string>
+    <string name="save_success">Save success!</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="brand">Brand</string>
+    <string name="device">Device</string>
+    <string name="fake_device_info">Fake Device Info</string>
+    <string name="wifi_status">Wifi Status</string>
+    <string name="config_device_info">Device Info</string>
+    <string name="about">About</string>
+    <string name="clone_apps">Clone Apps</string>
+    <string name="external_storage">External Storage</string>
+    <string name="install_d">Install (%d)</string>
+    <string name="install_too_much_once_time">No more then 9 apps can be chosen at a time!</string>
+    <string name="menu_accounts">Accounts</string>
+    <string name="tip">Hi</string>
+    <string name="virtual_location">Virtual Location</string>
+    <string name="text_install_gms">We found that your device has been installed the Google service, whether you need to install them?</string>
+    <string name="choose_user_title">Please select an user</string>
+    <string name="real_location">real location</string>
+    <string name="about_title">About me</string>
+    <string name="about_msg">济宁市罗盒网络科技有限公司出品\nFeedback problem：zl@aluohe.com</string>
+    <string name="tip_no_app">Please add a App</string>
+    <string name="activity_choose_location">Choose Location</string>
+    <string name="activity_location_settings">Virtual Location Settings</string>
+    <string name="clear">Clear</string>
+    <string name="search">Search</string>
+    <string name="label_lat">Latitude:</string>
+    <string name="label_lng">Longitude:</string>
+    <string name="unknown_location">unknown address</string>
+    <string name="no_mock">Using Original Location</string>
+    <string name="tip_input_keywords">find other place</string>
+    <string name="tip_no_find_points">no find map point</string>
+    <string name="mocking">Fake Location Active</string>
+    <string name="tip_start_location">start locating</string>
+    <string name="tip_find_location">is locating</string>
+    <string name="title_input_location">Input position</string>
+    <string name="tip_search_keyword">Search by address, place, or landmark name. Use a more specific keyword if results are too broad.</string>
+    <string name="hint_lat">Latitude</string>
+    <string name="hint_lng">Longitude</string>
+    <string name="input_loc_error">The input content is wrong, please check the format：Latitude-90~90，Longitude-180~180</string>
+    <string name="real_location_enabled">Using original location</string>
+    <string name="start_fake_location">Play Fake Location</string>
+    <string name="update_fake_location">Update Point &amp; Play Fake Location</string>
+    <string name="tip_delete">Delete app</string>
+    <string name="text_delete_app" formatted="false">Do you want to delete %s?</string>
+    <string name="manage_clone_title" formatted="false">Kelola clone "%s"</string>
+    <string name="edit_info_spoof">Edit Info &amp; Spoof</string>
+    <string name="delete_clone_data">Delete Data Clone</string>
+    <string name="clear_clone_data_progress">Menghapus data clone…</string>
+    <string name="clear_clone_data_success">Data clone berhasil dihapus</string>
+    <string name="clear_clone_data_failed">Gagal menghapus data clone</string>
+    <string name="delete_clone_dialog_title">Hapus Clone Permanen</string>
+    <string name="delete_clone_dialog_message" formatted="false">Clone %s akan dihapus permanen dari launcher dan engine virtual. Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="cancel_action">Batal</string>
+    <string name="delete_permanently">Hapus Permanen</string>
+    <string name="pick_location_on_map">Pilih Titik di Peta</string>
+    <string name="edit_location_on_map">Edit Titik di Peta</string>
+    <string name="enable_fake_location_first">Pilih titik untuk mengaktifkan fake location</string>
+    <string name="location_permission_required">Izin lokasi diperlukan untuk membaca GPS asli.</string>
+    <string name="location_permission_denied">Izin lokasi ditolak. Gunakan input manual atau aktifkan izin lokasi.</string>
+    <string name="pick_clone_for_link">Pilih clone untuk membuka link</string>
+    <string name="primary_clone_label">Clone Utama</string>
+    <string name="clone_number_label">Clone %1$d</string>
+    <string name="deeplink_open_failed">Gagal membuka deeplink di clone</string>
+    <string name="fake_location_auto_hint">Kalau titik diisi, clone akan memakai titik ini saat profil disimpan. Kalau dikosongkan, clone memakai lokasi asli.</string>
+    <string name="fake_location_active_status">Titik fake location sudah dipilih</string>
+    <string name="fake_location_inactive_status">Belum ada titik fake location</string>
+    <string name="stop_fake_location">Stop Fake Location</string>
+    <string name="use_original_location">Use Original Location</string>
+    <string name="save_location_point_only">Save Point Only</string>
+    <string name="clone_onboarding_title_prepare">Siapkan Profil Clone</string>
+    <string name="clone_onboarding_title_edit">Edit Profil Clone</string>
+    <string name="clone_onboarding_subtitle_prepare" formatted="false">Atur identitas perangkat dan titik lokasi untuk "%1$s" sebelum clone dijalankan.</string>
+    <string name="clone_onboarding_subtitle_edit" formatted="false">Perbarui identitas perangkat dan titik lokasi untuk "%1$s".</string>
+    <string name="clone_onboarding_subtitle_default">Atur identitas perangkat dan titik lokasi untuk clone ini sebelum dijalankan.</string>
+    <string name="clone_onboarding_footer_prepare">Simpan profil ini dulu, lalu clone akan dijalankan dengan konfigurasi baru.</string>
+    <string name="clone_onboarding_footer_edit">Perubahan bisa disimpan kapan saja tanpa mengulang setup dari awal.</string>
+    <string name="clone_onboarding_header_chip">Profil per clone • bisa diubah kapan saja</string>
+    <string name="clone_onboarding_section_device">IDENTITAS PERANGKAT</string>
+    <string name="clone_onboarding_section_location">LOKASI DRAFT</string>
+    <string name="clone_onboarding_clone_name_label">NAMA CLONE</string>
+    <string name="clone_onboarding_clone_name_hint">Nama clone</string>
+    <string name="clone_onboarding_randomize">Acak Ulang Profil</string>
+    <string name="clone_onboarding_map_helper">Pilih titik untuk disimpan ke profil clone. Titik ini baru dipakai saat profil disimpan.</string>
+    <string name="clone_onboarding_save_changes">Simpan Perubahan</string>
+    <string name="clone_onboarding_save_and_start">Simpan &amp; Mulai</string>
+    <string name="mock_location_title">Spoof Location</string>
+    <string name="mock_location_search_hint">Search address or place</string>
+    <string name="mock_location_search_results">Search Results</string>
+    <string name="mock_location_drag_hint">DRAG MAP TO PIN</string>
+    <string name="mock_location_selected_address">Selected Address</string>
+    <string name="fake_location_actions_hint">Play applies this point now. Stop returns to the original location. Save Point Only keeps the point without playing it yet.</string>
+    <string name="tip_search_empty_helper">Try a more specific address or move the map manually.</string>
+    <string name="menu_gms">Google Framework</string>
+    <string name="kill_all_app">Speed up</string>
+    <string name="title_app_device">App Settings</string>
+    <string name="title_user_device">Global Settings</string>
+    <string name="menu_mock_phone">Mock phone</string>
+    <string name="mock_none">no mock</string>
+    <string name="mock_device">mocking</string>
+    <string name="dlg_reset_device">reset mock phone info</string>
+    <string name="mock_global">global mocking</string>
+    <string name="permission_tip_title">Important Tips:</string>
+    <string name="permission_tips_content">%1$s  doesn\'t support runtime permission, you must give permissions it needs in advance, please allow all the permission it will request in next step, otherwise it may not work properly.</string>
+    <string name="permission_tips_confirm">OK, I know.</string>
+    <string name="permission_denied_tips_content">App: %1$s doesn\'t grant necessary permission, it cann\'t be launched. Please go to your device\'s permission management and give it permissions.</string>
+    <string name="permission_denied_ok">Launch failed.</string>
+    <string name="start_app_failed">can\'t start %1$s </string>
+    <string name="any_apps">Apps</string>
+    <string name="tip_add_apps">Please wait for add app</string>
+    <string name="clean_data">Clean Data</string>
+    <string name="label_app_data_szie">Data：%1$s</string>
+    <string-array name="weeks">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+
+</resources>

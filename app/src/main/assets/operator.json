@@ -1,0 +1,14 @@
+[
+  {
+    "COUNTRY": "Indonesia",
+    "ISO": "id",
+    "DATA": [
+      {"operator": "Telkomsel", "mcc": "510", "mnc": "10"},
+      {"operator": "Indosat Ooredoo Hutchison", "mcc": "510", "mnc": "01"},
+      {"operator": "XL Axiata", "mcc": "510", "mnc": "11"},
+      {"operator": "Tri Indonesia", "mcc": "510", "mnc": "89"},
+      {"operator": "Smartfren", "mcc": "510", "mnc": "09"},
+      {"operator": "by.U", "mcc": "510", "mnc": "10"}
+    ]
+  }
+]

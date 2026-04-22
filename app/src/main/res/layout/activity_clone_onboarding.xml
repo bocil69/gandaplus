@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md3_surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CloneOnboardingCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingTop="28dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="24dp">
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="4dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/md3_primary_low" />
+
+                <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/splash_icon_bg" />
+
+                    <ImageView
+                        android:id="@+id/onboard_app_icon"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_device"
+                        app:tint="@color/md3_on_surface" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/onboard_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center"
+                    android:text="@string/clone_onboarding_title_prepare"
+                    android:textColor="@color/md3_on_surface"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/onboard_subtitle"
+                    style="@style/CloneOnboardingHelperText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.25"
+                    android:text="@string/clone_onboarding_subtitle_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/bg_mock_location_section_chip"
+                    android:paddingStart="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/clone_onboarding_header_chip"
+                    android:textColor="@color/md3_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            style="@style/CloneOnboardingSectionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/clone_onboarding_section_device" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CloneOnboardingCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clone_onboarding_clone_name_label" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_clone_name"
+                    style="@style/CloneOnboardingEditText"
+                    android:hint="@string/clone_onboarding_clone_name_hint"
+                    android:inputType="text" />
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="IMEI" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_imei"
+                    style="@style/CloneOnboardingEditText"
+                    android:fontFamily="monospace"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ANDROID ID" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_android_id"
+                    style="@style/CloneOnboardingEditText"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="WI-FI MAC ADDRESS" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_mac"
+                    style="@style/CloneOnboardingEditText"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SERIAL NUMBER" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_serial"
+                    style="@style/CloneOnboardingEditText"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ANDROID VERSION (RELEASE)" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_android_release"
+                    style="@style/CloneOnboardingEditText"
+                    android:hint="Contoh: 13 / 14 / 15" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/CloneOnboardingFieldLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="BRAND" />
+
+                        <EditText
+                            android:id="@+id/onboard_edt_brand"
+                            style="@style/CloneOnboardingEditText"
+                            android:layout_marginBottom="0dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/CloneOnboardingFieldLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="MODEL" />
+
+                        <EditText
+                            android:id="@+id/onboard_edt_model"
+                            style="@style/CloneOnboardingEditText"
+                            android:layout_marginBottom="0dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="IMSI (SIM SERIAL)" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_imsi"
+                    style="@style/CloneOnboardingEditText"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    style="@style/CloneOnboardingFieldLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="BUILD FINGERPRINT" />
+
+                <EditText
+                    android:id="@+id/onboard_edt_fingerprint"
+                    style="@style/CloneOnboardingMultilineEditText"
+                    android:fontFamily="monospace" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            style="@style/CloneOnboardingSectionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/clone_onboarding_section_location" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CloneOnboardingCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/CloneOnboardingHelperText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fake_location_auto_hint" />
+
+                <TextView
+                    style="@style/CloneOnboardingHelperText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/clone_onboarding_map_helper" />
+
+                <LinearLayout
+                    android:id="@+id/layout_location_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/onboard_tv_location_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/fake_location_active_status"
+                        android:textColor="@color/holo_green_dark"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/CloneOnboardingFieldLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="LATITUDE" />
+
+                            <EditText
+                                android:id="@+id/onboard_edt_latitude"
+                                style="@style/CloneOnboardingEditText"
+                                android:layout_marginBottom="0dp"
+                                android:fontFamily="monospace"
+                                android:inputType="numberDecimal|numberSigned" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/CloneOnboardingFieldLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="LONGITUDE" />
+
+                            <EditText
+                                android:id="@+id/onboard_edt_longitude"
+                                style="@style/CloneOnboardingEditText"
+                                android:layout_marginBottom="0dp"
+                                android:fontFamily="monospace"
+                                android:inputType="numberDecimal|numberSigned" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/onboard_btn_pick_map"
+                        style="@style/CloneOnboardingButtonSecondary"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="@string/pick_location_on_map" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/onboard_btn_use_original"
+                        style="@style/CloneOnboardingButtonTonal"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="@string/use_original_location" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/onboard_btn_regenerate"
+            style="@style/CloneOnboardingButtonSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/clone_onboarding_randomize" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/onboard_btn_start"
+            style="@style/CloneOnboardingButtonPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/clone_onboarding_save_and_start" />
+
+        <TextView
+            android:id="@+id/onboard_footer_note"
+            style="@style/CloneOnboardingHelperText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:text="@string/clone_onboarding_footer_prepare" />
+    </LinearLayout>
+</ScrollView>

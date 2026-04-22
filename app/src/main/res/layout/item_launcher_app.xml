@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MD3 Clone App Card -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/md3_surface_container"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="8dp"
+    android:outlineAmbientShadowColor="#004D64"
+    android:outlineSpotShadowColor="#1A4FC3F7">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp">
+
+        <!-- App Icon -->
+        <io.virtualapp.widgets.LauncherIconView
+            android:id="@+id/item_app_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            app:pi_mask_color="#CC000000"
+            app:pi_progress="0"
+            app:pi_radius="40dp"
+            app:pi_stroke="5dp" />
+
+        <!-- Text group -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/item_app_icon"
+            android:layout_marginStart="14dp"
+            android:orientation="vertical">
+
+            <io.virtualapp.widgets.MarqueeTextView
+                android:id="@+id/item_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textColor="@color/md3_on_surface"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_app_slot_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Clone"
+                android:textColor="@color/md3_on_surface_variant"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/item_app_device_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/md3_outline"
+                android:textSize="10sp"
+                android:visibility="visible" />
+
+            <!-- Location spoof chip -->
+            <LinearLayout
+                android:id="@+id/item_loc_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="#1A4CAF50"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📍 "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/item_loc_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="#4CAF50"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- First open dot -->
+        <View
+            android:id="@+id/item_first_open_dot"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_alignBottom="@id/item_app_icon"
+            android:layout_alignEnd="@id/item_app_icon"
+            android:background="@drawable/blue_circle"
+            android:visibility="invisible" />
+
+        <!-- Legacy compat: hidden space index -->
+        <io.virtualapp.widgets.LabelView
+            xmlns:lv="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/item_app_space_idx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:visibility="gone"
+            lv:lv_background_color="@color/md3_primary"
+            lv:lv_gravity="TOP_RIGHT"
+            lv:lv_text="2"
+            lv:lv_text_size="11sp" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

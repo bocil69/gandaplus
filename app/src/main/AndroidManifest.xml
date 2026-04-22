@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="io.virtualapp">
+
+    <uses-permission android:name="${PACKAGE_NAME_32BIT}.permission.SAFE_ACCESS" />
+    
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    
+    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.OTHER_SERVICES" />
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.YouTubeUser" />
+    
+    <application android:resizeableActivity="true" android:name=".App" android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:largeHeap="true" android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
+        <meta-data android:name="TencentMapSDK" android:value="4HPBZ-2QWC6-H47SR-M6PZY-MTZB5-N2F4F" />
+
+        <meta-data android:name="com.xdja.engine.provider" android:value="content://${applicationId}" />
+
+        <activity android:name=".splash.SplashActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".home.DeepLinkProxyActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <!-- OVO deeplinks -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="ovo.id" android:pathPrefix="/app/login" />
+                <data android:scheme="ovo" />
+            </intent-filter>
+            <!-- Grab deeplinks -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="grab" />
+                <data android:scheme="https" android:host="grab.com" android:pathPrefix="/app" />
+                <data android:scheme="https" android:host="www.grab.com" android:pathPrefix="/app" />
+            </intent-filter>
+            <!-- Eskimo deeplinks -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="eskimo" />
+                <data android:scheme="https" android:host="eskimo.com" />
+                <data android:scheme="https" android:host="www.eskimo.com" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".home.DeepLinkPickerActivity"
+            android:exported="false"
+            android:theme="@style/UITheme.HasActionBar" />
+
+        <activity android:name=".home.HomeActivity" android:screenOrientation="portrait" android:theme="@style/UITheme" />
+
+        <activity android:name=".home.ListAppActivity" android:screenOrientation="portrait" android:theme="@style/UITheme" />
+
+        <activity android:name=".home.location.LocationSettingsActivity" android:screenOrientation="portrait" android:theme="@style/UITheme" />
+        <activity android:name=".home.location.ChooseLocationActivity" android:screenOrientation="portrait" android:theme="@style/UITheme" />
+
+
+        <activity android:name=".home.PermissionRequestActivity" android:launchMode="singleInstance" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".home.BackHomeActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".home.AppSettingActivity" android:theme="@style/UITheme.HasActionBar" />
+        <activity android:name=".home.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/UITheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".home.CloneOnboardingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <provider android:name=".provider.SafetyProvider" android:authorities="${applicationId}" android:exported="true" />
+        
+        <receiver android:name=".PackageReceiver" android:enabled="false" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ── Google Maps API Key ─────────────────────────────────── -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCuyUv_PSmrgGKbXTftaL5yuqIwQp0yPtk" />
+
+    </application>
+
+
+</manifest>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MD3 AMOLED Blue palette -->
+    <color name="md3_seed">#2196F3</color>
+    <color name="md3_primary">#4FC3F7</color>
+    <color name="md3_on_primary">#003548</color>
+    <color name="md3_primary_container">#004D64</color>
+    <color name="md3_on_primary_container">#C8E6FF</color>
+    <color name="md3_secondary">#B3CBE8</color>
+    <color name="md3_on_secondary">#1D344A</color>
+    <color name="md3_secondary_container">#344B62</color>
+    <color name="md3_on_secondary_container">#D0E4FF</color>
+    <color name="md3_surface">#000000</color>
+    <color name="md3_surface_dim">#000000</color>
+    <color name="md3_surface_bright">#111318</color>
+    <color name="md3_surface_container_lowest">#000000</color>
+    <color name="md3_surface_container_low">#0E1117</color>
+    <color name="md3_surface_container">#131821</color>
+    <color name="md3_surface_container_high">#1D2026</color>
+    <color name="md3_surface_container_highest">#282B31</color>
+    <color name="md3_on_surface">#E2E2E9</color>
+    <color name="md3_on_surface_variant">#C3C7CF</color>
+    <color name="md3_outline">#8D9199</color>
+    <color name="md3_outline_variant">#434750</color>
+    <color name="md3_primary_low">#334FC3F7</color>
+    <color name="md3_surface_tint">#162434</color>
+    <color name="md3_error">#FFB4AB</color>
+    <color name="md3_on_error">#690005</color>
+    <color name="md3_error_container">#93000A</color>
+    <color name="md3_scrim">#000000</color>
+    <color name="md3_inverse_surface">#E2E2E9</color>
+    <color name="md3_inverse_on_surface">#2F3036</color>
+    <color name="md3_inverse_primary">#006684</color>
+
+    <!-- legacy compat -->
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryRavel">#1D2026</color>
+    <color name="colorPrimaryRavel2">#131821</color>
+    <color name="colorAccent">#4FC3F7</color>
+    <color name="mainTextColor">#E2E2E9</color>
+    <color name="holo_blue_dark">#4FC3F7</color>
+    <color name="holo_yellow_dark">#FFD740</color>
+    <color name="holo_green_dark">#69F0AE</color>
+    <color name="holo_purple_dark">#EA80FC</color>
+    <color name="holo_red_dark">#FF6E6E</color>
+    <color name="white">#E2E2E9</color>
+    <color name="transparent">#00000000</color>
+    <color name="black_20_transparent">#55000000</color>
+    <color name="md_transparent">#00FFFFFF</color>
+    <color name="gray9">#8D9199</color>
+    <color name="gray">#434750</color>
+    <color name="black2">#131821</color>
+    <color name="black3">#8D9199</color>
+    <color name="gray4">#C3C7CF</color>
+    <color name="gray2">#434750</color>
+    <color name="dialogColorPrimary">#a0004D64</color>
+    <color name="dialogColorPrimary2">#50004D64</color>
+    <color name="item_bg">#131821</color>
+
+    <integer-array name="progress_colors">
+        <item>@color/holo_blue_dark</item>
+        <item>@color/holo_yellow_dark</item>
+        <item>@color/holo_green_dark</item>
+        <item>@color/holo_purple_dark</item>
+        <item>@color/holo_red_dark</item>
+    </integer-array>
+</resources>
