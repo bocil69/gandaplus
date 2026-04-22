@@ -1,0 +1,82 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.idea
+.DS_Store
+/build
+/captures
+kat_jadx/
+kat_extracted/
+java_pid*.hprof
+build_log*.txt
+
+# Local editor / agent state
+.vscode/
+.sisyphus/
+
+# Local temporary debug artifacts
+tmp-*
+*.log
+*.rar
+*.zip
+*.apk
+
+# Screenshots / UI dumps / pulled media
+*.png
+*.jpg
+*.jpeg
+*.webp
+.tmp_*.xml
+tmp-*.xml
+*.uiautomator.xml
+window_dump.xml
+current*.xml
+after*.xml
+grab_*.xml
+grab-*.xml
+ovo-*.xml
+picker_*.xml
+picker-*.xml
+resolver_*.xml
+delete*.xml
+tmp-virtuapp-*.xml
+tmp-home-*.xml
+tmp-current-*.xml
+tmp-eskimo-*.xml
+tmp-fb-*.xml
+tmp-step-*.xml
+home-after-*.xml
+launch_phase_*.xml
+
+# Local extracted / decompiled / ad-hoc workspace folders
+kat_decompiled/
+kat_extracted/
+kat_jadx/
+va-jadx/
+
+# Python cache / helper scripts output
+__pycache__/
+*.pyc
+
+# Local log dumps / runtime captures
+*_filtered_log.txt
+*_windows.txt
+*_windows_full.txt
+*_processes.txt
+*_processes_full.txt
+*_activity_top.txt
+launch_top.txt
+full_log.txt
+install_log.txt
+test_log.txt
+
+# Local one-off maintenance scripts
+find_imports.py
+fix_app_errors.py
+fix_manifest.py
+fix_ternary.py
+fix_ternary2.py
+migrate_androidx.py
+remove_remote_exception.py
