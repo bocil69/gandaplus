@@ -137,8 +137,7 @@ public class SpoofSyncManager {
             int locationMode = VirtualLocationManager.get().getMode(userId, pkg);
             if (locationMode == VirtualLocationManager.MODE_USE_SELF) {
                 // 4. Verify location data exists when spoofing is enabled
-                VLocation location = com.lody.virtual.client.ipc.VLocationManager.get()
-                    .getLocation(pkg, userId);
+                VLocation location = VirtualLocationManager.get().getLocation(userId, pkg);
                 if (location == null || location.isEmpty()) {
                     Log.e(TAG, "❌ Location data missing for " + pkg);
                     return false;
@@ -189,8 +188,7 @@ public class SpoofSyncManager {
             // Check location
             int mode = VirtualLocationManager.get().getMode(userId, pkg);
             if (mode == VirtualLocationManager.MODE_USE_SELF) {
-                VLocation location = com.lody.virtual.client.ipc.VLocationManager.get()
-                    .getLocation(pkg, userId);
+                VLocation location = VirtualLocationManager.get().getLocation(userId, pkg);
                 if (location == null || location.isEmpty()) {
                     result.addError("Location data is empty");
                 }
@@ -241,11 +239,9 @@ public class SpoofSyncManager {
         Log.d(TAG, "➕ Creating new account " + userId + " for " + pkg);
 
         deleteCloneState(pkg, userId);
-        VDeviceConfig deviceConfig = VDeviceManager.get().getDeviceConfig(userId);
-        if (deviceConfig != null) {
-            deviceConfig.enable = false;
-            VDeviceManager.get().updateDeviceConfig(userId, deviceConfig);
-        }
+        VDeviceConfig deviceConfig = CloneSpoofRepository.createEmptySpoofConfig();
+        deviceConfig.enable = false;
+        VDeviceManager.get().updateDeviceConfig(userId, deviceConfig);
         VirtualLocationManager.get().setMode(userId, pkg, VirtualLocationManager.MODE_CLOSE);
         VirtualLocationManager.get().setLocation(userId, pkg, new VLocation());
         return true;

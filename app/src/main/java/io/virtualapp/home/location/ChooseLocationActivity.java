@@ -58,9 +58,9 @@ public class ChooseLocationActivity extends VActivity implements OnMapReadyCallb
     private SearchView mSearchView;
     private ListView mSearchResult;
     private View mSearchLayout;
-    private TextView mLatText, mLngText, mAddressText, mCoordsText;
+    private TextView mLatText, mLngText, mAddressText;
     private SearchResultAdapter mSearchAdapter;
-    private View mMockImg, mMockingView, mSearchTip;
+    private View mMockImg, mSearchTip;
     private MaterialButton mMockBtn, mSaveBtn, mUseOriginalBtn, mManualInputBtn;
     private TextView mMockText;
     private String mCurPkg;
@@ -84,16 +84,16 @@ public class ChooseLocationActivity extends VActivity implements OnMapReadyCallb
 
         mSearchResult  = bind(R.id.search_results);
         mapView        = findViewById(R.id.map);
-        mCoordsText    = bind(R.id.tv_coords);
+        mLatText       = bind(R.id.tv_lat);
+        mLngText       = bind(R.id.tv_lng);
         mMockImg       = bind(R.id.img_mock);
         mMockText      = bind(R.id.tv_mock);
         mSearchLayout  = bind(R.id.search_layout);
         mAddressText   = bind(R.id.tv_address);
-        mMockingView   = bind(R.id.img_stop);
         mMockBtn       = findViewById(R.id.img_go_mock);
         mSaveBtn       = findViewById(R.id.btn_save_location);
-        mUseOriginalBtn = null; // Removed from simplified layout
-        mManualInputBtn = null; // Removed from simplified layout
+        mUseOriginalBtn = findViewById(R.id.btn_use_original);
+        mManualInputBtn = findViewById(R.id.btn_manual_input);
         mSearchTip     = findViewById(R.id.tv_tip_search);
 
         if (btnSearchAction != null) {
@@ -116,15 +116,16 @@ public class ChooseLocationActivity extends VActivity implements OnMapReadyCallb
             }
         });
 
-        findViewById(R.id.img_stop_mock).setOnClickListener(v -> {
-            restoreOriginalLocation();
-        });
-
         mMockBtn.setOnClickListener(v -> onPlayClicked());
+        if (mUseOriginalBtn != null) {
+            mUseOriginalBtn.setOnClickListener(v -> restoreOriginalLocation());
+        }
+        if (mManualInputBtn != null) {
+            mManualInputBtn.setOnClickListener(v -> showInputWindow());
+        }
 
-        // Simplified - only Play button and Stop button
         if (mSaveBtn != null) {
-            mSaveBtn.setVisibility(View.GONE); // Hide save only button
+            mSaveBtn.setVisibility(View.GONE);
         }
 
         // GPS location button - fix click handler
@@ -135,8 +136,6 @@ public class ChooseLocationActivity extends VActivity implements OnMapReadyCallb
                 startGpsLocation();
             });
         }
-        mMockingView.setOnClickListener(v -> restoreOriginalLocation());
-
         mCurPkg    = getIntent().getStringExtra(VCommends.EXTRA_PACKAGE);
         mCurUserId = getIntent().getIntExtra(VCommends.EXTRA_USERID, 0);
         mEditorOnly = getIntent().getBooleanExtra(VCommends.EXTRA_LOCATION_EDITOR_ONLY, false);
@@ -234,14 +233,10 @@ public class ChooseLocationActivity extends VActivity implements OnMapReadyCallb
         mLocation.latitude  = StringUtils.doubleFor8(lat);
         mLocation.longitude = StringUtils.doubleFor8(lng);
         
-        // Update coordinate displays
         String latStr = String.valueOf(mLocation.latitude);
         String lngStr = String.valueOf(mLocation.longitude);
         if (mLatText != null) mLatText.setText(latStr);
         if (mLngText != null) mLngText.setText(lngStr);
-        if (mCoordsText != null) {
-            mCoordsText.setText(String.format("Lat: %s | Lng: %s", latStr, lngStr));
-        }
 
         if (move && mMap != null) {
             int zoom = (int) Math.max(mMap.getCameraPosition().zoom, 15);
@@ -409,9 +404,14 @@ public class ChooseLocationActivity extends VActivity implements OnMapReadyCallb
             return;
         }
         if (mEditorOnly) {
-            mEditorDraftActive = enableFakeLocation;
+            // Editor-only mode: just save the point, don't activate fake location.
+            // The onboarding screen decides when to activate.
+            mEditorDraftActive = true;
+            finishWithResult(mLocation, VirtualLocationManager.MODE_USE_SELF);
+            return;
         }
-        if (!mEditorOnly && !TextUtils.isEmpty(mCurPkg)) {
+        // Direct mode: save and activate immediately
+        if (!TextUtils.isEmpty(mCurPkg)) {
             VirtualLocationManager.get().setLocation(mCurUserId, mCurPkg, mLocation);
             VirtualLocationManager.get().setMode(mCurUserId, mCurPkg,
                     enableFakeLocation ? VirtualLocationManager.MODE_USE_SELF : VirtualLocationManager.MODE_CLOSE);
@@ -499,17 +499,17 @@ public class ChooseLocationActivity extends VActivity implements OnMapReadyCallb
                 mMockText.setText(R.string.mocking);
                 mMockText.setTextColor(ContextCompat.getColor(this, R.color.md3_primary));
             }
-            // Show stop overlay when mocking is active
-            if (mMockingView != null) mMockingView.setVisibility(View.VISIBLE);
             if (mMockBtn != null) mMockBtn.setText(R.string.update_fake_location);
         } else {
             if (mMockText != null) {
                 mMockText.setText(R.string.no_mock);
                 mMockText.setTextColor(ContextCompat.getColor(this, R.color.md3_on_surface_variant));
             }
-            // Hide stop overlay when not mocking
-            if (mMockingView != null) mMockingView.setVisibility(View.GONE);
             if (mMockBtn != null) mMockBtn.setText(R.string.start_fake_location);
+        }
+        if (mUseOriginalBtn != null) {
+            mUseOriginalBtn.setText(mock ? R.string.stop_fake_location : R.string.use_original_location);
+            mUseOriginalBtn.setVisibility(View.VISIBLE);
         }
         if (mSearchView != null) {
             mSearchView.setEnabled(true);

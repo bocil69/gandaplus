@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0273" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent">
+        <TextView android:textSize="@dimen/admsoloraya_res_0x7f070126" android:textStyle="bold" android:textColor="#51c757" android:id="@+id/admsoloraya_res_0x7f0a04fa" android:paddingLeft="@dimen/admsoloraya_res_0x7f070338" android:paddingRight="@dimen/admsoloraya_res_0x7f070338" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Timepick"/>
+        <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:textColor="#51c757" android:id="@+id/admsoloraya_res_0x7f0a04f9" android:paddingLeft="@dimen/admsoloraya_res_0x7f070338" android:paddingTop="@dimen/admsoloraya_res_0x7f070187" android:paddingRight="@dimen/admsoloraya_res_0x7f070338" android:paddingBottom="@dimen/admsoloraya_res_0x7f070338" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Memetakan Cache"/>
+        <ProgressBar android:id="@+id/admsoloraya_res_0x7f0a03ea" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" android:indeterminate="false" style="?android:attr/progressBarStyle"/>
+        <androidx.core.widget.NestedScrollView android:id="@+id/admsoloraya_res_0x7f0a03cb" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f070339" android:textStyle="bold" android:textColor="#419f46" android:id="@+id/admsoloraya_res_0x7f0a04fe" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TextView"/>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</LinearLayout>

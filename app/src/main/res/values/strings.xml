@@ -119,6 +119,9 @@
     <string name="start_app_failed">can\'t start %1$s </string>
     <string name="any_apps">Apps</string>
     <string name="tip_add_apps">Please wait for add app</string>
+    <string name="add_app_dialog_title">Tambah Aplikasi</string>
+    <string name="add_app_option_clone">Clone dari HP (app terinstall)</string>
+    <string name="add_app_option_install">Install dari File (APK / XAPK / APKS)</string>
     <string name="clean_data">Clean Data</string>
     <string name="label_app_data_szie">Data：%1$s</string>
     <string-array name="weeks">

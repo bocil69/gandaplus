@@ -22,6 +22,11 @@ public class GmsSupport {
     public static final String GSF_PKG = "com.google.android.gsf";
     public static final String VENDING_PKG = "com.android.vending";
 
+    /** Core GMS packages that must bridge to the host OS, not run inside VA. */
+    public static final java.util.Set<String> GMS_PACKAGES = new java.util.HashSet<>(
+            java.util.Arrays.asList(GMS_PKG, GSF_PKG, VENDING_PKG,
+                    "com.google.android.gms.persistent"));
+
     static {
         GOOGLE_APP.add(VENDING_PKG);
         GOOGLE_APP.add("com.google.android.play.games");
@@ -86,9 +91,18 @@ public class GmsSupport {
         }
     }
 
+        /**
+     * Returns {@code true} if {@code packageName} is a core Google Mobile Services
+     * component that must run on the real OS, not inside the virtual environment.
+     */
+    public static boolean isGmsPackage(String packageName) {
+        if (packageName == null) return false;
+        return GMS_PACKAGES.contains(packageName);
+    }
+
     public static void installGApps(int userId) {
-        installPackages(GOOGLE_SERVICE, userId);
-        installPackages(GOOGLE_APP, userId);
+        // GMS Host Bridge: GMS must NOT be virtualised — it runs on the real OS.
+        // Any GMS install requests are silently ignored.
     }
 
     public static void remove(String packageName) {

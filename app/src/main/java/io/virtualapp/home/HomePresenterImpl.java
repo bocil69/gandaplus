@@ -36,6 +36,7 @@ import io.virtualapp.home.models.PackageAppData;
 import io.virtualapp.home.repo.AppRepository;
 import io.virtualapp.home.repo.CloneSpoofRepository;
 import io.virtualapp.home.repo.PackageAppDataStorage;
+import io.virtualapp.home.repo.SpoofSyncManager;
 import jonathanfinerty.once.Once;
 
 import static io.virtualapp.VCommends.REQUEST_PERMISSION;
@@ -173,61 +174,22 @@ class HomePresenterImpl implements HomeContract.HomePresenter {
      * Returns true if all data is valid and applied successfully.
      */
     private boolean validateAndApplySpoof(String packageName, int userId) {
-        StringBuilder errors = new StringBuilder();
-        boolean hasError = false;
-
         try {
-            CloneSpoofRepository spoofRepo = CloneSpoofRepository.get(mActivity);
-            
-            // Check onboarding state
-            if (!spoofRepo.isOnboarded(packageName, userId)) {
-                errors.append("• Clone not onboarded\n");
-                hasError = true;
-            }
-
-            // Apply device spoof
-            boolean spoofApplied = spoofRepo.applySpoof(packageName, userId);
-            if (!spoofApplied) {
-                errors.append("• Failed to apply device spoof\n");
-                hasError = true;
-            }
-
-            // Verify device config is active
-            VDeviceConfig deviceConfig = VDeviceManager.get().getDeviceConfig(userId);
-            if (deviceConfig == null || !deviceConfig.enable) {
-                errors.append("• Device config not enabled\n");
-                hasError = true;
-            }
-
-            // Check and apply fake location
-            int locationMode = VirtualLocationManager.get().getMode(userId, packageName);
-
-            if (locationMode == VirtualLocationManager.MODE_USE_SELF) {
-                // Verify location data exists
-                VLocation location = com.lody.virtual.client.ipc.VLocationManager.get()
-                    .getLocation(packageName, userId);
-                if (location == null || location.isEmpty()) {
-                    errors.append("• Location data is empty\n");
-                    hasError = true;
-                } else {
-                    Log.d(TAG, "Location validated for " + packageName + 
-                        ": " + location.getLatitude() + ", " + location.getLongitude());
-                }
-            } else {
-                Log.d(TAG, "Fake location is optional and currently disabled for " + packageName);
-            }
-
-            if (hasError) {
-                String fullMessage = "Validation Failed for " + packageName + ":\n\n" + errors.toString();
+            SpoofSyncManager syncManager = SpoofSyncManager.get(mActivity);
+            if (!syncManager.loadCompleteProfile(packageName, userId)) {
+                SpoofSyncManager.ValidationResult validation = syncManager.validateBeforeLaunch(packageName, userId);
+                String details = validation.hasErrors()
+                        ? validation.getErrorMessage()
+                        : "• Failed to load slot profile for this clone";
                 HookErrorHandler.handleError(
                     HookErrorHandler.ErrorType.SPOOF_DATA_MISSING,
-                    fullMessage,
+                    "Validation Failed for " + packageName + " (slot " + userId + "):\n\n" + details,
                     null
                 );
                 return false;
             }
 
-            Log.d(TAG, "All spoof data validated for " + packageName);
+            Log.d(TAG, "Loaded clone slot profile for " + packageName + " (userId=" + userId + ")");
             return true;
 
         } catch (Exception e) {
@@ -250,8 +212,8 @@ class HomePresenterImpl implements HomeContract.HomePresenter {
             return; // Error shown, don't launch
         }
         
-        // Apply the freshly-saved spoof then launch immediately
-        CloneSpoofRepository.get(mActivity).applySpoof(packageName, userId);
+        // Reload the saved slot profile and launch immediately.
+        SpoofSyncManager.get(mActivity).loadCompleteProfile(packageName, userId);
         launchAppInternal(userId, packageName);
     }
 
@@ -314,6 +276,9 @@ class HomePresenterImpl implements HomeContract.HomePresenter {
             InstalledAppInfo installedAppInfo = VirtualCore.get().getInstalledAppInfo(info.packageName, 0);
             if (installedAppInfo != null) {
                 addResult.userId = MultiAppHelper.installExistedPackage(installedAppInfo);
+                if (addResult.userId > 0) {
+                    SpoofSyncManager.get(mActivity).createNewAccount(info.packageName, addResult.userId);
+                }
             } else {
                 InstallResult res = mRepo.addVirtualApp(info);
                 if (!res.isSuccess) throw new IllegalStateException();
@@ -336,6 +301,56 @@ class HomePresenterImpl implements HomeContract.HomePresenter {
                 mView.addAppToLauncher(d);
                 handleLoadingApp(d);
                 appData = d;
+            }
+            loadingDialog.dismiss();
+        });
+    }
+    
+    /**
+     * Install an app from a local archive file (.apk, .xapk, .apks, .apkm).
+     * Extracts split APKs and native libraries automatically.
+     */
+    public void addAppFromStorage(java.io.File archiveFile) {
+        if (archiveFile == null || !archiveFile.exists()) {
+            Toast.makeText(mActivity, "Selected archive is missing.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        final PackageAppData[] addedAppData = new PackageAppData[1];
+        AlertDialog loadingDialog = createMD3LoadingDialog("Preparing APK set...");
+        loadingDialog.show();
+
+        VUiKit.defer().when(() -> {
+            // 1. Extract splits
+            java.util.List<java.io.File> extracted = com.lody.virtual.helper.SplitApkExtractor.extractSplitApks(archiveFile, mActivity);
+            if (extracted.isEmpty()) {
+                throw new RuntimeException("No valid APKs found in " + archiveFile.getName());
+            }
+
+            // 2. Convert to list of paths
+            java.util.List<String> paths = new java.util.ArrayList<>();
+            for (java.io.File f : extracted) {
+                paths.add(f.getAbsolutePath());
+            }
+
+            // 3. Install via new multi-APK API
+            com.lody.virtual.remote.InstallOptions options = com.lody.virtual.remote.InstallOptions
+                    .makeOptions(false, false, com.lody.virtual.remote.InstallOptions.UpdateStrategy.COMPARE_VERSION)
+                    .setInstallerInfo("com.android.vending", "com.android.vending");
+            InstallResult res = VirtualCore.get().installPackageSync(paths, options);
+            if (!res.isSuccess) {
+                throw new RuntimeException("Install failed: " + res.error);
+            }
+            addedAppData[0] = PackageAppDataStorage.get().acquire(res.packageName);
+        }).fail((e) -> {
+            loadingDialog.dismiss();
+            Throwable t = (Throwable) e;
+            Toast.makeText(mActivity, t.getMessage(), Toast.LENGTH_LONG).show();
+        }).done((res) -> {
+            PackageAppData appData = addedAppData[0];
+            if (appData != null) {
+                appData.isLoading = true;
+                mView.addAppToLauncher(appData);
+                handleLoadingApp(appData);
             }
             loadingDialog.dismiss();
         });

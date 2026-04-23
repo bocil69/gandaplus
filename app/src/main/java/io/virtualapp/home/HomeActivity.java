@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,11 +16,13 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
+import android.provider.OpenableColumns;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -64,6 +67,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import io.virtualapp.R;
 import io.virtualapp.VCommends;
@@ -79,6 +83,7 @@ import io.virtualapp.home.models.MultiplePackageAppData;
 import io.virtualapp.home.models.PackageAppData;
 import io.virtualapp.home.repo.AppListBackupManager;
 import io.virtualapp.diagnostic.StorageDiagnosticActivity;
+import io.virtualapp.home.ListAppActivity;
 
 import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG;
 import static androidx.recyclerview.widget.ItemTouchHelper.DOWN;
@@ -94,7 +99,7 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
     private static final String TAG = "HomeActivity";
     private static final int PERMISSION_REQUEST_CODE = 1;
     private static final int MENU_DIAGNOSTIC = 1001;
-    private boolean mRestoredFromBackup = false;
+    private boolean mDetectedMissingPackageState = false;
     private HomeContract.HomePresenter mPresenter;
     private View mLoadingView;
     private RecyclerView mLauncherView;
@@ -123,8 +128,8 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
         overridePendingTransition(0, 0);
         super.onCreate(savedInstanceState);
         
-        // Check and restore from backup if needed
-        checkAndRestoreFromBackup();
+        // Diagnose missing engine state early so we do not pretend SharedPreferences restored clones.
+        diagnoseMissingPackageState();
         
         setContentView(R.layout.activity_home);
         mUiHandler = new Handler(Looper.getMainLooper());
@@ -182,24 +187,37 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
         AppListBackupManager.get(this).backupAppList();
     }
 
-    private void checkAndRestoreFromBackup() {
+    private void diagnoseMissingPackageState() {
         try {
-            Log.d(TAG, "Checking for backup restore...");
+            Log.d(TAG, "Checking for package persistence mismatch...");
             AppListBackupManager backupManager = AppListBackupManager.get(this);
             
             List<com.lody.virtual.remote.InstalledAppInfo> apps = 
                 VirtualCore.get().getInstalledApps(0);
             
             if (apps.isEmpty()) {
-                Log.w(TAG, "No apps in primary storage, checking backup...");
-                boolean restored = backupManager.restoreIfNeeded();
-                
-                if (restored) {
-                    mRestoredFromBackup = true;
-                    Log.d(TAG, "Restore attempt completed");
+                Log.w(TAG, "No apps in primary engine state, checking backup metadata...");
+                if (backupManager.hasBackupMetadata()) {
+                    mDetectedMissingPackageState = true;
+                    Log.w(TAG, "Backup metadata exists for " + backupManager.getBackedUpAppCount()
+                            + " app(s), but SharedPreferences backup cannot restore virtual installs.");
+                    backupManager.restoreIfNeeded();
                 }
             } else {
                 Log.d(TAG, "Primary storage has " + apps.size() + " apps");
+                for (com.lody.virtual.remote.InstalledAppInfo app : apps) {
+                    int[] users = app.getInstalledUsers();
+                    StringBuilder userSummary = new StringBuilder();
+                    if (users != null) {
+                        for (int userId : users) {
+                            if (userSummary.length() > 0) {
+                                userSummary.append(',');
+                            }
+                            userSummary.append(userId);
+                        }
+                    }
+                    Log.d(TAG, "Engine package state: " + app.packageName + " users=[" + userSummary + "]");
+                }
             }
         } catch (Exception e) {
             Log.e(TAG, "Error checking backup", e);
@@ -210,7 +228,7 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
         try {
             String dataDir = getApplicationInfo().dataDir;
             File virtualDir = new File(dataDir, "virtual");
-            File packageList = new File(virtualDir, "package-list");
+            File packageList = new File(new File(new File(virtualDir, "data"), "app/system"), "packages.ini");
             
             Log.d(TAG, "═══════════════════════════════════════════");
             Log.d(TAG, "STORAGE INFO:");
@@ -412,7 +430,29 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
     }
 
     private void onAddAppButtonClick() {
-        ListAppActivity.gotoListApp(this);
+        // Show bottom sheet with two options: clone from device or install from file
+        String[] options = {
+            getString(R.string.add_app_option_clone),
+            getString(R.string.add_app_option_install)
+        };
+        new AlertDialog.Builder(this, R.style.VACustomTheme)
+            .setTitle(getString(R.string.add_app_dialog_title))
+            .setItems(options, (dialog, which) -> {
+                if (which == 0) {
+                    // Clone from installed apps
+                    ListAppActivity.gotoListApp(HomeActivity.this);
+                } else {
+                    // Install from APK/XAPK/APKS file
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("*/*");
+                    String[] mimetypes = {"application/vnd.android.package-archive", "application/zip", "application/octet-stream"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    startActivityForResult(intent, REQUEST_CODE_SELECT_APK);
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show();
     }
 
     private void deleteApp(int position) {
@@ -570,6 +610,11 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
         mLaunchpadAdapter.setList(list);
         hideLoading();
         int count = list.size();
+        Log.d(TAG, "Launcher load finished with " + count + " item(s)");
+        for (AppData data : list) {
+            Log.d(TAG, "Launcher item: pkg=" + data.getPackageName() + " userId=" + data.getUserId()
+                    + " name=" + data.getName());
+        }
         if (mAppCountText != null) {
             mAppCountText.setText(count > 0 ? count + (count == 1 ? " app cloned" : " apps cloned") : "");
         }
@@ -577,17 +622,22 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
         // Backup app list setelah successful load
         AppListBackupManager.get(this).backupAppList();
         
-        // Show notification jika restore terjadi tapi list masih kosong
-        if (mRestoredFromBackup && list.isEmpty()) {
+        // Show notification when the engine package list is empty but metadata backup exists.
+        if (mDetectedMissingPackageState && list.isEmpty()) {
             Toast.makeText(this, 
-                "Apps were restored from backup but may need to be re-added", 
+                "Clone metadata ditemukan, tapi state engine kosong. Buka Storage Diagnostics jika clone hilang setelah restart.", 
                 Toast.LENGTH_LONG).show();
         }
     }
 
+    private static final int MENU_INSTALL_APK = 1002;
+    private static final int REQUEST_CODE_SELECT_APK = 1003;
+
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         menu.add(0, MENU_DIAGNOSTIC, 0, "Storage Diagnostics")
+            .setShowAsAction(android.view.MenuItem.SHOW_AS_ACTION_NEVER);
+        menu.add(0, MENU_INSTALL_APK, 0, "Install APK from Storage")
             .setShowAsAction(android.view.MenuItem.SHOW_AS_ACTION_NEVER);
         return true;
     }
@@ -597,6 +647,14 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
         if (item.getItemId() == MENU_DIAGNOSTIC) {
             Intent intent = new Intent(this, StorageDiagnosticActivity.class);
             startActivity(intent);
+            return true;
+        } else if (item.getItemId() == MENU_INSTALL_APK) {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            String[] mimetypes = {"application/vnd.android.package-archive", "application/zip", "application/octet-stream"};
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+            startActivityForResult(intent, REQUEST_CODE_SELECT_APK);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -680,7 +738,20 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VCommends.REQUEST_SELECT_APP) {
+        if (requestCode == REQUEST_CODE_SELECT_APK && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            if (uri != null) {
+                try {
+                    java.io.File tempFile = copySelectedInstallArchive(uri);
+                    if (mPresenter instanceof HomePresenterImpl) {
+                        ((HomePresenterImpl)mPresenter).addAppFromStorage(tempFile);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Failed to read file", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else if (requestCode == VCommends.REQUEST_SELECT_APP) {
             if (resultCode == RESULT_OK && data != null) {
                 List<AppInfoLite> appList = data.getParcelableArrayListExtra(VCommends.EXTRA_APP_INFO_LIST);
                 if (appList != null) {
@@ -715,6 +786,62 @@ public class HomeActivity extends VActivity implements HomeContract.HomeView {
                 }
             }
         }
+    }
+
+    private File copySelectedInstallArchive(Uri uri) throws IOException {
+        String fileName = resolveInstallFileName(uri);
+        File installCacheDir = new File(getCacheDir(), "storage_imports");
+        if (!installCacheDir.exists() && !installCacheDir.mkdirs()) {
+            throw new IOException("Failed to prepare import cache directory");
+        }
+        File tempFile = new File(installCacheDir, System.currentTimeMillis() + "_" + fileName);
+        try (InputStream in = getContentResolver().openInputStream(uri);
+             FileOutputStream out = new FileOutputStream(tempFile)) {
+            if (in == null) {
+                throw new IOException("Failed to open selected file");
+            }
+            byte[] buffer = new byte[8192];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            out.flush();
+        }
+        return tempFile;
+    }
+
+    private String resolveInstallFileName(Uri uri) {
+        String displayName = null;
+        Cursor cursor = null;
+        try {
+            cursor = getContentResolver().query(uri, new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                if (nameIndex >= 0) {
+                    displayName = cursor.getString(nameIndex);
+                }
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Unable to resolve display name for import uri: " + uri, e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        if (TextUtils.isEmpty(displayName)) {
+            displayName = uri.getLastPathSegment();
+        }
+        if (TextUtils.isEmpty(displayName)) {
+            displayName = "install.apk";
+        }
+
+        String normalized = displayName.toLowerCase(Locale.ROOT);
+        if (!(normalized.endsWith(".apk") || normalized.endsWith(".xapk")
+                || normalized.endsWith(".apks") || normalized.endsWith(".apkm"))) {
+            displayName = displayName + ".apk";
+        }
+        return displayName.replaceAll("[^a-zA-Z0-9._-]", "_");
     }
 
     private class LauncherTouchCallback extends ItemTouchHelper.SimpleCallback {

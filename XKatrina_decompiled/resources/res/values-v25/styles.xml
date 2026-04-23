@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="admsoloraya_res_0x7f130137" parent="@style/admsoloraya_res_0x7f130142">
+    </style>
+    <style name="admsoloraya_res_0x7f130138" parent="@style/admsoloraya_res_0x7f130143">
+    </style>
+    <style name="admsoloraya_res_0x7f130142" parent="@android:style/Theme.Material.NoActionBar">
+    </style>
+    <style name="admsoloraya_res_0x7f130143" parent="@android:style/Theme.Material.Light.NoActionBar">
+    </style>
+</resources>

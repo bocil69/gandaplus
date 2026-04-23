@@ -26,6 +26,27 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 	private static VAccountManager Mgr = VAccountManager.get();
 
+	private static final String GOOGLE_ACCOUNT_TYPE = "com.google";
+
+	/**
+	 * Check if the account type is Google-related.
+	 * For Google accounts, we fall through to the host AccountManager
+	 * so cloned apps can use the device's real Google account for Sign-In.
+	 */
+	private static boolean isGoogleAccountType(String accountType) {
+		return accountType != null && (
+			GOOGLE_ACCOUNT_TYPE.equals(accountType)
+			|| accountType.startsWith("com.google.")
+		);
+	}
+
+	/**
+	 * Check if an Account is a Google account.
+	 */
+	private static boolean isGoogleAccount(Account account) {
+		return account != null && isGoogleAccountType(account.type);
+	}
+
 	public AccountManagerStub() {
 		super(IAccountManager.Stub.asInterface, Context.ACCOUNT_SERVICE);
 	}
@@ -51,6 +72,7 @@ public class AccountManagerStub extends BinderInvocationProxy {
 		addMethodProxy(new getAccounts());
 		addMethodProxy(new getAccountsForPackage());
 		addMethodProxy(new getAccountsByTypeForPackage());
+		addMethodProxy(new getAccountByTypeAndFeatures());
 		addMethodProxy(new getAccountsAsUser());
 		addMethodProxy(new hasFeatures());
 		addMethodProxy(new getAccountsByFeatures());
@@ -130,7 +152,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object who, Method method, Object... args) throws Throwable {
-			return Mgr.getAuthenticatorTypes();
+			// Fall through to host so cloned apps can see Google authenticator
+			// which is required for "Continue with Google" sign-in flow
+			return method.invoke(who, args);
 		}
 	}
 
@@ -143,6 +167,11 @@ public class AccountManagerStub extends BinderInvocationProxy {
 		@Override
 		public Object call(Object who, Method method, Object... args) throws Throwable {
 			String accountType = (String) args[0];
+			if (accountType == null || isGoogleAccountType(accountType)) {
+				// Fall through to host for Google accounts so cloned apps
+				// can see the device's real Google accounts for sign-in
+				return method.invoke(who, args);
+			}
 			return Mgr.getAccounts(accountType);
 		}
 	}
@@ -155,8 +184,8 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object who, Method method, Object... args) throws Throwable {
-			String packageName = (String) args[0];
-			return Mgr.getAccounts(null);
+			// Fall through to host so apps can see all accounts including Google
+			return method.invoke(who, args);
 		}
 	}
 
@@ -170,6 +199,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 		public Object call(Object who, Method method, Object... args) throws Throwable {
 			String type = (String) args[0];
 			String packageName = (String) args[1];
+			if (type == null || isGoogleAccountType(type)) {
+				return method.invoke(who, args);
+			}
 			return Mgr.getAccounts(type);
 		}
 	}
@@ -183,7 +215,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
         @Override
         public Object call(Object who, Method method, Object... args) throws Throwable {
             String type = (String) args[0];
-            String packageName = (String) args[1];
+            if (isGoogleAccountType(type)) {
+                return method.invoke(who, args);
+            }
             return Mgr.getAccounts(type);
         }
     }
@@ -196,7 +230,17 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object who, Method method, Object... args) throws Throwable {
-			String accountType = (String) args[0];
+			String accountType = null;
+			// accountType is typically the last string argument
+			for (int i = args.length - 1; i >= 0; i--) {
+				if (args[i] instanceof String) {
+					accountType = (String) args[i];
+					break;
+				}
+			}
+			if (accountType == null || isGoogleAccountType(accountType)) {
+				return method.invoke(who, args);
+			}
 			return Mgr.getAccounts(accountType);
 		}
 	}
@@ -212,6 +256,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			IAccountManagerResponse response = (IAccountManagerResponse) args[0];
 			Account account = (Account) args[1];
 			String[] features = (String[]) args[2];
+			if (isGoogleAccount(account)) {
+				return method.invoke(who, args);
+			}
 			Mgr.hasFeatures(response, account, features);
 			return 0;
 		}
@@ -228,6 +275,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			IAccountManagerResponse response = (IAccountManagerResponse) args[0];
 			String accountType = (String) args[1];
 			String[] features = (String[]) args[2];
+			if (isGoogleAccountType(accountType)) {
+				return method.invoke(who, args);
+			}
 			Mgr.getAccountsByFeatures(response, accountType, features);
 			return 0;
 		}
@@ -320,6 +370,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 		public Object call(Object who, Method method, Object... args) throws Throwable {
 			String accountType = (String) args[0];
 			String authToken = (String) args[1];
+			if (isGoogleAccountType(accountType)) {
+				return method.invoke(who, args);
+			}
 			Mgr.invalidateAuthToken(accountType, authToken);
 			return 0;
 		}
@@ -335,6 +388,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 		public Object call(Object who, Method method, Object... args) throws Throwable {
 			Account account = (Account) args[0];
 			String authTokenType = (String) args[1];
+			if (isGoogleAccount(account)) {
+				return method.invoke(who, args);
+			}
 			return Mgr.peekAuthToken(account, authTokenType);
 		}
 	}
@@ -431,6 +487,10 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			boolean notifyOnAuthFailure = (boolean) args[3];
 			boolean expectActivityLaunch = (boolean) args[4];
 			Bundle options = (Bundle) args[5];
+			if (isGoogleAccount(account)) {
+				// Fall through to host for Google auth tokens
+				return method.invoke(who, args);
+			}
 			Mgr.getAuthToken(response, account, authTokenType, notifyOnAuthFailure, expectActivityLaunch, options);
 			return 0;
 		}
@@ -450,6 +510,10 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			String[] requiredFeatures = (String[]) args[3];
 			boolean expectActivityLaunch = (boolean) args[4];
 			Bundle options = (Bundle) args[5];
+			if (isGoogleAccountType(accountType)) {
+				// Fall through to host for Google account addition
+				return method.invoke(who, args);
+			}
 			Mgr.addAccount(response, accountType, authTokenType, requiredFeatures, expectActivityLaunch, options);
 			return 0;
 		}
@@ -469,6 +533,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			String[] requiredFeatures = (String[]) args[3];
 			boolean expectActivityLaunch = (boolean) args[4];
 			Bundle options = (Bundle) args[5];
+			if (isGoogleAccountType(accountType)) {
+				return method.invoke(who, args);
+			}
 			Mgr.addAccount(response, accountType, authTokenType, requiredFeatures, expectActivityLaunch, options);
 			return 0;
 		}
@@ -487,6 +554,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			String authTokenType = (String) args[2];
 			boolean expectActivityLaunch = (boolean) args[3];
 			Bundle options = (Bundle) args[4];
+			if (isGoogleAccount(account)) {
+				return method.invoke(who, args);
+			}
 			Mgr.updateCredentials(response, account, authTokenType, expectActivityLaunch, options);
 			return 0;
 		}
@@ -503,6 +573,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			IAccountManagerResponse response = (IAccountManagerResponse) args[0];
 			String authTokenType = (String) args[1];
 			boolean expectActivityLaunch = (boolean) args[2];
+			if (authTokenType != null && isGoogleAccountType(authTokenType)) {
+				return method.invoke(who, args);
+			}
 			Mgr.editProperties(response, authTokenType, expectActivityLaunch);
 			return 0;
 		}
@@ -520,6 +593,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			Account account = (Account) args[1];
 			Bundle options = (Bundle) args[2];
 			boolean expectActivityLaunch = (boolean) args[3];
+			if (isGoogleAccount(account)) {
+				return method.invoke(who, args);
+			}
 			Mgr.confirmCredentials(response, account, options, expectActivityLaunch);
 			return 0;
 
@@ -550,6 +626,9 @@ public class AccountManagerStub extends BinderInvocationProxy {
 			IAccountManagerResponse response = (IAccountManagerResponse) args[0];
 			String accountType = (String) args[1];
 			String authTokenType = (String) args[2];
+			if (isGoogleAccountType(accountType)) {
+				return method.invoke(who, args);
+			}
 			Mgr.getAuthTokenLabel(response, accountType, authTokenType);
 			return 0;
 		}
@@ -665,6 +744,15 @@ public class AccountManagerStub extends BinderInvocationProxy {
 		}
 
 		public Object call(Object obj, Method method, Object... objArr) throws Throwable {
+			Bundle sessionBundle = (Bundle) objArr[1];
+			Bundle appInfo = (Bundle) objArr[3];
+			String accountType = sessionBundle != null ? sessionBundle.getString("accountType") : null;
+			if (accountType == null && appInfo != null) {
+				accountType = appInfo.getString("accountType");
+			}
+			if (isGoogleAccountType(accountType)) {
+				return method.invoke(obj, objArr);
+			}
 			AccountManagerStub.Mgr.finishSessionAsUser((IAccountManagerResponse) objArr[0], (Bundle) objArr[1], ((Boolean) objArr[2]).booleanValue(), (Bundle) objArr[3], ((Integer) objArr[4]).intValue());
 			return Integer.valueOf(0);
 		}
@@ -709,6 +797,10 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object obj, Method method, Object... objArr) throws Throwable {
+			String accountType = (String) objArr[1];
+			if (isGoogleAccountType(accountType)) {
+				return method.invoke(obj, objArr);
+			}
 			return Mgr.getAccountsAndVisibilityForPackage((String) objArr[0], (String) objArr[1]);
 		}
 	}
@@ -739,6 +831,10 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object obj, Method method, Object... objArr) throws Throwable {
+			Account account = (Account) objArr[0];
+			if (isGoogleAccount(account)) {
+				return method.invoke(obj, objArr);
+			}
 			return Mgr.setAccountVisibility((Account) objArr[0], (String) objArr[1], ((Integer) objArr[2]).intValue());
 		}
 	}
@@ -754,6 +850,10 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object obj, Method method, Object... objArr) throws Throwable {
+			String accountType = (String) objArr[1];
+			if (isGoogleAccountType(accountType)) {
+				return method.invoke(obj, objArr);
+			}
 			Mgr.startAddAccountSession((IAccountManagerResponse) objArr[0], (String) objArr[1], (String) objArr[2], (String[]) objArr[3], ((Boolean) objArr[4]).booleanValue(), (Bundle) objArr[5]);
 			return 0;
 		}
@@ -770,6 +870,10 @@ public class AccountManagerStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object obj, Method method, Object... objArr) throws Throwable {
+			Account account = (Account) objArr[1];
+			if (isGoogleAccount(account)) {
+				return method.invoke(obj, objArr);
+			}
 			Mgr.startUpdateCredentialsSession((IAccountManagerResponse) objArr[0], (Account) objArr[1], (String) objArr[2], ((Boolean) objArr[3]).booleanValue(), (Bundle) objArr[4]);
 			return 0;
 		}

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="admsoloraya_res_0x7f130050" parent="@style/admsoloraya_res_0x7f1300b9">
+    </style>
+    <style name="admsoloraya_res_0x7f130057" parent="@style/admsoloraya_res_0x7f1300ba">
+    </style>
+    <style name="admsoloraya_res_0x7f1300a0" parent="@style/admsoloraya_res_0x7f130280">
+        <item name="android:backgroundDimAmount">0.32</item>
+        <item name="android:checkedTextViewStyle">@style/admsoloraya_res_0x7f130402</item>
+        <item name="android:dialogCornerRadius">@null</item>
+        <item name="admsoloraya_res_0x7f04002a">@style/admsoloraya_res_0x7f13012d</item>
+        <item name="admsoloraya_res_0x7f04008c">@style/admsoloraya_res_0x7f1303fa</item>
+        <item name="admsoloraya_res_0x7f04008d">@style/admsoloraya_res_0x7f1303fa</item>
+        <item name="admsoloraya_res_0x7f04008e">@style/admsoloraya_res_0x7f1303fb</item>
+        <item name="admsoloraya_res_0x7f04008f">@style/admsoloraya_res_0x7f1303fa</item>
+        <item name="admsoloraya_res_0x7f0402fc">@style/admsoloraya_res_0x7f13012e</item>
+        <item name="admsoloraya_res_0x7f0402fd">@integer/admsoloraya_res_0x7f0b0040</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1300b9" parent="@style/admsoloraya_res_0x7f1300b6">
+        <item name="admsoloraya_res_0x7f04017a">?android:attr/dialogCornerRadius</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1300ba" parent="@style/admsoloraya_res_0x7f1300b7">
+        <item name="admsoloraya_res_0x7f04017a">?android:attr/dialogCornerRadius</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301d5" parent="@style/admsoloraya_res_0x7f130197">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120055</item>
+        <item name="android:letterSpacing">0.0312</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120055</item>
+        <item name="admsoloraya_res_0x7f0402cb">24sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301d6" parent="@style/admsoloraya_res_0x7f130196">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120055</item>
+        <item name="android:letterSpacing">0.0179</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120055</item>
+        <item name="admsoloraya_res_0x7f0402cb">20sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301d7" parent="@style/admsoloraya_res_0x7f130199">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120055</item>
+        <item name="android:letterSpacing">0.0333</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120055</item>
+        <item name="admsoloraya_res_0x7f0402cb">16sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301d8" parent="@style/admsoloraya_res_0x7f13019c">
+        <item name="android:textSize">57sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120053</item>
+        <item name="android:letterSpacing">-0.0044</item>
+        <item name="android:lineHeight">64sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120053</item>
+        <item name="admsoloraya_res_0x7f0402cb">64sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301d9" parent="@style/admsoloraya_res_0x7f13019b">
+        <item name="android:textSize">45sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120053</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineHeight">52sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120053</item>
+        <item name="admsoloraya_res_0x7f0402cb">52sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301da" parent="@style/admsoloraya_res_0x7f13019a">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120053</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineHeight">44sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120053</item>
+        <item name="admsoloraya_res_0x7f0402cb">44sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301db" parent="@style/admsoloraya_res_0x7f13019a">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120053</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineHeight">40sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120053</item>
+        <item name="admsoloraya_res_0x7f0402cb">40sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301dc" parent="@style/admsoloraya_res_0x7f13019e">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120053</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineHeight">36sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120053</item>
+        <item name="admsoloraya_res_0x7f0402cb">36sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301dd" parent="@style/admsoloraya_res_0x7f1301af">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120053</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineHeight">32sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120053</item>
+        <item name="admsoloraya_res_0x7f0402cb">32sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301de" parent="@style/admsoloraya_res_0x7f130196">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120054</item>
+        <item name="android:letterSpacing">0.0071</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120054</item>
+        <item name="admsoloraya_res_0x7f0402cb">20sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301df" parent="@style/admsoloraya_res_0x7f130199">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120054</item>
+        <item name="android:letterSpacing">0.0417</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120054</item>
+        <item name="admsoloraya_res_0x7f0402cb">16sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301e0" parent="@style/admsoloraya_res_0x7f130199">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120054</item>
+        <item name="android:letterSpacing">0.0455</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120054</item>
+        <item name="admsoloraya_res_0x7f0402cb">16sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301e1" parent="@style/admsoloraya_res_0x7f1301af">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120053</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineHeight">28sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120053</item>
+        <item name="admsoloraya_res_0x7f0402cb">28sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301e2" parent="@style/admsoloraya_res_0x7f1301ad">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120054</item>
+        <item name="android:letterSpacing">0.0094</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120054</item>
+        <item name="admsoloraya_res_0x7f0402cb">24sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1301e3" parent="@style/admsoloraya_res_0x7f1301ad">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@string/admsoloraya_res_0x7f120054</item>
+        <item name="android:letterSpacing">0.0071</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="admsoloraya_res_0x7f040207">@string/admsoloraya_res_0x7f120054</item>
+        <item name="admsoloraya_res_0x7f0402cb">20sp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f130341" parent="@style/admsoloraya_res_0x7f1303e7">
+        <item name="android:background">?attr/admsoloraya_res_0x7f040124</item>
+        <item name="android:stateListAnimator">@animator/admsoloraya_res_0x7f020009</item>
+        <item name="android:outlineSpotShadowColor">@android:color/transparent</item>
+        <item name="android:outlineAmbientShadowColor">@android:color/transparent</item>
+        <item name="admsoloraya_res_0x7f0402c7">true</item>
+    </style>
+    <style name="admsoloraya_res_0x7f13034a" parent="@style/admsoloraya_res_0x7f130100">
+        <item name="android:outlineSpotShadowColor">@android:color/transparent</item>
+        <item name="android:outlineAmbientShadowColor">@android:color/transparent</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1303bf" parent="@android:style/Widget">
+        <item name="android:textAppearance">@style/admsoloraya_res_0x7f1301f3</item>
+        <item name="android:minHeight">@dimen/admsoloraya_res_0x7f0704b9</item>
+        <item name="android:paddingStart">@dimen/admsoloraya_res_0x7f0704bd</item>
+        <item name="android:outlineSpotShadowColor">@android:color/transparent</item>
+        <item name="android:outlineAmbientShadowColor">@android:color/transparent</item>
+        <item name="admsoloraya_res_0x7f040173">true</item>
+        <item name="admsoloraya_res_0x7f040175">true</item>
+        <item name="admsoloraya_res_0x7f0401a0">@dimen/admsoloraya_res_0x7f0704b8</item>
+        <item name="admsoloraya_res_0x7f0401ae">true</item>
+        <item name="admsoloraya_res_0x7f04022d">false</item>
+        <item name="admsoloraya_res_0x7f040325">@style/admsoloraya_res_0x7f1302b6</item>
+        <item name="admsoloraya_res_0x7f04032b">@dimen/admsoloraya_res_0x7f0704b9</item>
+        <item name="admsoloraya_res_0x7f0403d8">?attr/admsoloraya_res_0x7f0403df</item>
+        <item name="admsoloraya_res_0x7f0403e0">@style/admsoloraya_res_0x7f130188</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1303dc" parent="@style/admsoloraya_res_0x7f130330">
+        <item name="android:outlineSpotShadowColor">@android:color/transparent</item>
+        <item name="android:outlineAmbientShadowColor">@android:color/transparent</item>
+        <item name="admsoloraya_res_0x7f040143">0dp</item>
+        <item name="admsoloraya_res_0x7f040426">?attr/admsoloraya_res_0x7f040477</item>
+        <item name="admsoloraya_res_0x7f0404b8">?attr/admsoloraya_res_0x7f040476</item>
+    </style>
+</resources>

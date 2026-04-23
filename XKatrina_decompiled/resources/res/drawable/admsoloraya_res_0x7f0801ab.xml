@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="32dp" android:width="32dp" android:viewportWidth="32" android:viewportHeight="32">
+    <group>
+        <path android:fillColor="@android:color/black" android:pathData="@string/admsoloraya_res_0x7f12007f"/>
+    </group>
+    <group android:name="@string/admsoloraya_res_0x7f12007d" android:pivotX="16" android:pivotY="16">
+        <path android:name="@string/admsoloraya_res_0x7f12007e" android:fillColor="@android:color/black" android:pathData="@string/admsoloraya_res_0x7f12007c"/>
+    </group>
+</vector>

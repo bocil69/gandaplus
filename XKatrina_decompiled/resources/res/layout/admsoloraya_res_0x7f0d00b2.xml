@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0270" android:layout_width="match_parent" android:layout_height="match_parent">
+        <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a01b6" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView android:layout_gravity="bottom" android:id="@+id/admsoloraya_res_0x7f0a03c0" android:layout_width="match_parent" android:layout_height="wrap_content" app:labelVisibilityMode="1" app:menu="@menu/admsoloraya_res_0x7f0e0000"/>
+    </LinearLayout>
+</LinearLayout>

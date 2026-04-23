@@ -85,7 +85,7 @@ public class UacProxyActivity extends Activity {
                     }
                 } else if ("ovo".equals(scheme) || (uri.getHost() != null && uri.getHost().contains("ovo"))) {
                     targetPkg = "ovo.id";
-                } else if ("eskimo".equals(scheme)) {
+                } else if ("eskimo".equals(scheme) || (uri.getHost() != null && uri.getHost().contains("eskimo"))) {
                     targetPkg = "travel.eskimo.esim";
                 }
 

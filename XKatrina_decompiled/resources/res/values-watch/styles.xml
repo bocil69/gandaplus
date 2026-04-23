@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="admsoloraya_res_0x7f130052" parent="@style/admsoloraya_res_0x7f1300a3">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowElevation">0dp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f130059" parent="@style/admsoloraya_res_0x7f1300a5">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowElevation">0dp</item>
+    </style>
+    <style name="admsoloraya_res_0x7f13007d" parent="@style/admsoloraya_res_0x7f1300aa">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowElevation">0dp</item>
+    </style>
+</resources>

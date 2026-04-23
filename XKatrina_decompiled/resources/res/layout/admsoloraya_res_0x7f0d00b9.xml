@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/admsoloraya_res_0x7f0a000e" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <com.google.android.material.textfield.TextInputLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a04a7" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/admsoloraya_res_0x7f07027b" style="@style/admsoloraya_res_0x7f13044a">
+            <AutoCompleteTextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:id="@+id/admsoloraya_res_0x7f0a0068" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Nama Shortcut"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a02fb" android:layout_width="match_parent" android:layout_height="match_parent">
+            <GridView android:id="@+id/admsoloraya_res_0x7f0a01c3" android:layout_width="match_parent" android:layout_height="match_parent" android:stretchMode="columnWidth" android:numColumns="4" android:layout_weight="1"/>
+            <com.google.android.material.card.MaterialCardView android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0380" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="@dimen/admsoloraya_res_0x7f07027b" android:layout_marginBottom="@dimen/admsoloraya_res_0x7f07030e" app:cardCornerRadius="@dimen/admsoloraya_res_0x7f070119" style="@style/admsoloraya_res_0x7f130363">
+                <ListView android:id="@+id/admsoloraya_res_0x7f0a0317" android:layout_width="@dimen/admsoloraya_res_0x7f0702c3" android:layout_height="match_parent" android:layout_marginTop="@dimen/admsoloraya_res_0x7f07027b" android:layout_marginBottom="@dimen/admsoloraya_res_0x7f07027b" android:divider="@null" android:dividerHeight="0dp" android:choiceMode="none"/>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton android:layout_gravity="bottom|right" android:id="@+id/admsoloraya_res_0x7f0a000f" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/admsoloraya_res_0x7f0700e7" android:layout_marginTop="@dimen/admsoloraya_res_0x7f0700e7" android:layout_marginRight="@dimen/admsoloraya_res_0x7f070338" android:layout_marginBottom="@dimen/admsoloraya_res_0x7f0700e7" app:srcCompat="@drawable/admsoloraya_res_0x7f0800f3"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

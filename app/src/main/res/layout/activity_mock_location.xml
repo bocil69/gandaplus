@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Premium AMOLED MD3 Location Picker -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="@color/md3_surface">
 
-    <!-- Full-screen map -->
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         map:mapType="normal" />
 
-    <!-- Top Scrim for Status Bar & Search Readability -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="132dp"
         android:layout_gravity="top"
         android:background="@drawable/bg_mock_location_top_scrim" />
 
-    <!-- Bottom Scrim for Bottom Sheet Readability -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_height="220dp"
         android:layout_gravity="bottom"
         android:background="@drawable/bg_mock_location_bottom_scrim" />
 
-    <!-- Search Bar (Floating MD3 Pill) -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="68dp"
         app:cardBackgroundColor="@color/md3_surface_container"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="12dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="10dp"
         app:strokeColor="@color/md3_outline_variant"
         app:strokeWidth="1dp">
 
@@ -47,60 +42,103 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="8dp">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_back"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="12dp"
+                android:contentDescription="@string/cancel_action"
+                android:padding="10dp"
                 android:src="@drawable/ic_arrow_back"
-                app:tint="#E8EAED" />
+                app:tint="@color/md3_on_surface" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
                 android:orientation="vertical">
-                
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/mock_location_title"
-                    android:textColor="@color/md3_on_surface"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/md3_on_surface_variant"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/search_view"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@android:color/transparent"
-                    android:maxWidth="999dp"
-                    app:iconifiedByDefault="false"
-                    app:queryBackground="@null"
-                    app:queryHint="@string/mock_location_search_hint"
-                    app:searchIcon="@null"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_md3_input_field">
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/search_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:maxWidth="999dp"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                        app:iconifiedByDefault="false"
+                        app:queryBackground="@null"
+                        app:queryHint="@string/mock_location_search_hint"
+                        app:searchIcon="@null" />
+                </FrameLayout>
             </LinearLayout>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_search_action"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="4dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/shape_search_action_bg"
                 android:backgroundTint="@color/md3_primary"
-                android:padding="12dp"
+                android:contentDescription="@string/search"
+                android:padding="10dp"
                 android:src="@drawable/ic_search_white_24dp"
                 app:tint="@color/md3_on_primary" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Center Map Pin (Anchored) -->
+    <ImageView
+        android:id="@+id/img_loc"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="12dp"
+        android:layout_marginTop="74dp"
+        android:background="@drawable/bg_mock_location_metric_card"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/selector_map_loc" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/bg_mock_location_metric_card"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="7dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mock_location_drag_hint"
+            android:textColor="@color/md3_on_surface"
+            android:textSize="10sp"
+            android:letterSpacing="0.08"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="48dp"
@@ -115,54 +153,18 @@
             android:src="@drawable/map_select_location" />
     </FrameLayout>
 
-    <!-- FAB: My Location -->
-    <ImageView
-        android:id="@+id/img_loc"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="top|end"
-        android:layout_margin="16dp"
-        android:layout_marginTop="72dp"
-        android:background="@drawable/bg_mock_location_metric_card"
-        android:padding="12dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/selector_map_loc" />
-
-    <!-- Drag map hint chip -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="104dp"
-        android:background="@drawable/bg_mock_location_metric_card"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-                android:text="@string/mock_location_drag_hint"
-                android:textColor="@color/md3_on_surface"
-            android:textSize="11sp"
-            android:letterSpacing="0.05"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- Bottom Detail Card -->
+    <!-- Bottom info card (compact) -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/bottom_point"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="72dp"
         app:cardBackgroundColor="@color/md3_surface_container"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="16dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
         app:strokeColor="@color/md3_outline_variant"
         app:strokeWidth="1dp">
 
@@ -171,8 +173,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp">
 
+            <!-- Header row: chip + status -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,13 +189,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_mock_location_section_chip"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp"
-                    android:text="TARGET LOCATION"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/mock_location_selected_address"
                     android:textColor="@color/md3_primary"
-                    android:textSize="10sp"
+                    android:textSize="9sp"
                     android:letterSpacing="0.1"
                     android:textStyle="bold" />
 
@@ -200,50 +206,41 @@
 
                 <ImageView
                     android:id="@+id/img_mock"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/selector_mock"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tv_mock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="4dp"
                     android:text="@string/no_mock"
                     android:textColor="@color/md3_on_surface_variant"
-                    android:textSize="13sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Compact Address & Coordinates -->
+            <!-- Address -->
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="start"
-                android:maxLines="1"
+                android:layout_marginTop="8dp"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/unknown_location"
                 android:textColor="@color/md3_on_surface"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <!-- Compact Coordinates - Single Line -->
-            <TextView
-                android:id="@+id/tv_coords"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Lat: - | Lng: -"
-                android:textColor="@color/md3_on_surface_variant"
-                android:textSize="12sp" />
-
+            <!-- Coordinate row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -251,150 +248,159 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_lat"
-                    android:textColor="@color/md3_on_surface_variant"
-                    android:textSize="12sp"
+                    android:textColor="@color/md3_primary"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_lat"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
                     android:text="-"
                     android:textColor="@color/md3_on_surface"
-                    android:textSize="12sp" />
-
-                <Space
-                    android:layout_width="16dp"
-                    android:layout_height="1dp" />
+                    android:textSize="11sp"
+                    android:fontFamily="monospace" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_lng"
-                    android:textColor="@color/md3_on_surface_variant"
-                    android:textSize="12sp"
+                    android:textColor="@color/md3_primary"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_lng"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
                     android:text="-"
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/md3_on_surface"
-                    android:textSize="12sp" />
+                    android:textSize="11sp"
+                    android:fontFamily="monospace" />
             </LinearLayout>
 
+            <!-- Utility buttons row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_manual_input"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Input Koordinat"
+                    android:minWidth="0dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/title_input_location"
                     android:textAllCaps="false"
-                    android:textColor="@color/md3_on_surface"
-                    android:textSize="13sp"
-                    app:backgroundTint="@color/md3_surface"
-                    app:cornerRadius="24dp"
-                    app:strokeColor="@color/md3_outline_variant"
-                    app:strokeWidth="1dp" />
+                    android:textColor="@color/md3_primary"
+                    android:textSize="11sp"
+                    app:cornerRadius="16dp"
+                    app:icon="@drawable/ic_search_white_24dp"
+                    app:iconGravity="textStart"
+                    app:iconPadding="4dp"
+                    app:iconSize="14dp"
+                    app:iconTint="@color/md3_primary" />
 
                 <Space
-                    android:layout_width="12dp"
+                    android:layout_width="6dp"
                     android:layout_height="1dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_use_original"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:text="@string/use_original_location"
                     android:textAllCaps="false"
-                    android:textColor="@color/md3_on_surface"
-                    android:textSize="13sp"
-                    app:backgroundTint="@color/md3_surface"
-                    app:cornerRadius="24dp"
-                    app:strokeColor="@color/md3_outline_variant"
-                    app:strokeWidth="1dp" />
+                    android:textColor="@color/md3_on_surface_variant"
+                    android:textSize="11sp"
+                    app:cornerRadius="16dp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_save_location"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/save_location_point_only"
+                    android:textAllCaps="false"
+                    android:textColor="@color/md3_on_surface_variant"
+                    android:textSize="11sp"
+                    app:cornerRadius="16dp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Prominent Play / Activate button — standalone at bottom -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_save_location"
+        android:id="@+id/img_go_mock"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_gravity="bottom"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="92dp"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/save_location_point_only"
-        android:textAllCaps="false"
-        android:textColor="@color/md3_primary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/md3_surface_container"
-        app:cornerRadius="26dp"
-        app:elevation="0dp"
-        app:strokeColor="@color/md3_primary_low"
-        app:strokeWidth="1dp" />
-
-    <!-- FAB: Start Fake Location -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/img_go_mock"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="14dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/start_fake_location"
         android:textAllCaps="false"
         android:textColor="@color/md3_on_primary"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:backgroundTint="@color/md3_primary"
-        app:cornerRadius="30dp"
-        app:elevation="8dp"
+        app:cornerRadius="26dp"
+        app:elevation="6dp"
         app:icon="@drawable/map_postion_green"
         app:iconGravity="textStart"
-        app:iconPadding="12dp"
+        app:iconPadding="10dp"
+        app:iconSize="20dp"
         app:iconTint="@color/md3_on_primary"
-        app:rippleColor="#40FFFFFF" />
+        app:rippleColor="#33FFFFFF" />
 
-    <!-- Search results overlay -->
     <LinearLayout
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="96dp"
-        android:background="#D9000000"
+        android:layout_marginTop="72dp"
+        android:background="#A6000000"
+        android:gravity="top"
         android:orientation="vertical"
         android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="12dp"
             app:cardBackgroundColor="@color/md3_surface_container"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="16dp"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="14dp"
             app:strokeColor="@color/md3_outline_variant"
             app:strokeWidth="1dp">
 
@@ -402,86 +408,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="16dp"
+                android:paddingTop="14dp"
                 android:paddingBottom="8dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
                     android:text="@string/mock_location_search_results"
                     android:textColor="@color/md3_on_surface"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_tip_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
+                    android:paddingStart="18dp"
                     android:paddingTop="4dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="12dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="10dp"
                     android:text="@string/tip_search_keyword"
                     android:textColor="@color/md3_on_surface_variant"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
                 <io.virtualapp.widgets.ListViewPlus
                     android:id="@+id/search_results"
                     android:layout_width="match_parent"
-                    android:layout_height="360dp"
+                    android:layout_height="280dp"
                     android:divider="@color/md3_outline_variant"
                     android:dividerHeight="1dp"
                     android:listSelector="@android:color/transparent"
-                    android:paddingBottom="8dp"
+                    android:paddingBottom="6dp"
                     android:scrollbars="none" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
-    <!-- Stop mock overlay -->
-    <FrameLayout
-        android:id="@+id/img_stop"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#D9000000"
-        android:visibility="gone">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:cardBackgroundColor="#1A1A1A"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="24dp"
-            app:strokeColor="#F28B82"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="32dp">
-
-                <ImageView
-                    android:id="@+id/img_stop_mock"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/map_stop" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Stop Location Spoofing"
-                    android:textColor="#F28B82"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

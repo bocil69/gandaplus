@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.lody.virtual.helper.compat.BundleCompat;
@@ -17,6 +18,7 @@ import com.lody.virtual.server.IRequestPermissionsResult;
 @TargetApi(Build.VERSION_CODES.M)
 public class RequestPermissionsActivity extends Activity {
     private static final int REQUEST_PERMISSION_CODE = 996;
+    private static final String TAG = "VAReqPermissions";
 
     public static void request(Context context, boolean is64bit, String[] permissions, IRequestPermissionsResult callback) {
         Intent intent = new Intent();
@@ -54,19 +56,24 @@ public class RequestPermissionsActivity extends Activity {
         final String[] permissions = intent.getStringArrayExtra("permissions");
         IBinder binder = BundleCompat.getBinder(intent, "callback");
         if (binder == null || permissions == null) {
+            Log.w(TAG, "doIntent missing binder or permissions");
             finish();
             return;
         }
         mCallBack = IRequestPermissionsResult.Stub.asInterface(binder);
+        Log.d(TAG, "requesting permissions=" + java.util.Arrays.toString(permissions));
         RequestPermissionsActivity.this.requestPermissions(permissions, REQUEST_PERMISSION_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, final String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, "onRequestPermissionsResult permissions=" + java.util.Arrays.toString(permissions)
+                + " results=" + java.util.Arrays.toString(grantResults));
         if (mCallBack != null) {
             try {
                 boolean success = mCallBack.onResult(requestCode, permissions, grantResults);
+                Log.d(TAG, "callback success=" + success);
                 if (!success) {
                     runOnUiThread(new Runnable() {
                         @Override

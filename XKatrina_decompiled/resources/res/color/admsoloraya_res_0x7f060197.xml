@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:color="?attr/admsoloraya_res_0x7f04010d" android:alpha="@dimen/admsoloraya_res_0x7f0704b6"/>
+    <item android:state_selected="true" android:state_pressed="false" android:color="?attr/admsoloraya_res_0x7f04010d" android:alpha="@dimen/admsoloraya_res_0x7f0704c8"/>
+    <item android:state_pressed="false" android:color="?attr/admsoloraya_res_0x7f04010d" android:alpha="@dimen/admsoloraya_res_0x7f0704c7" android:state_hovered="true"/>
+</selector>

@@ -24,10 +24,12 @@ public abstract class PersistenceLayer {
 
     private File mPersistenceFile;
     private File mBackupFile;
+    private File mLegacyBackupFile;
 
     public PersistenceLayer(File persistenceFile) {
         this.mPersistenceFile = persistenceFile;
         this.mBackupFile = new File(persistenceFile.getParent(), persistenceFile.getName() + ".backup");
+        this.mLegacyBackupFile = new File(persistenceFile.getParent(), persistenceFile.getName() + ".bak");
     }
 
     public final File getPersistenceFile() {
@@ -125,6 +127,7 @@ public abstract class PersistenceLayer {
                     Log.w(TAG, "Failed to delete temp persistence file: " + tempFile);
                 }
             }
+            syncLegacyBackup();
         } catch (Exception e) {
             if (!mPersistenceFile.exists() && mBackupFile.exists()) {
                 if (!mBackupFile.renameTo(mPersistenceFile)) {
@@ -153,10 +156,10 @@ public abstract class PersistenceLayer {
     public void read() {
         try {
             if (!mPersistenceFile.exists()) {
-                // Try restore from backup
-                if (mBackupFile.exists()) {
-                    Log.w(TAG, "Main file missing, restoring from backup");
-                    copyFile(mBackupFile, mPersistenceFile);
+                File restoreSource = getBestAvailableBackup();
+                if (restoreSource != null) {
+                    Log.w(TAG, "Main file missing, restoring from backup: " + restoreSource.getName());
+                    copyFile(restoreSource, mPersistenceFile);
                 } else {
                     Log.w(TAG, "No persistence file found: " + mPersistenceFile);
                     return; // First run, no data yet
@@ -171,10 +174,11 @@ public abstract class PersistenceLayer {
             e.printStackTrace();
             
             // Try backup
-            if (mBackupFile.exists()) {
+            File restoreSource = getBestAvailableBackup();
+            if (restoreSource != null) {
                 try {
-                    Log.w(TAG, "Attempting to restore from backup...");
-                    copyFile(mBackupFile, mPersistenceFile);
+                    Log.w(TAG, "Attempting to restore from backup: " + restoreSource.getName());
+                    copyFile(restoreSource, mPersistenceFile);
                     attemptRead();
                     Log.d(TAG, "Restored from backup successfully");
                 } catch (Exception backupException) {
@@ -236,6 +240,30 @@ public abstract class PersistenceLayer {
     private void prepareBackupFile() throws IOException {
         if (mBackupFile.exists() && !mBackupFile.delete()) {
             throw new IOException("Failed to clear old backup file: " + mBackupFile);
+        }
+    }
+
+    private File getBestAvailableBackup() {
+        if (mBackupFile.exists()) {
+            return mBackupFile;
+        }
+        if (mLegacyBackupFile.exists()) {
+            return mLegacyBackupFile;
+        }
+        return null;
+    }
+
+    private void syncLegacyBackup() {
+        try {
+            if (!mPersistenceFile.exists()) {
+                return;
+            }
+            if (mLegacyBackupFile.equals(mBackupFile)) {
+                return;
+            }
+            copyFile(mPersistenceFile, mLegacyBackupFile);
+        } catch (IOException e) {
+            Log.w(TAG, "Failed to sync legacy backup file: " + mLegacyBackupFile, e);
         }
     }
 

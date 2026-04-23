@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a02c3" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/admsoloraya_res_0x7f0a0207" android:padding="@dimen/admsoloraya_res_0x7f070201" android:layout_width="@dimen/admsoloraya_res_0x7f070179" android:layout_height="@dimen/admsoloraya_res_0x7f070179" android:src="@drawable/admsoloraya_res_0x7f080099" android:scaleType="fitCenter"/>
+        <TextView android:textSize="@dimen/admsoloraya_res_0x7f07034f" android:ellipsize="start" android:id="@+id/admsoloraya_res_0x7f0a0520" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/data/user/0/" android:maxLines="1"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a0288" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02b1" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+            <ListView android:id="@+id/admsoloraya_res_0x7f0a0316" android:layout_width="match_parent" android:layout_height="wrap_content" android:divider="@null" android:dividerHeight="0dp" android:choiceMode="none"/>
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:gravity="center" android:id="@+id/admsoloraya_res_0x7f0a051c" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent" android:text="Folder kosong" android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02e5" android:background="#191919" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="@dimen/admsoloraya_res_0x7f07010d" android:layout_height="match_parent" android:alpha="0.5"/>
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02d5" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+            <ScrollView android:id="@+id/admsoloraya_res_0x7f0a05be" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+                <TextView android:textSize="@dimen/admsoloraya_res_0x7f070339" android:id="@+id/admsoloraya_res_0x7f0a04ff" android:padding="@dimen/admsoloraya_res_0x7f07027b" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Empty"/>
+            </ScrollView>
+            <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a0263" android:padding="@dimen/admsoloraya_res_0x7f07027b" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton android:textSize="@dimen/admsoloraya_res_0x7f07034f" android:id="@+id/admsoloraya_res_0x7f0a0086" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="BATAL" android:layout_weight="1" style="@style/admsoloraya_res_0x7f130359"/>
+                <com.google.android.material.button.MaterialButton android:textSize="@dimen/admsoloraya_res_0x7f07034f" android:id="@+id/admsoloraya_res_0x7f0a00fb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SIMPAN" android:layout_weight="1" style="@style/admsoloraya_res_0x7f130359"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

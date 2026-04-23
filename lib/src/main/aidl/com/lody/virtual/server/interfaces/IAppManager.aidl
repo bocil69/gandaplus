@@ -32,6 +32,8 @@ interface IAppManager{
 
     oneway void installPackage(String path, in InstallOptions options, in ResultReceiver receiver);
 
+    oneway void installSplitPackage(in List<String> apkPaths, in InstallOptions options, in ResultReceiver receiver);
+
     void requestCopyPackage64(String packageName);
 
     boolean isPackageLaunched(int userId, String packageName);

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:gravity="start|bottom" android:id="@+id/admsoloraya_res_0x7f0a03a0" android:paddingBottom="@dimen/admsoloraya_res_0x7f07056d" android:layout_width="match_parent" android:layout_height="wrap_content" app:autoSizeTextType="uniform" app:firstBaselineToTopHeight="@dimen/admsoloraya_res_0x7f070571" app:lineHeight="@dimen/admsoloraya_res_0x7f070562" style="?attr/admsoloraya_res_0x7f04030c"/>

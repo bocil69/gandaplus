@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0270" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ScrollView android:id="@+id/admsoloraya_res_0x7f0a05c1" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700a0" android:textColor="#000000" android:gravity="center_vertical" android:layout_gravity="center_horizontal" android:id="@+id/admsoloraya_res_0x7f0a0545" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TextView"/>
+        </ScrollView>
+        <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a028d" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/admsoloraya_res_0x7f0700ff">
+            <Button android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:textColor="#ffffff" android:gravity="center" android:id="@+id/admsoloraya_res_0x7f0a008c" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/admsoloraya_res_0x7f0702f5" android:layout_marginRight="@dimen/admsoloraya_res_0x7f0702f5" android:text="Copy" android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.lody.virtual.client.ipc.VDeviceManager;
-import com.lody.virtual.client.ipc.VLocationManager;
 import com.lody.virtual.client.ipc.VirtualLocationManager;
 import com.lody.virtual.remote.VDeviceConfig;
 import com.lody.virtual.remote.vloc.VLocation;
@@ -29,6 +28,7 @@ import io.virtualapp.R;
 import io.virtualapp.VCommends;
 import io.virtualapp.home.location.ChooseLocationActivity;
 import io.virtualapp.home.repo.CloneSpoofRepository;
+import io.virtualapp.home.repo.SpoofSyncManager;
 
 /**
  * Per-clone device identity setup — with INTEGRATED Fake Location.
@@ -125,21 +125,18 @@ public class CloneOnboardingActivity extends AppCompatActivity {
         CloneSpoofRepository repo = CloneSpoofRepository.get(this);
         
         if (isEdit && repo.isOnboarded(mPkg, mUserId)) {
+            repo.applySpoof(mPkg, mUserId);
             mConfig = VDeviceManager.get().getDeviceConfig(mUserId);
-            if (mConfig == null) {
-                repo.applySpoof(mPkg, mUserId);
-                mConfig = VDeviceManager.get().getDeviceConfig(mUserId);
-            }
             
-            // NEW: Load existing location
-            mLocation = VLocationManager.get().getLocation(mPkg, mUserId);
+            // Load existing location (isolated per userId+pkg)
+            mLocation = VirtualLocationManager.get().getLocation(mUserId, mPkg);
             if (mLocation != null && mLocation.isEmpty()) {
                 mLocation = null;
             }
         }
         
         if (mConfig == null) {
-            mConfig = CloneSpoofRepository.generateRandomSpoof(mUserId);
+            mConfig = CloneSpoofRepository.createEmptySpoofConfig();
         }
         fillFields();
         applyLocationUiState();
@@ -327,12 +324,7 @@ public class CloneOnboardingActivity extends AppCompatActivity {
             mConfig.setProp("ro.product.manufacturer", mConfig.getProp("MANUFACTURER"));
             mConfig.enable = true;
 
-            // Persist Device
-            VDeviceManager.get().updateDeviceConfig(mUserId, mConfig);
-            CloneSpoofRepository repo = CloneSpoofRepository.get(this);
-            repo.saveSpoof(mPkg, mUserId, mConfig);
-            
-            // NEW: Save Fake Location
+            // Build location from inputs
             String latStr = text(edtLatitude);
             String lngStr = text(edtLongitude);
 
@@ -349,24 +341,21 @@ public class CloneOnboardingActivity extends AppCompatActivity {
                         return;
                     }
                     mLocation = new VLocation(lat, lng);
-
-                    // Enable fake location mode
-                    VirtualLocationManager.get().setMode(mUserId, mPkg, 
-                        VirtualLocationManager.MODE_USE_SELF);
-                    VirtualLocationManager.get().setLocation(mUserId, mPkg, mLocation);
-                    mLocation = new VLocation(lat, lng);
                 } catch (NumberFormatException e) {
                     showError("Invalid coordinates. Please check latitude/longitude.");
                     return;
                 }
             } else {
                 mLocation = null;
-                VirtualLocationManager.get().setMode(mUserId, mPkg, VirtualLocationManager.MODE_CLOSE);
-                VirtualLocationManager.get().setLocation(mUserId, mPkg, new VLocation());
             }
-            
-            // Mark onboarded
-            repo.markOnboarded(mPkg, mUserId);
+
+            // Atomic save: device spoof + fake location via SpoofSyncManager
+            SpoofSyncManager syncManager = SpoofSyncManager.get(this);
+            boolean saved = syncManager.saveCompleteProfile(mPkg, mUserId, mConfig, mLocation);
+            if (!saved) {
+                showError("Gagal menyimpan profil clone. Coba lagi.");
+                return;
+            }
 
             // Save custom clone name
             String newName = text(edtCloneName);

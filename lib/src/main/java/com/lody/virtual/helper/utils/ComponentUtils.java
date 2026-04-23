@@ -145,8 +145,14 @@ public class ComponentUtils {
         if (applicationInfo == null) {
             return false;
         }
-        if (GmsSupport.isGoogleAppOrService(applicationInfo.packageName)) {
-            return false;
+        if (GmsSupport.isGmsPackage(applicationInfo.packageName)) {
+            // Core GMS packages must be visible as system apps so that cloned apps
+            // can reach the host device's Play Services/Play Store directly.
+            return true;
+        } else if (GmsSupport.isGoogleAppOrService(applicationInfo.packageName)) {
+            // Other Google apps (Play Games, Wearable, etc.) also need to be
+            // visible to cloned apps that depend on Google framework.
+            return true;
         } else if (SpecialComponentList.isSpecSystemPackage(applicationInfo.packageName)) {
             return true;
         } else if (applicationInfo.uid >= Process.FIRST_APPLICATION_UID && (applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {

@@ -101,52 +101,71 @@ public class AppListBackupManager {
         }
     }
 
+    public boolean hasBackupMetadata() {
+        String json = mPrefs.getString(KEY_APP_LIST, null);
+        return json != null && !json.isEmpty();
+    }
+
+    public int getBackedUpAppCount() {
+        try {
+            String json = mPrefs.getString(KEY_APP_LIST, null);
+            if (json == null || json.isEmpty()) {
+                return 0;
+            }
+            List<AppBackupEntry> entries = mGson.fromJson(json,
+                    new TypeToken<List<AppBackupEntry>>(){}.getType());
+            return entries != null ? entries.size() : 0;
+        } catch (Exception e) {
+            Log.e(TAG, "❌ Failed to parse backup metadata", e);
+            return 0;
+        }
+    }
+
     /**
-     * Restore app list from backup if primary storage is empty.
-     * Returns true if restore was performed.
+     * Legacy diagnostics-only path.
+     *
+     * <p>This does NOT restore virtual installs. It only reports whether
+     * backup metadata exists while the engine list is empty.
      */
     public boolean restoreIfNeeded() {
         try {
-            // Check if primary storage has data
             List<InstalledAppInfo> currentApps = VirtualCore.get().getInstalledApps(0);
-            
             if (!currentApps.isEmpty()) {
                 Log.d(TAG, "✅ Primary storage has " + currentApps.size() + " apps, no restore needed");
                 return false;
             }
-            
-            // Primary is empty, check backup
+
             String json = mPrefs.getString(KEY_APP_LIST, null);
             if (json == null || json.isEmpty()) {
                 Log.w(TAG, "⚠️ No backup available");
                 return false;
             }
-            
+
             int version = mPrefs.getInt(KEY_BACKUP_VERSION, 0);
             if (version != CURRENT_VERSION) {
                 Log.w(TAG, "⚠️ Backup version mismatch: " + version + " vs " + CURRENT_VERSION);
             }
-            
+
             long backupTime = mPrefs.getLong(KEY_LAST_BACKUP, 0);
-            Log.d(TAG, "📂 Restoring from backup (created: " + new java.util.Date(backupTime) + ")");
-            
+            Log.w(TAG, "📂 Engine package state is empty; backup metadata exists from: "
+                    + new java.util.Date(backupTime));
+
             List<AppBackupEntry> entries = mGson.fromJson(json, 
                 new TypeToken<List<AppBackupEntry>>(){}.getType());
-            
+
             if (entries == null || entries.isEmpty()) {
                 Log.w(TAG, "⚠️ Backup is empty");
                 return false;
             }
-            
+
             Log.d(TAG, "✅ Found " + entries.size() + " apps in backup");
-            Log.d(TAG, "   Note: Apps need to be re-installed. Backup contains metadata only.");
-            
-            // Log the packages that were lost
+            Log.w(TAG, "   Backup metadata only — virtual installs must be recovered from package persistence, not SharedPreferences.");
+
             for (AppBackupEntry entry : entries) {
                 Log.d(TAG, "   📦 " + entry.packageName + " (users: " + entry.userIds + ")");
             }
-            
-            return true;
+
+            return false;
             
         } catch (Exception e) {
             Log.e(TAG, "❌ Failed to restore from backup", e);

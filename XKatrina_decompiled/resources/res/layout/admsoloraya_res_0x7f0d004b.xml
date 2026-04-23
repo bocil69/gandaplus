@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.internal.CheckableImageButton xmlns:android="http://schemas.android.com/apk/res/android" android:layout_gravity="start|center_vertical" android:id="@+id/admsoloraya_res_0x7f0a0491" android:background="?attr/admsoloraya_res_0x7f040003" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="@dimen/admsoloraya_res_0x7f0705a1" android:minHeight="@dimen/admsoloraya_res_0x7f0705a1" android:layout_marginEnd="@dimen/admsoloraya_res_0x7f0705e1"/>

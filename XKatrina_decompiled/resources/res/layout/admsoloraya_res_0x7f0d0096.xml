@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:id="@+id/admsoloraya_res_0x7f0a0431" android:background="?attr/admsoloraya_res_0x7f0403cc" android:layout_width="match_parent" android:layout_height="match_parent" android:alpha="0"/>
+    <com.google.android.material.internal.ClippableRoundedCornerLayout android:id="@+id/admsoloraya_res_0x7f0a0430" android:focusable="true" android:focusableInTouchMode="true" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0429" android:layout_width="match_parent" android:layout_height="match_parent">
+            <View android:id="@+id/admsoloraya_res_0x7f0a0433" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a042f" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a0435" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <com.google.android.material.appbar.MaterialToolbar android:layout_gravity="end" android:id="@+id/admsoloraya_res_0x7f0a042d" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/admsoloraya_res_0x7f1303c3"/>
+                <com.google.android.material.appbar.MaterialToolbar android:id="@+id/admsoloraya_res_0x7f0a0434" android:clipChildren="false" android:layout_width="match_parent" android:layout_height="wrap_content" app:navigationContentDescription="@string/admsoloraya_res_0x7f1200c0" app:navigationIcon="@drawable/admsoloraya_res_0x7f0800de" style="@style/admsoloraya_res_0x7f1303c3">
+                    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f0704c2">
+                        <TextView android:id="@+id/admsoloraya_res_0x7f0a0432" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" style="?attr/admsoloraya_res_0x7f040322"/>
+                        <EditText android:id="@+id/admsoloraya_res_0x7f0a042e" android:background="@null" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:inputType="textNoSuggestions" android:imeOptions="flagNoExtractUi|actionSearch" android:textDirection="firstStrong" android:importantForAutofill="no"/>
+                        <ImageButton android:id="@+id/admsoloraya_res_0x7f0a042a" android:background="?attr/admsoloraya_res_0x7f040003" android:padding="16dp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:contentDescription="@string/admsoloraya_res_0x7f1200bf" app:srcCompat="@drawable/admsoloraya_res_0x7f0800e9"/>
+                    </LinearLayout>
+                </com.google.android.material.appbar.MaterialToolbar>
+            </FrameLayout>
+            <View android:id="@+id/admsoloraya_res_0x7f0a042c" android:background="?attr/admsoloraya_res_0x7f040114" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f0704c0"/>
+            <com.google.android.material.internal.TouchObserverFrameLayout android:id="@+id/admsoloraya_res_0x7f0a042b" android:layout_width="match_parent" android:layout_height="match_parent"/>
+        </LinearLayout>
+    </com.google.android.material.internal.ClippableRoundedCornerLayout>
+</merge>

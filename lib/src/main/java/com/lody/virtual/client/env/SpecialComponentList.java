@@ -34,16 +34,13 @@ import mirror.android.webkit.WebViewFactory;
  */
 public final class SpecialComponentList {
 
-    private static final String GMS_INTEGRITY_BIND_ACTION = "com.google.android.gms.integritycheck.BIND_INTEGRITY_SERVICE";
-
     private static final List<ComponentName> GMS_BLOCK_COMPONENT = Arrays.asList(
             new ComponentName("com.google.android.gms", "com.google.android.gms.update.SystemUpdateService"),
             new ComponentName("com.google.android.gsf", "com.google.android.gsf.update.SystemUpdateService")
     );
 
     private static final List<String> GMS_BLOCK_ACTION_LIST = Arrays.asList(
-            "com.google.android.gms.update.START_SERVICE",
-            GMS_INTEGRITY_BIND_ACTION
+            "com.google.android.gms.update.START_SERVICE"
     );
 
     private static final List<String> ACTION_BLACK_LIST = new ArrayList<String>(2);
@@ -170,26 +167,7 @@ public final class SpecialComponentList {
                 return true;
             }
         }
-        if (isGmsIntegrityIntent(intent)) {
-            return true;
-        }
         return false;
-    }
-
-    private static boolean isGmsIntegrityIntent(Intent intent) {
-        ComponentName component = intent.getComponent();
-        String componentPackage = component != null ? component.getPackageName() : null;
-        if (!GmsSupport.GMS_PKG.equals(intent.getPackage()) && !GmsSupport.GMS_PKG.equals(componentPackage)) {
-            return false;
-        }
-        String action = intent.getAction();
-        if (!TextUtils.isEmpty(action) && action.toLowerCase().contains("integrity")) {
-            return true;
-        }
-        String componentClass = component != null ? component.getClassName() : null;
-        return !TextUtils.isEmpty(componentClass)
-                && (componentClass.contains("IntegrityService")
-                || componentClass.toLowerCase().contains("integrity"));
     }
 
     /**

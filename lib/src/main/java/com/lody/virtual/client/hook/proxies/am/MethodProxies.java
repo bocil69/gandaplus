@@ -815,7 +815,7 @@ class MethodProxies {
                         } else if (VirtualCore.get().isAppInstalled("com.grab.driver")) {
                             forcedTarget = "com.grab.driver";
                         }
-                    } else if ("eskimo".equals(scheme)) {
+                    } else if ("eskimo".equals(scheme) || (host != null && host.contains("eskimo"))) {
                         forcedTarget = "travel.eskimo.esim";
                     }
 
@@ -1431,25 +1431,35 @@ class MethodProxies {
 
         private static final String GMS_INTEGRITY_BIND_ACTION = "com.google.android.gms.integritycheck.BIND_INTEGRITY_SERVICE";
 
+        private boolean isGmsService(Intent service) {
+            if (service == null) {
+                return false;
+            }
+            if (isPlayIntegrityService(service)) {
+                return true;
+            }
+            String packageName = service.getPackage();
+            if (com.lody.virtual.GmsSupport.isGmsPackage(packageName)) {
+                return true;
+            }
+            ComponentName component = service.getComponent();
+            String componentPackage = component != null ? component.getPackageName() : null;
+            return com.lody.virtual.GmsSupport.isGmsPackage(componentPackage);
+        }
+
         private boolean isPlayIntegrityService(Intent service) {
             if (service == null) {
                 return false;
             }
-            String packageName = service.getPackage();
-            ComponentName component = service.getComponent();
-            String componentPackage = component != null ? component.getPackageName() : null;
-            if (!GmsSupport.GMS_PKG.equals(packageName) && !GmsSupport.GMS_PKG.equals(componentPackage)) {
+            if (!TextUtils.equals(service.getAction(), GMS_INTEGRITY_BIND_ACTION)) {
                 return false;
             }
-            String action = service.getAction();
-            if (!TextUtils.isEmpty(action) && (GMS_INTEGRITY_BIND_ACTION.equals(action)
-                    || action.toLowerCase().contains("integrity"))) {
+            String packageName = service.getPackage();
+            if (GmsSupport.GMS_PKG.equals(packageName)) {
                 return true;
             }
-            String componentClass = component != null ? component.getClassName() : null;
-            return !TextUtils.isEmpty(componentClass)
-                    && (componentClass.contains("IntegrityService")
-                    || componentClass.toLowerCase().contains("integrity"));
+            ComponentName component = service.getComponent();
+            return component != null && GmsSupport.GMS_PKG.equals(component.getPackageName());
         }
 
         private int findResolvedTypeIndex(Object[] args, int intentIndex) {
@@ -1469,6 +1479,21 @@ class MethodProxies {
                 }
             }
             return -1;
+        }
+
+        private ComponentName resolveHostServiceComponent(Intent service) {
+            if (service == null) {
+                return null;
+            }
+            ComponentName component = service.getComponent();
+            if (component != null) {
+                return component;
+            }
+            ResolveInfo resolveInfo = VirtualCore.get().getUnHookPackageManager().resolveService(service, 0);
+            if (resolveInfo == null || resolveInfo.serviceInfo == null) {
+                return null;
+            }
+            return new ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name);
         }
 
         @Override
@@ -1492,12 +1517,15 @@ class MethodProxies {
                     ? ((Number) args[flagsIndex]).intValue() : Context.BIND_AUTO_CREATE;
             int userId = VUserHandle.myUserId();
             if (isHostIntent(service)) {
+                MethodParameterUtils.replaceAllAppPkgWithHost(args);
                 return method.invoke(who, args);
             }
-            if (isPlayIntegrityService(service)) {
-                if (BuildCompat.isT()) {
-                    MethodParameterUtils.replaceAllAppPkgWithHost(args);
+            if (isGmsService(service)) {
+                ComponentName hostComponent = resolveHostServiceComponent(service);
+                if (hostComponent != null) {
+                    args[connIndex] = ServiceConnectionDelegate.getOrCreateDelegate(conn, hostComponent);
                 }
+                MethodParameterUtils.replaceAllAppPkgWithHost(args);
                 return method.invoke(who, args);
             }
             if (BuildCompat.isT()) {
@@ -1532,6 +1560,7 @@ class MethodProxies {
             if (resolveInfo == null || !isVisiblePackage(resolveInfo.serviceInfo.applicationInfo)) {
                 return 0;
             }
+            MethodParameterUtils.replaceAllAppPkgWithHost(args);
             return method.invoke(who, args);
         }
 
@@ -1570,6 +1599,7 @@ class MethodProxies {
                 return null;
             }
             if (isHostIntent(service)) {
+                MethodParameterUtils.replaceAllAppPkgWithHost(args);
                 return method.invoke(who, args);
             }
             if (BuildCompat.isT()) {
@@ -1588,6 +1618,7 @@ class MethodProxies {
             if (resolveInfo == null || !isVisiblePackage(resolveInfo.serviceInfo.applicationInfo)) {
                 return null;
             }
+            MethodParameterUtils.replaceAllAppPkgWithHost(args);
             return method.invoke(who, args);
         }
 
@@ -2214,11 +2245,9 @@ class MethodProxies {
                     || name.equals(getConfig().getBinderProviderAuthority())) {
                 return method.invoke(who, args);
             }
-            if (BuildCompat.isQ()) {
-                int pkgIdx = nameIdx - 1;
-                if (args[pkgIdx] instanceof String) {
-                    args[pkgIdx] = getHostPkg();
-                }
+            int pkgIdx = nameIdx - 1;
+            if (pkgIdx >= 0 && pkgIdx < args.length && args[pkgIdx] instanceof String) {
+                args[pkgIdx] = getHostPkg();
             }
             int userId = VUserHandle.myUserId();
             ProviderInfo info = VPackageManager.get().resolveContentProvider(name, 0, userId);

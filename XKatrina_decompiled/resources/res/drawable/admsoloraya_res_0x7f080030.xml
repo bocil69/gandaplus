@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android" android:insetLeft="@dimen/admsoloraya_res_0x7f070012" android:insetRight="@dimen/admsoloraya_res_0x7f070012" android:insetTop="@dimen/admsoloraya_res_0x7f070013" android:insetBottom="@dimen/admsoloraya_res_0x7f070013">
+    <shape android:shape="rectangle">
+        <corners android:radius="@dimen/admsoloraya_res_0x7f070018"/>
+        <solid android:color="@android:color/white"/>
+        <padding android:left="@dimen/admsoloraya_res_0x7f070014" android:top="@dimen/admsoloraya_res_0x7f070015" android:right="@dimen/admsoloraya_res_0x7f070014" android:bottom="@dimen/admsoloraya_res_0x7f070015"/>
+    </shape>
+</inset>

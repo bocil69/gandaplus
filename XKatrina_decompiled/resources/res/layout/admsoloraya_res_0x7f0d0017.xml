@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.ActionBarOverlayLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/admsoloraya_res_0x7f0a0153" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent">
+    <include layout="@layout/admsoloraya_res_0x7f0d0014"/>
+    <androidx.appcompat.widget.ActionBarContainer android:gravity="top" android:id="@+id/admsoloraya_res_0x7f0a0037" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:touchscreenBlocksFocus="true" style="?attr/admsoloraya_res_0x7f040007">
+        <androidx.appcompat.widget.Toolbar android:id="@+id/admsoloraya_res_0x7f0a0035" android:layout_width="match_parent" android:layout_height="wrap_content" app:navigationContentDescription="@string/admsoloraya_res_0x7f120001" style="?attr/admsoloraya_res_0x7f0404bf"/>
+        <androidx.appcompat.widget.ActionBarContextView android:theme="?attr/admsoloraya_res_0x7f04001f" android:id="@+id/admsoloraya_res_0x7f0a003d" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" style="?attr/admsoloraya_res_0x7f04001e"/>
+    </androidx.appcompat.widget.ActionBarContainer>
+</androidx.appcompat.widget.ActionBarOverlayLayout>

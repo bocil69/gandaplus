@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.internal.NavigationMenuItemView xmlns:android="http://schemas.android.com/apk/res/android" android:paddingLeft="?attr/admsoloraya_res_0x7f0402da" android:paddingRight="?attr/admsoloraya_res_0x7f0402db" android:focusable="true" android:layout_width="match_parent" android:layout_height="wrap_content" android:foreground="?attr/admsoloraya_res_0x7f0403d3" android:minHeight="?attr/admsoloraya_res_0x7f0402d8" android:defaultFocusHighlightEnabled="false"/>

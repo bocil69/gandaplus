@@ -10,6 +10,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageDeleteObserver2;
 import android.content.pm.IPackageInstallerCallback;
+import android.content.pm.InstallSourceInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
@@ -34,6 +35,7 @@ import com.lody.virtual.client.fixer.ComponentFixer;
 import com.lody.virtual.client.hook.base.MethodProxy;
 import com.lody.virtual.client.hook.utils.MethodParameterUtils;
 import com.lody.virtual.client.ipc.VPackageManager;
+import com.lody.virtual.helper.compat.BuildCompat;
 import com.lody.virtual.helper.compat.ParceledListSliceCompat;
 import com.lody.virtual.helper.utils.ArrayUtils;
 import com.lody.virtual.helper.utils.FileUtils;
@@ -41,6 +43,8 @@ import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.os.VBinder;
 import com.lody.virtual.os.VUserHandle;
 import com.lody.virtual.server.IPackageInstaller;
+import com.lody.virtual.server.pm.PackageCacheManager;
+import com.lody.virtual.server.pm.PackageSetting;
 import com.lody.virtual.server.pm.installer.SessionInfo;
 import com.lody.virtual.server.pm.installer.SessionParams;
 
@@ -59,6 +63,54 @@ import mirror.android.content.pm.ParceledListSlice;
  */
 @SuppressWarnings("unused")
 class MethodProxies {
+
+    private static PackageSetting getVirtualPackageSetting(String packageName) {
+        if (TextUtils.isEmpty(packageName) || !VirtualCore.get().isAppInstalled(packageName)) {
+            return null;
+        }
+        return PackageCacheManager.getSetting(packageName);
+    }
+
+    private static String resolveInstallerPackageName(PackageSetting setting) {
+        return setting != null && !TextUtils.isEmpty(setting.installerPackageName)
+                ? setting.installerPackageName
+                : null;
+    }
+
+    private static String resolveInstallSourcePackageName(PackageSetting setting) {
+        if (setting == null) {
+            return null;
+        }
+        if (!TextUtils.isEmpty(setting.installSourcePackageName)) {
+            return setting.installSourcePackageName;
+        }
+        return resolveInstallerPackageName(setting);
+    }
+
+    private static InstallSourceInfo buildInstallSourceInfo(PackageSetting setting) {
+        String installerPackageName = resolveInstallerPackageName(setting);
+        String sourcePackageName = resolveInstallSourcePackageName(setting);
+        if (mirror.android.content.pm.InstallSourceInfo.ctorApi33 != null) {
+            InstallSourceInfo info = mirror.android.content.pm.InstallSourceInfo.ctorApi33.newInstance(
+                    sourcePackageName,
+                    null,
+                    sourcePackageName,
+                    installerPackageName,
+                    null,
+                    PackageInstaller.PACKAGE_SOURCE_STORE);
+            if (info != null) {
+                return info;
+            }
+        }
+        if (mirror.android.content.pm.InstallSourceInfo.ctorApi30 != null) {
+            return mirror.android.content.pm.InstallSourceInfo.ctorApi30.newInstance(
+                    sourcePackageName,
+                    null,
+                    sourcePackageName,
+                    installerPackageName);
+        }
+        return null;
+    }
 
     private static int readIntArg(Object[] args, int index) {
         Object value = args[index];
@@ -206,12 +258,41 @@ class MethodProxies {
 
         @Override
         public Object call(Object who, Method method, Object... args) throws Throwable {
-            return "com.android.vending";
+            String packageName = (String) args[0];
+            PackageSetting setting = getVirtualPackageSetting(packageName);
+            if (setting != null) {
+                return resolveInstallerPackageName(setting);
+            }
+            return method.invoke(who, args);
         }
 
         @Override
         public boolean isEnable() {
             return isAppProcess();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.R)
+    static class GetInstallSourceInfo extends MethodProxy {
+
+        @Override
+        public String getMethodName() {
+            return "getInstallSourceInfo";
+        }
+
+        @Override
+        public Object call(Object who, Method method, Object... args) throws Throwable {
+            String packageName = (String) args[0];
+            PackageSetting setting = getVirtualPackageSetting(packageName);
+            if (setting != null) {
+                return buildInstallSourceInfo(setting);
+            }
+            return method.invoke(who, args);
+        }
+
+        @Override
+        public boolean isEnable() {
+            return isAppProcess() && BuildCompat.isR();
         }
     }
 
@@ -829,9 +910,31 @@ class MethodProxies {
             if ((flags & MATCH_FACTORY_ONLY) != 0) {
                 return method.invoke(who, args);
             }
+            // GMS Host Bridge: pass GMS package queries to the real OS PackageManager
+            if (com.lody.virtual.GmsSupport.isGmsPackage(pkg)) {
+                try {
+                    return VirtualCore.get().getUnHookPackageManager()
+                            .getPackageInfo(pkg, (int) flags);
+                } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+                    return null;
+                } catch (Throwable e) {
+                    return method.invoke(who, args);
+                }
+            }
             PackageInfo packageInfo = VPackageManager.get().getPackageInfo(pkg, (int) flags, userId);
             if (packageInfo != null) {
+                // Signature preservation: inject the app's real certificate chain
+                if ((flags & android.content.pm.PackageManager.GET_SIGNATURES) != 0) {
+                    android.content.pm.Signature[] orig =
+                            com.lody.virtual.server.pm.PackageCacheManager.getOriginalSignatures(pkg);
+                    if (orig != null) {
+                        packageInfo.signatures = orig;
+                    }
+                }
                 return packageInfo;
+            }
+            if (pkg != null && (pkg.equals(getAppPkg()) || VirtualCore.get().isAppInstalled(pkg))) {
+                return null;
             }
             packageInfo = (PackageInfo) method.invoke(who, args);
             if (packageInfo != null) {
@@ -1256,6 +1359,9 @@ class MethodProxies {
             ApplicationInfo info = VPackageManager.get().getApplicationInfo(pkg, flags, userId);
             if (info != null) {
                 return info;
+            }
+            if (pkg != null && (pkg.equals(getAppPkg()) || VirtualCore.get().isAppInstalled(pkg))) {
+                return null;
             }
             info = (ApplicationInfo) method.invoke(who, args);
             if (info == null || !isVisiblePackage(info)) {

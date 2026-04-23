@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="admsoloraya_res_0x7f130050" parent="@style/admsoloraya_res_0x7f1300b6">
+    </style>
+    <style name="admsoloraya_res_0x7f130057" parent="@style/admsoloraya_res_0x7f1300b7">
+    </style>
+    <style name="admsoloraya_res_0x7f1300b6" parent="@style/admsoloraya_res_0x7f1300b0">
+        <item name="admsoloraya_res_0x7f0400fd">?android:attr/colorError</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1300b7" parent="@style/admsoloraya_res_0x7f1300b1">
+        <item name="admsoloraya_res_0x7f0400fd">?android:attr/colorError</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1300b8" parent="@style/admsoloraya_res_0x7f1300c2">
+        <item name="android:touchscreenBlocksFocus">true</item>
+        <item name="android:keyboardNavigationCluster">true</item>
+    </style>
+    <style name="admsoloraya_res_0x7f1300fb" parent="@style/admsoloraya_res_0x7f1300b8">
+    </style>
+    <style name="admsoloraya_res_0x7f130334" parent="@android:style/Widget">
+        <item name="android:background">?attr/admsoloraya_res_0x7f040116</item>
+        <item name="android:stateListAnimator">@animator/admsoloraya_res_0x7f020000</item>
+        <item name="android:touchscreenBlocksFocus">true</item>
+        <item name="android:keyboardNavigationCluster">true</item>
+    </style>
+</resources>

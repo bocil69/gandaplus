@@ -21,6 +21,7 @@ LOCAL_C_INCLUDES += $(MAIN_LOCAL_PATH)/Jni
 
 LOCAL_SRC_FILES := Jni/VAJni.cpp \
 				   Jni/Helper.cpp \
+				   hooks/proc_maps_hook.cpp \
 				   Foundation/syscall/BinarySyscallFinder.cpp \
 				   Foundation/fake_dlfcn.cpp \
 				   Foundation/canonicalize_md.c \
@@ -55,6 +56,7 @@ LOCAL_SRC_FILES := Jni/VAJni.cpp \
 ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 LOCAL_SRC_FILES := Jni/VAJni.cpp \
 				   Jni/Helper.cpp \
+				   hooks/proc_maps_hook.cpp \
 				   Foundation/syscall/BinarySyscallFinder.cpp \
 				   Foundation/fake_dlfcn.cpp \
 				   Foundation/canonicalize_md.c \

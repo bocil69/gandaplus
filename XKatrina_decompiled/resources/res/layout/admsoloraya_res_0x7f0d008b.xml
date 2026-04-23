@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="end" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a0150" android:paddingRight="@dimen/admsoloraya_res_0x7f070552" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f070551" android:paddingEnd="@dimen/admsoloraya_res_0x7f070552">
+    <Button android:layout_gravity="center_vertical" android:id="@+id/admsoloraya_res_0x7f0a0108" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/admsoloraya_res_0x7f12008b" style="?attr/admsoloraya_res_0x7f04008d"/>
+    <Button android:layout_gravity="center_vertical" android:id="@+id/admsoloraya_res_0x7f0a0134" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="@dimen/admsoloraya_res_0x7f070550" android:text="@string/admsoloraya_res_0x7f12008c" style="?attr/admsoloraya_res_0x7f04008f"/>
+</LinearLayout>

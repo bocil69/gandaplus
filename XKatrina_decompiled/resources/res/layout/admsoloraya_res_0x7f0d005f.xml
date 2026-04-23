@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a024a" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:id="@+id/admsoloraya_res_0x7f0a05a2" android:padding="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/admsoloraya_res_0x7f070338" android:text="Backup ditemukan"/>
+        <ListView android:id="@+id/admsoloraya_res_0x7f0a0319" android:layout_width="match_parent" android:layout_height="wrap_content" android:divider="@null" android:dividerHeight="0dp" android:choiceMode="none" android:layout_weight="1"/>
+        <com.google.android.material.button.MaterialButton android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:layout_gravity="center_horizontal" android:id="@+id/admsoloraya_res_0x7f0a0102" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginRight="@dimen/admsoloraya_res_0x7f07027b" android:text="Batal" style="@style/admsoloraya_res_0x7f130359"/>
+    </LinearLayout>
+</LinearLayout>

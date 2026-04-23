@@ -54,6 +54,7 @@ import com.xdja.zs.VServiceKeepAliveService;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,8 @@ import static com.lody.virtual.remote.InstalledAppInfo.MODE_APP_USE_OUTSIDE_APK;
 public class VAppManagerService extends IAppManager.Stub {
 
     private static final String TAG = VAppManagerService.class.getSimpleName();
+    private static final String BASE_APK_NAME = "base.apk";
+    private static final String INSTALL_STAGE_DIR = "va-install";
     private static final Singleton<VAppManagerService> sService = new Singleton<VAppManagerService>() {
         @Override
         protected VAppManagerService create() {
@@ -80,6 +83,27 @@ public class VAppManagerService extends IAppManager.Stub {
     private final Set<String> mVisibleOutsidePackages = new HashSet<>();
     private boolean mBooting;
     private RemoteCallbackList<IPackageObserver> mRemoteCallbackList = new RemoteCallbackList<>();
+
+    private static final class InstallSource {
+        final File parseTarget;
+        final File baseApk;
+        final List<File> splitApks;
+        final File cleanupDir;
+
+        InstallSource(File parseTarget, File baseApk, List<File> splitApks, File cleanupDir) {
+            this.parseTarget = parseTarget;
+            this.baseApk = baseApk;
+            this.splitApks = splitApks;
+            this.cleanupDir = cleanupDir;
+        }
+
+        List<File> getAllApks() {
+            ArrayList<File> apks = new ArrayList<>(1 + splitApks.size());
+            apks.add(baseApk);
+            apks.addAll(splitApks);
+            return apks;
+        }
+    }
 
     /*
         《A》
@@ -148,6 +172,7 @@ public class VAppManagerService extends IAppManager.Stub {
 
     private void startup() {
         mVisibleOutsidePackages.add("com.android.providers.downloads");
+        mVisibleOutsidePackages.addAll(com.lody.virtual.GmsSupport.GMS_PACKAGES);
         mUidSystem.initUidList();
 
         //见《A》
@@ -160,6 +185,15 @@ public class VAppManagerService extends IAppManager.Stub {
 
     public boolean isBooting() {
         return mBooting;
+    }
+
+    private void persistPackageState(String reason, String packageName) {
+        mPersistenceLayer.save();
+        if (!mPersistenceLayer.verifyIntegrity()) {
+            VLog.w(TAG, "Persistence integrity check failed after %s for %s, retrying save.",
+                    reason, packageName);
+            mPersistenceLayer.save();
+        }
     }
 
     private void extractRequiredFrameworks() {
@@ -186,7 +220,7 @@ public class VAppManagerService extends IAppManager.Stub {
                 mPersistenceLayer.read();
                 if (mPersistenceLayer.changed) {
                     mPersistenceLayer.changed = false;
-                    mPersistenceLayer.save();
+                    persistPackageState("persistence migration", "<all-packages>");
                     VLog.w(TAG, "Package PersistenceLayer updated.");
                 }
 
@@ -266,8 +300,8 @@ public class VAppManagerService extends IAppManager.Stub {
                 return false;
             }
             try {
-                //reparse apk
-                pkg = PackageParserEx.parsePackage(apkFile);
+                //reparse apk (use the package directory when split APKs are present)
+                pkg = PackageParserEx.parsePackage(resolvePackageParseTarget(apkFile));
                 VLog.e(TAG, "reload parsePackage ok %s", ps.packageName);
             } catch (Throwable e2) {
                 VLog.e(TAG, "parsePackage %s\n%s", ps.packageName, VLog.getStackTraceString(e2));
@@ -337,16 +371,17 @@ public class VAppManagerService extends IAppManager.Stub {
         synchronized (this) {
             res = installPackageImpl(path, options);
         }
-        if (res == null) {
-            VLog.e(TAG, "installPackageImpl returned null!");
-            res = InstallResult.makeFailure("Internal error: installPackageImpl returned null");
+        sendInstallResult(receiver, res);
+    }
+
+    @Override
+    public void installSplitPackage(List<String> apkPaths, InstallOptions options, ResultReceiver receiver) {
+        VLog.i(TAG, "installSplitPackage called from IPC, apkCount=%d", apkPaths == null ? 0 : apkPaths.size());
+        InstallResult res;
+        synchronized (this) {
+            res = installPackage(apkPaths, options);
         }
-        VLog.i(TAG, "installPackage sending result: isSuccess=%s, error=%s", res.isSuccess, res.error);
-        if (receiver != null) {
-            android.os.Bundle data = new Bundle();
-            data.putParcelable("result", res);
-            receiver.send(0, data);
-        }
+        sendInstallResult(receiver, res);
     }
 
     @Override
@@ -368,27 +403,59 @@ public class VAppManagerService extends IAppManager.Stub {
         }
     }
 
+    /**
+     * Install from a list of APK paths where the first element is the base APK
+     * and any subsequent elements are split APKs (ABI splits, density splits, etc.).
+     *
+     * <p>Native libraries are extracted from split APKs and copied into
+     * {@link VEnvironment#getAppLibDirectory(String)} so the
+     * virtual app can load them without {@link UnsatisfiedLinkError}.
+     *
+     * <p>Backward-compatible: a single-element list behaves identically to
+     * {@link #installPackage(String, InstallOptions)}.
+     */
+    public synchronized InstallResult installPackage(List<String> apkPaths, InstallOptions options) {
+        if (apkPaths == null || apkPaths.isEmpty()) {
+            return InstallResult.makeFailure("apkPaths is null or empty");
+        }
+        InstallSource installSource = null;
+        try {
+            installSource = createInstallSource(apkPaths);
+            return installPackageImpl(installSource, options, false);
+        } finally {
+            cleanupInstallSource(installSource);
+        }
+    }
+
     private InstallResult installPackageImpl(String path, InstallOptions options){
         return installPackageImpl(path, options, false);
     }
 
     private InstallResult installPackageImpl(String path, InstallOptions options, boolean loadingApp) {
-        long installTime = System.currentTimeMillis();
-        VLog.i(TAG, "Starting install for: %s", path);
-        if (path == null) {
-            VLog.e(TAG, "Install failed: path = NULL");
-            return InstallResult.makeFailure("path = NULL");
+        InstallSource installSource = null;
+        try {
+            installSource = createInstallSource(path);
+            return installPackageImpl(installSource, options, loadingApp);
+        } finally {
+            cleanupInstallSource(installSource);
         }
-        File packageFile = new File(path);
+    }
+
+    private InstallResult installPackageImpl(InstallSource installSource, InstallOptions options, boolean loadingApp) {
+        long installTime = System.currentTimeMillis();
+        if (installSource == null || installSource.baseApk == null) {
+            return InstallResult.makeFailure("Package File is not exist.");
+        }
+        File packageFile = installSource.baseApk;
         if (!packageFile.exists() || !packageFile.isFile()) {
-            VLog.e(TAG, "Install failed: Package File does not exist: %s", path);
+            VLog.e(TAG, "Install failed: Package File does not exist: %s", packageFile.getPath());
             return InstallResult.makeFailure("Package File is not exist.");
         }
         VPackage pkg = null;
-        VLog.i(TAG, "Stage: Parsing package %s", packageFile.getPath());
+        VLog.i(TAG, "Stage: Parsing package %s", installSource.parseTarget.getPath());
         try {
             com.lody.virtual.helper.compat.HiddenApiCompat.ensureExemptions();
-            pkg = PackageParserEx.parsePackage(packageFile);
+            pkg = PackageParserEx.parsePackage(installSource.parseTarget);
         } catch (Throwable e) {
             VLog.e(TAG, "Install failed: Unable to parse package: %s", e.getMessage());
             e.printStackTrace();
@@ -442,12 +509,19 @@ public class VAppManagerService extends IAppManager.Stub {
                 checkSupportAbi = false;
             }
         }
-        Map<String, List<String>> soMap = null;
+        List<File> apkFiles = installSource.getAllApks();
+        List<Map<String, List<String>>> soMaps = new ArrayList<>(apkFiles.size());
 
         if (checkSupportAbi) {
-            VLog.i(TAG, "Stage: Checking Support ABI for %s", packageFile.getPath());
-            soMap = NativeLibraryHelperCompat.getSoMapForApk(packageFile.getPath());
-            Set<String> abiList = soMap.keySet();
+            VLog.i(TAG, "Stage: Checking Support ABI for %s", installSource.parseTarget.getPath());
+            Set<String> abiList = new HashSet<>();
+            for (File apk : apkFiles) {
+                Map<String, List<String>> soMap = NativeLibraryHelperCompat.getSoMapForApk(apk.getPath());
+                soMaps.add(soMap);
+                if (soMap != null) {
+                    abiList.addAll(soMap.keySet());
+                }
+            }
             if (abiList.isEmpty()) {
                 support32bit = true;
                 support64bit = true;
@@ -468,6 +542,10 @@ public class VAppManagerService extends IAppManager.Stub {
             } else {
                 ps.flag = PackageSetting.FLAG_RUN_64BIT;
             }
+        } else {
+            for (int i = 0; i < apkFiles.size(); i++) {
+                soMaps.add(null);
+            }
         }
         if ((VirtualRuntime.is64bit() && ps.flag == PackageSetting.FLAG_RUN_32BIT)
                 || (!VirtualRuntime.is64bit() && ps.flag == PackageSetting.FLAG_RUN_64BIT)) {
@@ -476,12 +554,14 @@ public class VAppManagerService extends IAppManager.Stub {
             }
         }
         VLog.i(TAG, "Stage: Copying native binaries for %s", pkg.packageName);
-        NativeLibraryHelperCompat.copyNativeBinaries(packageFile, VEnvironment.getAppLibDirectory(pkg.packageName), soMap);
+        File nativeLibDir = VEnvironment.getAppLibDirectory(pkg.packageName);
+        for (int i = 0; i < apkFiles.size(); i++) {
+            NativeLibraryHelperCompat.copyNativeBinaries(apkFiles.get(i), nativeLibDir, soMaps.get(i));
+        }
 
+        List<File> installedSplitApks = installSource.splitApks;
         if (!useSourceLocationApk) {
             VLog.i(TAG, "Stage: Copying APK and creating symlinks for %s", pkg.packageName);
-            //old apk
-            File oldPackageFile = VEnvironment.getPackageResourcePath(pkg.packageName);
             //new apk
             File privatePackageFile = VEnvironment.getPackageResourcePathNext(pkg.packageName);
             //base.apk
@@ -489,8 +569,7 @@ public class VAppManagerService extends IAppManager.Stub {
             try {
                 //delete old odex
                 FileUtils.deleteDir(VEnvironment.getOdexFile(pkg.packageName));
-                //delete old apk
-                FileUtils.deleteDir(oldPackageFile);
+                deleteInstalledApkArtifacts(privatePackageFile.getParentFile());
                 //copy apk -> new apk
                 FileUtils.copyFile(packageFile, privatePackageFile);
                 VLog.d(TAG, "copyFile:%s->%s", packageFile.getPath(), privatePackageFile.getPath());
@@ -526,13 +605,39 @@ public class VAppManagerService extends IAppManager.Stub {
                 baseApkFile.delete();
                 return InstallResult.makeFailure("Unable to copy the package file.");
             }
+            ArrayList<File> copiedSplitApks = new ArrayList<>(installSource.splitApks.size());
+            try {
+                for (File splitApk : installSource.splitApks) {
+                    File installedSplitApk = new File(privatePackageFile.getParentFile(), splitApk.getName());
+                    FileUtils.copyFile(splitApk, installedSplitApk);
+                    VEnvironment.chmodPackageDictionary(installedSplitApk);
+                    copiedSplitApks.add(installedSplitApk);
+                }
+            } catch (Exception e) {
+                VLog.e(TAG, "Copy split APK failed for %s: %s", pkg.packageName, e.getMessage());
+                return InstallResult.makeFailure("Unable to copy split package files.");
+            }
             packageFile = privatePackageFile;
             VEnvironment.chmodPackageDictionary(packageFile);
+            installedSplitApks = copiedSplitApks;
+            rewriteInstalledApplicationInfo(pkg.applicationInfo, packageFile, installedSplitApks);
         }
 
         if (support64bit && !useSourceLocationApk) {
             VLog.i(TAG, "Stage: Copying 64bit package for %s", pkg.packageName);
-            V64BitHelper.copyPackage64(packageFile.getPath(), pkg.packageName);
+            deleteInstalledApkArtifacts(VEnvironment.getDataAppPackageDirectory64(pkg.packageName));
+            if (!V64BitHelper.copyPackage64(packageFile.getPath(), pkg.packageName)) {
+                VLog.w(TAG, "Stage: Failed to copy package to 64bit engine for %s — "
+                        + "app will run in 32-bit mode only.", pkg.packageName);
+                // Downgrade to 32-bit only so the app can still run
+                if (ps.flag == PackageSetting.FLAG_RUN_64BIT) {
+                    ps.flag = PackageSetting.FLAG_RUN_32BIT;
+                } else if (ps.flag == PackageSetting.FLAG_RUN_BOTH_32BIT_64BIT) {
+                    ps.flag = PackageSetting.FLAG_RUN_32BIT;
+                }
+            } else {
+                copySplitApksTo64BitDirectory(pkg.packageName, installedSplitApks, soMaps);
+            }
         }
 
         ps.appMode = useSourceLocationApk ? MODE_APP_USE_OUTSIDE_APK : MODE_APP_COPY_APK;
@@ -548,10 +653,34 @@ public class VAppManagerService extends IAppManager.Stub {
                 ps.setUserState(userId, false/*launched*/, false/*hidden*/, installed);
             }
         }
+        if (!TextUtils.isEmpty(options.installerPackageName)) {
+            ps.installerPackageName = options.installerPackageName;
+        } else if (!res.isUpdate) {
+            ps.installerPackageName = null;
+        }
+        if (!TextUtils.isEmpty(options.installSourcePackageName)) {
+            ps.installSourcePackageName = options.installSourcePackageName;
+        } else if (!res.isUpdate) {
+            ps.installSourcePackageName = ps.installerPackageName;
+        }
         VLog.i(TAG, "Stage: Saving package cache for %s", pkg.packageName);
+        // Extract and persist original signatures for the signature-preservation hook
+        try {
+            android.content.pm.PackageInfo archiveInfo = VirtualCore.get().getUnHookPackageManager()
+                    .getPackageArchiveInfo(installSource.baseApk.getPath(), PackageManager.GET_SIGNATURES);
+            if (archiveInfo != null && archiveInfo.signatures != null
+                    && archiveInfo.signatures.length > 0) {
+                ps.originalSignatures = archiveInfo.signatures;
+                VLog.d(TAG, "Captured %d original signature(s) for %s",
+                        archiveInfo.signatures.length, pkg.packageName);
+            }
+        } catch (Throwable e) {
+            VLog.w(TAG, "Failed to extract signatures for %s (non-fatal): %s",
+                    pkg.packageName, e.getMessage());
+        }
         PackageParserEx.savePackageCache(pkg);
         PackageCacheManager.put(pkg, ps);
-        mPersistenceLayer.save();
+        persistPackageState("installPackageImpl", ps.packageName);
         if (support32bit && !useSourceLocationApk) {
             VLog.i(TAG, "Stage: Optimizing DEX for %s", ps.packageName);
             try {
@@ -586,6 +715,220 @@ public class VAppManagerService extends IAppManager.Stub {
             VirtualCore.getConfig().onFirstInstall(ps.packageName, false);
         }
         return res;
+    }
+
+    private void sendInstallResult(ResultReceiver receiver, InstallResult res) {
+        if (res == null) {
+            VLog.e(TAG, "installPackageImpl returned null!");
+            res = InstallResult.makeFailure("Internal error: installPackageImpl returned null");
+        }
+        VLog.i(TAG, "installPackage sending result: isSuccess=%s, error=%s", res.isSuccess, res.error);
+        if (receiver != null) {
+            Bundle data = new Bundle();
+            data.putParcelable("result", res);
+            receiver.send(0, data);
+        }
+    }
+
+    private InstallSource createInstallSource(String path) {
+        if (path == null) {
+            VLog.e(TAG, "Install failed: path = NULL");
+            return null;
+        }
+        File packageFile = new File(path);
+        if (!packageFile.exists() || !packageFile.isFile()) {
+            return null;
+        }
+        List<File> splitApks = collectSiblingSplitApks(packageFile);
+        File parseTarget = splitApks.isEmpty() ? packageFile : packageFile.getParentFile();
+        return new InstallSource(parseTarget, packageFile, splitApks, null);
+    }
+
+    private InstallSource createInstallSource(List<String> apkPaths) {
+        if (apkPaths == null || apkPaths.isEmpty()) {
+            return null;
+        }
+        if (apkPaths.size() == 1) {
+            return createInstallSource(apkPaths.get(0));
+        }
+        ArrayList<File> inputApks = new ArrayList<>(apkPaths.size());
+        for (String apkPath : apkPaths) {
+            if (TextUtils.isEmpty(apkPath)) {
+                continue;
+            }
+            File apkFile = new File(apkPath);
+            if (apkFile.exists() && apkFile.isFile()) {
+                inputApks.add(apkFile);
+            }
+        }
+        if (inputApks.isEmpty()) {
+            return null;
+        }
+        File stageRoot = new File(VirtualCore.get().getContext().getCacheDir(), INSTALL_STAGE_DIR);
+        if (!stageRoot.exists()) {
+            stageRoot.mkdirs();
+        }
+        File stageDir = new File(stageRoot, String.valueOf(System.nanoTime()));
+        if (!stageDir.mkdirs()) {
+            return null;
+        }
+        try {
+            File stagedBase = new File(stageDir, BASE_APK_NAME);
+            FileUtils.copyFile(inputApks.get(0), stagedBase);
+            ArrayList<File> stagedSplits = new ArrayList<>(Math.max(0, inputApks.size() - 1));
+            Set<String> usedNames = new HashSet<>();
+            usedNames.add(BASE_APK_NAME.toLowerCase());
+            for (int i = 1; i < inputApks.size(); i++) {
+                File sourceApk = inputApks.get(i);
+                String stagedName = buildUniqueSplitName(sourceApk.getName(), i, usedNames);
+                File stagedSplit = new File(stageDir, stagedName);
+                FileUtils.copyFile(sourceApk, stagedSplit);
+                stagedSplits.add(stagedSplit);
+            }
+            return new InstallSource(stageDir, stagedBase, stagedSplits, stageDir);
+        } catch (Exception e) {
+            VLog.e(TAG, "Failed to stage split APKs: %s", e.getMessage());
+            FileUtils.deleteDir(stageDir);
+            return null;
+        }
+    }
+
+    private void cleanupInstallSource(InstallSource installSource) {
+        if (installSource != null && installSource.cleanupDir != null) {
+            FileUtils.deleteDir(installSource.cleanupDir);
+        }
+    }
+
+    private File resolvePackageParseTarget(File packageFile) {
+        if (packageFile == null || !packageFile.exists() || !packageFile.isFile()) {
+            return packageFile;
+        }
+        List<File> splitApks = collectSiblingSplitApks(packageFile);
+        return splitApks.isEmpty() ? packageFile : packageFile.getParentFile();
+    }
+
+    private List<File> collectSiblingSplitApks(File baseApk) {
+        if (baseApk == null || !baseApk.exists() || !baseApk.isFile()) {
+            return Collections.emptyList();
+        }
+        String baseName = baseApk.getName().toLowerCase();
+        if (!baseName.startsWith("base")) {
+            return Collections.emptyList();
+        }
+        File parent = baseApk.getParentFile();
+        if (parent == null || !parent.isDirectory()) {
+            return Collections.emptyList();
+        }
+        File[] siblings = parent.listFiles();
+        if (siblings == null || siblings.length == 0) {
+            return Collections.emptyList();
+        }
+        ArrayList<File> splitApks = new ArrayList<>();
+        for (File sibling : siblings) {
+            if (sibling == null || !sibling.isFile()) {
+                continue;
+            }
+            String siblingName = sibling.getName().toLowerCase();
+            if (!siblingName.endsWith(".apk") || sibling.equals(baseApk)) {
+                continue;
+            }
+            if (BASE_APK_NAME.equals(siblingName) || siblingName.startsWith("base-")) {
+                continue;
+            }
+            splitApks.add(sibling);
+        }
+        return splitApks;
+    }
+
+    private String buildUniqueSplitName(String originalName, int index, Set<String> usedNames) {
+        String safeName = TextUtils.isEmpty(originalName) ? "split_" + index + ".apk" : originalName;
+        safeName = safeName.replace(File.separatorChar, '_');
+        if (!safeName.toLowerCase().endsWith(".apk")) {
+            safeName = safeName + ".apk";
+        }
+        String candidate = safeName;
+        int suffix = 1;
+        while (usedNames.contains(candidate.toLowerCase())) {
+            String prefix = safeName.substring(0, safeName.length() - 4);
+            candidate = prefix + "_" + suffix + ".apk";
+            suffix++;
+        }
+        usedNames.add(candidate.toLowerCase());
+        return candidate;
+    }
+
+    private void deleteInstalledApkArtifacts(File packageDir) {
+        if (packageDir == null || !packageDir.exists() || !packageDir.isDirectory()) {
+            return;
+        }
+        File[] children = packageDir.listFiles();
+        if (children == null) {
+            return;
+        }
+        for (File child : children) {
+            if (child != null && child.isFile() && child.getName().toLowerCase().endsWith(".apk")) {
+                FileUtils.deleteDir(child);
+            }
+        }
+    }
+
+    private void rewriteInstalledApplicationInfo(ApplicationInfo applicationInfo, File baseApk, List<File> splitApks) {
+        if (applicationInfo == null || baseApk == null) {
+            return;
+        }
+        applicationInfo.sourceDir = baseApk.getPath();
+        applicationInfo.publicSourceDir = baseApk.getPath();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (splitApks == null || splitApks.isEmpty()) {
+                applicationInfo.splitSourceDirs = null;
+                applicationInfo.splitPublicSourceDirs = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    applicationInfo.splitNames = null;
+                }
+                return;
+            }
+            String[] splitPaths = new String[splitApks.size()];
+            for (int i = 0; i < splitApks.size(); i++) {
+                splitPaths[i] = splitApks.get(i).getPath();
+            }
+            applicationInfo.splitSourceDirs = splitPaths;
+            applicationInfo.splitPublicSourceDirs = splitPaths.clone();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                    && (applicationInfo.splitNames == null || applicationInfo.splitNames.length != splitPaths.length)) {
+                applicationInfo.splitNames = buildSplitNames(splitApks);
+            }
+        }
+    }
+
+    private String[] buildSplitNames(List<File> splitApks) {
+        String[] splitNames = new String[splitApks.size()];
+        for (int i = 0; i < splitApks.size(); i++) {
+            String fileName = splitApks.get(i).getName();
+            splitNames[i] = fileName.endsWith(".apk") ? fileName.substring(0, fileName.length() - 4) : fileName;
+        }
+        return splitNames;
+    }
+
+    private void copySplitApksTo64BitDirectory(String packageName, List<File> splitApks, List<Map<String, List<String>>> soMaps) {
+        if (splitApks == null || splitApks.isEmpty()) {
+            return;
+        }
+        File targetDir = VEnvironment.getDataAppPackageDirectory64(packageName);
+        File libDir = VEnvironment.getAppLibDirectory64(packageName);
+        for (int i = 0; i < splitApks.size(); i++) {
+            File splitApk = splitApks.get(i);
+            File targetFile = new File(targetDir, splitApk.getName());
+            try {
+                FileUtils.copyFile(splitApk, targetFile);
+                VEnvironment.chmodPackageDictionary(targetFile);
+                if (soMaps != null && soMaps.size() > i + 1) {
+                    NativeLibraryHelperCompat.copyNativeBinaries(splitApk, libDir, soMaps.get(i + 1));
+                }
+            } catch (Exception e) {
+                VLog.w(TAG, "Failed to mirror split %s into 64bit package directory: %s",
+                        splitApk.getName(), e.getMessage());
+            }
+        }
     }
 
     private void supportTelephony(int userId) {
@@ -625,7 +968,7 @@ public class VAppManagerService extends IAppManager.Stub {
                     ps.setInstalled(userId, true);
                     mkdirsForUser(packageName, userId);
                     notifyAppInstalled(ps, userId);
-                    mPersistenceLayer.save();
+                    persistPackageState("installPackageAsUser", packageName);
                     //版本差异适配
                     if (InstallerSetting.PROVIDER_TELEPHONY_PKG.equals(packageName)) {
                         supportTelephony(userId);
@@ -680,7 +1023,7 @@ public class VAppManagerService extends IAppManager.Stub {
                 VJobSchedulerService.get().cancelAll(ps.appId, userId);
                 VActivityManagerService.get().killAppByPkg(packageName, userId);
                 ps.setInstalled(userId, false);
-                mPersistenceLayer.save();
+                persistPackageState("uninstallPackageAsUser", packageName);
                 deletePackageDataAsUser(userId, ps, false);
                 notifyAppUninstalled(ps, userId);
             }

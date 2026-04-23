@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/admsoloraya_res_0x7f0602c2" android:alpha="@dimen/admsoloraya_res_0x7f070514"/>
+</selector>

@@ -169,7 +169,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         boolean success = false;
         for (File file : stageDir.listFiles()) {
             VLog.e(TAG, "found apk in stage dir: " + file.getPath());
-            InstallResult res = VAppManagerService.get().installPackage(file.getPath(), InstallOptions.makeOptions(false));
+            InstallOptions options = InstallOptions.makeOptions(false)
+                    .setInstallerInfo(installerPackageName);
+            InstallResult res = VAppManagerService.get().installPackage(file.getPath(), options);
             if (res.isSuccess) {
                 success = true;
             }

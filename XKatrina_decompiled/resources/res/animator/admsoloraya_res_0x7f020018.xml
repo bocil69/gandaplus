@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:state_pressed="true">
+        <objectAnimator android:duration="@integer/admsoloraya_res_0x7f0b0035" android:valueTo="@dimen/admsoloraya_res_0x7f070580" android:valueType="floatType" android:propertyName="translationZ"/>
+    </item>
+    <item android:state_enabled="true">
+        <objectAnimator android:duration="@integer/admsoloraya_res_0x7f0b0035" android:valueTo="0" android:valueType="floatType" android:propertyName="translationZ"/>
+    </item>
+    <item>
+        <objectAnimator android:duration="0" android:valueTo="0" android:valueType="floatType" android:propertyName="translationZ"/>
+    </item>
+</selector>

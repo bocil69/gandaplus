@@ -2,6 +2,7 @@ package com.lody.virtual.server.pm;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.SparseArray;
@@ -25,7 +26,7 @@ public class PackageSetting implements Parcelable {
 
     public static final int FIRST_V2_VERSION = 5;
 
-    public static final int CURRENT_VERSION = 5;
+    public static final int CURRENT_VERSION = 7;
 
     private static final PackageUserState DEFAULT_USER_STATE = new PackageUserState();
 
@@ -38,6 +39,18 @@ public class PackageSetting implements Parcelable {
     public int flag;
     public long firstInstallTime;
     public long lastUpdateTime;
+    /**
+     * Original signatures extracted from the base APK at install time.
+     * Used by the PM hook to return the app's real certificate chain.
+     * Not present in settings persisted with version < 6.
+     */
+    public Signature[] originalSignatures;
+    /**
+     * Installer identity exposed through PackageManager installer-source APIs.
+     * Not present in settings persisted with version < 7.
+     */
+    public String installerPackageName;
+    public String installSourcePackageName;
 
     public PackageSetting() {
         version = CURRENT_VERSION;
@@ -145,6 +158,11 @@ public class PackageSetting implements Parcelable {
         dest.writeInt(this.flag);
         dest.writeLong(this.firstInstallTime);
         dest.writeLong(this.lastUpdateTime);
+        // version 6+: original signatures
+        dest.writeTypedArray(this.originalSignatures, flags);
+        // version 7+: installer/source metadata
+        dest.writeString(this.installerPackageName);
+        dest.writeString(this.installSourcePackageName);
     }
 
     PackageSetting(int version, Parcel in) {
@@ -156,6 +174,18 @@ public class PackageSetting implements Parcelable {
         this.flag = in.readInt();
         this.firstInstallTime = in.readLong();
         this.lastUpdateTime = in.readLong();
+        // version 6+: original signatures
+        if (version >= 6) {
+            this.originalSignatures = in.createTypedArray(Signature.CREATOR);
+        }
+        // version 7+: installer/source metadata
+        if (version >= 7) {
+            this.installerPackageName = in.readString();
+            this.installSourcePackageName = in.readString();
+            if (this.installSourcePackageName == null) {
+                this.installSourcePackageName = this.installerPackageName;
+            }
+        }
     }
 
 

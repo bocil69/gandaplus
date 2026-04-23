@@ -63,31 +63,46 @@ abstract class StubBinder implements IBinder {
 	@Override
 	public IInterface queryLocalInterface(String descriptor) {
 		if (mInterface == null) {
-			StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-			if (stackTrace == null || stackTrace.length <= 1) {
-				return null;
-			}
 			Class<?> aidlType = null;
 			IInterface targetInterface = null;
-
-			for (StackTraceElement element : stackTrace) {
-				if (element.isNativeMethod()) {
-					continue;
-				}
-				try {
+			StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+			if (stackTrace != null && stackTrace.length > 1) {
+				for (StackTraceElement element : stackTrace) {
+					if (element.isNativeMethod()) {
+						continue;
+					}
+					try {
                     Method method = mClassLoader.loadClass(element.getClassName())
                             .getDeclaredMethod(element.getMethodName(), IBinder.class);
                     if ((method.getModifiers() & Modifier.STATIC) != 0) {
                         method.setAccessible(true);
                         Class<?> returnType = method.getReturnType();
                         if (returnType.isInterface() && IInterface.class.isAssignableFrom(returnType)) {
-                            aidlType = returnType;
-                            targetInterface = (IInterface) method.invoke(null, mBase);
-                        }
-                    }
+								aidlType = returnType;
+								targetInterface = (IInterface) method.invoke(null, mBase);
+								break;
+							}
+						}
                 } catch (Exception e) {
                     // go to the next cycle
                 }
+				}
+			}
+			if ((aidlType == null || targetInterface == null) && descriptor != null) {
+				try {
+					Class<?> interfaceClass = mClassLoader.loadClass(descriptor);
+					Class<?> stubClass = mClassLoader.loadClass(descriptor + "$Stub");
+					Method asInterface = stubClass.getDeclaredMethod("asInterface", IBinder.class);
+					asInterface.setAccessible(true);
+					Object resolved = asInterface.invoke(null, mBase);
+					if (resolved instanceof IInterface && interfaceClass.isInterface()
+							&& IInterface.class.isAssignableFrom(interfaceClass)) {
+						aidlType = interfaceClass;
+						targetInterface = (IInterface) resolved;
+					}
+				} catch (Exception e) {
+					// Ignore and fall back to raw binder.
+				}
 			}
 			if (aidlType == null || targetInterface == null) {
                 return null;
@@ -100,6 +115,14 @@ abstract class StubBinder implements IBinder {
 	}
 
 	public abstract InvocationHandler createHandler(Class<?> interfaceClass, IInterface iInterface);
+
+	protected final ClassLoader getStubClassLoader() {
+		return mClassLoader;
+	}
+
+	protected final IBinder getBaseBinder() {
+		return mBase;
+	}
 
 
 	@Override
@@ -114,6 +137,10 @@ abstract class StubBinder implements IBinder {
 
 	@Override
 	public boolean transact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+		return onTransact(code, data, reply, flags);
+	}
+
+	protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
 		return mBase.transact(code, data, reply, flags);
 	}
 

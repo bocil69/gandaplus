@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt" android:drawable="@drawable/admsoloraya_res_0x7f0801b6">
+    <target android:name="@string/admsoloraya_res_0x7f1200ae" android:animation="@drawable/admsoloraya_res_0x7f080023"/>
+</animated-vector>

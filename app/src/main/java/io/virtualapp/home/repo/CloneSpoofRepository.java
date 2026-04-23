@@ -133,7 +133,7 @@ public class CloneSpoofRepository {
     public boolean applySpoof(String pkg, int userId) {
         if (!isOnboarded(pkg, userId)) return false;
 
-        VDeviceConfig config = VDeviceManager.get().getDeviceConfig(userId);
+        VDeviceConfig config = createIsolatedRuntimeConfig(userId);
         config.enable = true;
 
         setPropIfSaved(config, pkg, userId, "BRAND");
@@ -196,7 +196,22 @@ public class CloneSpoofRepository {
         if (!TextUtils.isEmpty(val)) config.setProp(prop, val);
     }
 
+    private VDeviceConfig createIsolatedRuntimeConfig(int userId) {
+        VDeviceConfig currentConfig = VDeviceManager.get().getDeviceConfig(userId);
+        VDeviceConfig isolatedConfig = new VDeviceConfig();
+        if (currentConfig != null) {
+            isolatedConfig.bluetoothMac = currentConfig.bluetoothMac;
+            isolatedConfig.gmsAdId = currentConfig.gmsAdId;
+            isolatedConfig.alias = currentConfig.alias;
+        }
+        return isolatedConfig;
+    }
+
     // ── Random spoof generator ────────────────────────────────────────
+
+    public static VDeviceConfig createEmptySpoofConfig() {
+        return new VDeviceConfig();
+    }
 
     /**
      * Generate a fully randomised VDeviceConfig for a clone.
@@ -206,10 +221,6 @@ public class CloneSpoofRepository {
         // Device/operator randomization is centralized in VDeviceConfig.random().
         VDeviceConfig config = VDeviceConfig.random();
         config.enable = true;
-        
-        // Ensure VDeviceManager has the generated config
-        VDeviceManager.get().updateDeviceConfig(userId, config);
-        
         return config;
     }
 

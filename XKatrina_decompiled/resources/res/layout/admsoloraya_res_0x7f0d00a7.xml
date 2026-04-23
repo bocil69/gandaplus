@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <FrameLayout android:gravity="center" android:layout_gravity="center" android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a01b2" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a028b" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a0528" android:paddingLeft="@dimen/admsoloraya_res_0x7f0700b7" android:paddingTop="@dimen/admsoloraya_res_0x7f070338" android:paddingRight="@dimen/admsoloraya_res_0x7f0700b7" android:paddingBottom="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

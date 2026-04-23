@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="admsoloraya_res_0x7f070002">48dp</dimen>
+    <dimen name="admsoloraya_res_0x7f07004e">12dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070050">14dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070522">450dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070523">600dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070525">24dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070528">24dp</dimen>
+    <dimen name="admsoloraya_res_0x7f07055b">20dp</dimen>
+    <dimen name="admsoloraya_res_0x7f07055d">4dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070561">96dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070564">0dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070565">0dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070566">104dp</dimen>
+    <dimen name="admsoloraya_res_0x7f07056e">68dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070570">28dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070571">64dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070572">32dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070573">24dp</dimen>
+    <dimen name="admsoloraya_res_0x7f070574">32dp</dimen>
+</resources>

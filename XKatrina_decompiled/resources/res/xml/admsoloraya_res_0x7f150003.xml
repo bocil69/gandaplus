@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" android:minWidth="110dp" android:minHeight="110dp" android:updatePeriodMillis="0" android:initialLayout="@layout/admsoloraya_res_0x7f0d00c9" android:previewImage="@drawable/admsoloraya_res_0x7f0801e4" android:resizeMode="vertical|horizontal" android:widgetCategory="keyguard|home_screen"/>

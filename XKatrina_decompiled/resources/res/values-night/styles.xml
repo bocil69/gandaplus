@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="admsoloraya_res_0x7f130210" parent="@style/admsoloraya_res_0x7f13020e">
+    </style>
+    <style name="admsoloraya_res_0x7f130211" parent="@style/admsoloraya_res_0x7f13020e">
+    </style>
+    <style name="admsoloraya_res_0x7f130212" parent="@style/admsoloraya_res_0x7f130217">
+    </style>
+    <style name="admsoloraya_res_0x7f130213" parent="@style/admsoloraya_res_0x7f130218">
+    </style>
+    <style name="admsoloraya_res_0x7f130214" parent="@style/admsoloraya_res_0x7f130219">
+    </style>
+    <style name="admsoloraya_res_0x7f130215" parent="@style/admsoloraya_res_0x7f13021a">
+    </style>
+    <style name="admsoloraya_res_0x7f130216" parent="@style/admsoloraya_res_0x7f130223">
+    </style>
+    <style name="admsoloraya_res_0x7f130234" parent="@style/admsoloraya_res_0x7f13022c">
+    </style>
+    <style name="admsoloraya_res_0x7f130235" parent="@style/admsoloraya_res_0x7f13022d">
+    </style>
+    <style name="admsoloraya_res_0x7f130236" parent="@style/admsoloraya_res_0x7f13022e">
+    </style>
+    <style name="admsoloraya_res_0x7f130237" parent="@style/admsoloraya_res_0x7f13022f">
+    </style>
+    <style name="admsoloraya_res_0x7f130238" parent="@style/admsoloraya_res_0x7f130230">
+    </style>
+    <style name="admsoloraya_res_0x7f130239" parent="@style/admsoloraya_res_0x7f130231">
+    </style>
+    <style name="admsoloraya_res_0x7f13023a" parent="@style/admsoloraya_res_0x7f130232">
+    </style>
+    <style name="admsoloraya_res_0x7f13023b" parent="@style/admsoloraya_res_0x7f130233">
+    </style>
+    <style name="admsoloraya_res_0x7f13023d" parent="@style/admsoloraya_res_0x7f13023c">
+    </style>
+    <style name="admsoloraya_res_0x7f13024c" parent="@style/admsoloraya_res_0x7f130248">
+    </style>
+    <style name="admsoloraya_res_0x7f13024d" parent="@style/admsoloraya_res_0x7f130249">
+    </style>
+    <style name="admsoloraya_res_0x7f13024e" parent="@style/admsoloraya_res_0x7f13024a">
+    </style>
+    <style name="admsoloraya_res_0x7f13024f" parent="@style/admsoloraya_res_0x7f130248">
+    </style>
+    <style name="admsoloraya_res_0x7f130250" parent="@style/admsoloraya_res_0x7f13024a">
+    </style>
+    <style name="admsoloraya_res_0x7f130251" parent="@style/admsoloraya_res_0x7f13025c">
+    </style>
+    <style name="admsoloraya_res_0x7f130252" parent="@style/admsoloraya_res_0x7f13025d">
+    </style>
+    <style name="admsoloraya_res_0x7f130253" parent="@style/admsoloraya_res_0x7f13025e">
+    </style>
+    <style name="admsoloraya_res_0x7f130254" parent="@style/admsoloraya_res_0x7f13025f">
+    </style>
+    <style name="admsoloraya_res_0x7f130255" parent="@style/admsoloraya_res_0x7f130260">
+    </style>
+    <style name="admsoloraya_res_0x7f130256" parent="@style/admsoloraya_res_0x7f130261">
+    </style>
+    <style name="admsoloraya_res_0x7f130257" parent="@style/admsoloraya_res_0x7f130262">
+    </style>
+    <style name="admsoloraya_res_0x7f130258" parent="@style/admsoloraya_res_0x7f130263">
+    </style>
+    <style name="admsoloraya_res_0x7f130259" parent="@style/admsoloraya_res_0x7f130264">
+    </style>
+    <style name="admsoloraya_res_0x7f13025a" parent="@style/admsoloraya_res_0x7f130275">
+    </style>
+    <style name="admsoloraya_res_0x7f13025b" parent="@style/admsoloraya_res_0x7f130276">
+    </style>
+    <style name="admsoloraya_res_0x7f13027d" parent="@style/admsoloraya_res_0x7f13027b">
+    </style>
+    <style name="admsoloraya_res_0x7f13029f" parent="@style/admsoloraya_res_0x7f13029e">
+    </style>
+    <style name="admsoloraya_res_0x7f1303e1" parent="@style/admsoloraya_res_0x7f1303e3">
+    </style>
+    <style name="admsoloraya_res_0x7f1303e6" parent="@style/admsoloraya_res_0x7f1303e7">
+    </style>
+    <style name="admsoloraya_res_0x7f1303ef" parent="@style/admsoloraya_res_0x7f1303ed">
+    </style>
+    <style name="admsoloraya_res_0x7f1303f2" parent="@style/admsoloraya_res_0x7f1303f0">
+    </style>
+    <style name="admsoloraya_res_0x7f130433" parent="@style/admsoloraya_res_0x7f13042f">
+    </style>
+    <style name="admsoloraya_res_0x7f130441" parent="@style/admsoloraya_res_0x7f13043f">
+    </style>
+    <style name="admsoloraya_res_0x7f13045b" parent="@style/admsoloraya_res_0x7f13045c">
+    </style>
+</resources>

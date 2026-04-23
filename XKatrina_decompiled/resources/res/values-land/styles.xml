@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="admsoloraya_res_0x7f13033c" parent="@style/admsoloraya_res_0x7f1300fd">
+        <item name="admsoloraya_res_0x7f040434">admsoloraya_res_0x7f0a010e</item>
+        <item name="admsoloraya_res_0x7f040441">admsoloraya_res_0x7f0a01a8</item>
+    </style>
+    <style name="admsoloraya_res_0x7f130423" parent="@style/admsoloraya_res_0x7f13032e">
+        <item name="android:textAppearance">?attr/admsoloraya_res_0x7f040463</item>
+        <item name="android:textColor">?attr/admsoloraya_res_0x7f040104</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_gravity">start|top</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">@integer/admsoloraya_res_0x7f0b0031</item>
+    </style>
+    <style name="admsoloraya_res_0x7f130426" parent="@style/admsoloraya_res_0x7f130115">
+        <item name="android:layout_gravity">start|bottom</item>
+    </style>
+</resources>

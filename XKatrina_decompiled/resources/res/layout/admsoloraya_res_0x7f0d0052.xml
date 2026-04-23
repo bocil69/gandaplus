@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02b4" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:textStyle="bold" android:textColor="#ffffff" android:gravity="center_horizontal" android:id="@+id/admsoloraya_res_0x7f0a058b" android:background="#f75d59" android:padding="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Pilih aplikasi yang sudah di patch/mod oleh fufufu"/>
+        <ListView android:id="@+id/admsoloraya_res_0x7f0a030d" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" android:divider="@null" android:dividerHeight="0dp" android:choiceMode="none" android:layout_weight="1"/>
+        <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:gravity="center_horizontal" android:id="@+id/admsoloraya_res_0x7f0a04fb" android:padding="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Batal"/>
+    </LinearLayout>
+</LinearLayout>

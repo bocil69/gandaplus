@@ -575,6 +575,30 @@ public class PackageParserEx {
         }
         ai.publicSourceDir = apkPath;
         ai.sourceDir = apkPath;
+        if (ps.appMode != InstalledAppInfo.MODE_APP_USE_OUTSIDE_APK && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String[] splitSourceDirs = ai.splitSourceDirs != null ? ai.splitSourceDirs : ai.splitPublicSourceDirs;
+            if (splitSourceDirs != null && splitSourceDirs.length > 0) {
+                File packageDir = is64bit
+                        ? VEnvironment.getDataAppPackageDirectory64(ai.packageName)
+                        : VEnvironment.getDataAppPackageDirectory(ai.packageName);
+                String[] rewrittenSplitSourceDirs = new String[splitSourceDirs.length];
+                String[] rewrittenSplitPublicSourceDirs = new String[splitSourceDirs.length];
+                for (int i = 0; i < splitSourceDirs.length; i++) {
+                    String splitPath = splitSourceDirs[i];
+                    String splitFileName = splitPath == null ? null : new File(splitPath).getName();
+                    if (TextUtils.isEmpty(splitFileName)) {
+                        rewrittenSplitSourceDirs[i] = splitPath;
+                        rewrittenSplitPublicSourceDirs[i] = splitPath;
+                    } else {
+                        String rewrittenPath = new File(packageDir, splitFileName).getPath();
+                        rewrittenSplitSourceDirs[i] = rewrittenPath;
+                        rewrittenSplitPublicSourceDirs[i] = rewrittenPath;
+                    }
+                }
+                ai.splitSourceDirs = rewrittenSplitSourceDirs;
+                ai.splitPublicSourceDirs = rewrittenSplitPublicSourceDirs;
+            }
+        }
         SettingConfig config = VirtualCore.getConfig();
         SettingConfig.AppLibConfig libConfig = config.getAppLibConfig(ai.packageName);
         if (is64bit) {

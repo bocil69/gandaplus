@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:gravity="start|center_vertical" android:id="@+id/admsoloraya_res_0x7f0a038d" android:focusable="true" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f070556" style="?attr/admsoloraya_res_0x7f04030f"/>
+    <include layout="@layout/admsoloraya_res_0x7f0d0082"/>
+</LinearLayout>

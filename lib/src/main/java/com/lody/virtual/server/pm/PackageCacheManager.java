@@ -49,4 +49,16 @@ public class PackageCacheManager {
             return PACKAGE_CACHE.remove(packageName);
         }
     }
+
+    /**
+     * Returns the original {@link android.content.pm.Signature} array that was
+     * extracted from the APK at install time, or {@code null} if unavailable.
+     */
+    public static android.content.pm.Signature[] getOriginalSignatures(String packageName) {
+        PackageSetting ps = getSetting(packageName);
+        if (ps != null) {
+            return ps.originalSignatures;
+        }
+        return null;
+    }
 }

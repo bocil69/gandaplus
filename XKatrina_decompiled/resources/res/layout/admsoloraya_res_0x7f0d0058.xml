@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a0263" android:padding="@dimen/admsoloraya_res_0x7f07027b" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/admsoloraya_res_0x7f070187">
+        <ImageView android:id="@+id/admsoloraya_res_0x7f0a0200" android:padding="@dimen/admsoloraya_res_0x7f07027b" android:focusable="false" android:layout_width="@dimen/admsoloraya_res_0x7f070149" android:layout_height="@dimen/admsoloraya_res_0x7f070149" android:src="@drawable/admsoloraya_res_0x7f080099" android:scaleType="fitCenter"/>
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0264" android:paddingLeft="@dimen/admsoloraya_res_0x7f070338" android:paddingTop="@dimen/admsoloraya_res_0x7f070187" android:paddingRight="@dimen/admsoloraya_res_0x7f070187" android:paddingBottom="@dimen/admsoloraya_res_0x7f070187" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700a0" android:id="@+id/admsoloraya_res_0x7f0a04de" android:padding="@dimen/admsoloraya_res_0x7f070187" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TextView"/>
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f070339" android:id="@+id/admsoloraya_res_0x7f0a04df" android:padding="@dimen/admsoloraya_res_0x7f070187" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TextView"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

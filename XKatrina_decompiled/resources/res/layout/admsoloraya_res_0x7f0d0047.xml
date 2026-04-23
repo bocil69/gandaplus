@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" android:textAppearance="@style/admsoloraya_res_0x7f130197" android:textColor="?android:attr/textColorSecondary" android:gravity="start|center_vertical" android:paddingLeft="?attr/admsoloraya_res_0x7f0402da" android:paddingRight="?attr/admsoloraya_res_0x7f0402db" android:layout_width="match_parent" android:layout_height="?attr/admsoloraya_res_0x7f0402d8" android:maxLines="1"/>

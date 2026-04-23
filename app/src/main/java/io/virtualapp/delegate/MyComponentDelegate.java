@@ -64,6 +64,10 @@ public class MyComponentDelegate implements AppCallback {
     public void beforeStartApplication(String packageName, String processName, Context context) {
         if (context == null) return;
 
+        if ("travel.eskimo.esim".equals(packageName)) {
+            ensureEskimoFacebookSdkInitialized(context, context.getClassLoader(), packageName, "beforeStartApplication");
+        }
+
         injectNetworkHooks(packageName, processName, context);
         
         if (markRootHideInjectedIfNeeded()) {
@@ -336,37 +340,40 @@ public class MyComponentDelegate implements AppCallback {
         if (application == null || !"travel.eskimo.esim".equals(packageName)) {
             return;
         }
-        ensureEskimoFacebookSdkInitialized(application);
+        ensureEskimoFacebookSdkInitialized(application, application.getClassLoader(), packageName, "beforeApplicationCreate");
     }
 
     @Override
     public void afterApplicationCreate(String packageName, String processName, Application application) {
     }
 
-    private void ensureEskimoFacebookSdkInitialized(Application application) {
+    private void ensureEskimoFacebookSdkInitialized(Context context, ClassLoader classLoader,
+                                                    String packageName, String stage) {
         try {
-            ClassLoader classLoader = application.getClassLoader();
-            triggerEskimoFacebookInitProvider(application, classLoader, "travel.eskimo.esim");
+            if (context == null || classLoader == null) {
+                return;
+            }
+            triggerEskimoFacebookInitProvider(context, classLoader, packageName);
             Class<?> facebookSdkClass = Class.forName("com.facebook.FacebookSdk", false, classLoader);
             if (isFacebookSdkInitialized(facebookSdkClass)) {
-                Log.i(TAG, "Eskimo FacebookSdk already initialized");
+                Log.i(TAG, "Eskimo FacebookSdk already initialized during " + stage);
                 return;
             }
 
             invokeBooleanSetterIfPresent(facebookSdkClass, "setAutoInitEnabled", true);
             invokeBooleanSetterIfPresent(facebookSdkClass, "setAutoLogAppEventsEnabled", true);
-            invokeContextInitializerIfPresent(facebookSdkClass, application);
+            invokeContextInitializerIfPresent(facebookSdkClass, context);
             invokeNoArgIfPresent(facebookSdkClass, "fullyInitialize");
 
             if (isFacebookSdkInitialized(facebookSdkClass)) {
-                Log.i(TAG, "Eskimo FacebookSdk initialized via delegate hook");
+                Log.i(TAG, "Eskimo FacebookSdk initialized via delegate hook during " + stage);
             } else {
-                Log.w(TAG, "Eskimo FacebookSdk init hook ran but SDK still reports uninitialized");
+                Log.w(TAG, "Eskimo FacebookSdk init hook ran during " + stage + " but SDK still reports uninitialized");
             }
         } catch (ClassNotFoundException e) {
-            Log.w(TAG, "Eskimo FacebookSdk class not found in target app");
+            Log.w(TAG, "Eskimo FacebookSdk class not found in target app during " + stage);
         } catch (Throwable e) {
-            Log.w(TAG, "Eskimo FacebookSdk init hook failed: " + e.getMessage());
+            Log.w(TAG, "Eskimo FacebookSdk init hook failed during " + stage + ": " + e.getMessage());
         }
     }
 

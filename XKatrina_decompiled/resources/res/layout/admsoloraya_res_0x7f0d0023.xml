@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a014a" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/admsoloraya_res_0x7f070187">
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a024a" android:paddingLeft="@dimen/admsoloraya_res_0x7f0700e7" android:paddingTop="@dimen/admsoloraya_res_0x7f0700e7" android:paddingRight="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent">
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a025f" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a02c9" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+                    <ProgressBar android:id="@+id/admsoloraya_res_0x7f0a03e9" android:padding="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:indeterminate="false" style="?android:attr/progressBarStyle"/>
+                    <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:id="@+id/admsoloraya_res_0x7f0a04d6" android:padding="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Menghapus Backup"/>
+                </LinearLayout>
+                <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02a7" android:paddingRight="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+                    <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:textStyle="bold" android:id="@+id/admsoloraya_res_0x7f0a04d9" android:paddingBottom="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hapus Backup?"/>
+                    <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a04bd" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TextView"/>
+                    <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a04c8" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TextView"/>
+                    <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a04d0" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TextView"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a027b" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a0086" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Batal" style="@style/admsoloraya_res_0x7f130359"/>
+                <Button android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a00cc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hapus" style="@style/admsoloraya_res_0x7f130359"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:paddingTop="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layoutDirection="ltr">
+    <include android:id="@+id/admsoloraya_res_0x7f0a0348" layout="@layout/admsoloraya_res_0x7f0d0068"/>
+    <include layout="@layout/admsoloraya_res_0x7f0d006a"/>
+    <include android:id="@+id/admsoloraya_res_0x7f0a034b" layout="@layout/admsoloraya_res_0x7f0d0068"/>
+</LinearLayout>

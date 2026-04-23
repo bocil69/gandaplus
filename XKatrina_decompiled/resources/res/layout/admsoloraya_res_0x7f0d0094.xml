@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:orientation="horizontal" android:paddingLeft="@dimen/admsoloraya_res_0x7f070554" android:paddingTop="16dp" android:paddingRight="@dimen/admsoloraya_res_0x7f070554" android:paddingBottom="16dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout android:id="@+id/admsoloraya_res_0x7f0a03a5" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/admsoloraya_res_0x7f1200a2" android:inputType="date" android:imeOptions="flagNoExtractUi"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <Space android:layout_width="8dp" android:layout_height="0dp"/>
+        <com.google.android.material.textfield.TextInputLayout android:id="@+id/admsoloraya_res_0x7f0a03a4" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/admsoloraya_res_0x7f1200a1" android:inputType="date" android:imeOptions="flagNoExtractUi"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="admsoloraya_res_0x7f130056" parent="@style/admsoloraya_res_0x7f130054">
+    </style>
+    <style name="admsoloraya_res_0x7f13005d" parent="@style/admsoloraya_res_0x7f13005b">
+    </style>
+    <style name="admsoloraya_res_0x7f13006e" parent="@style/admsoloraya_res_0x7f13006c">
+    </style>
+    <style name="admsoloraya_res_0x7f130078" parent="@style/admsoloraya_res_0x7f130076">
+    </style>
+    <style name="admsoloraya_res_0x7f130231" parent="@style/admsoloraya_res_0x7f130060">
+        <item name="admsoloraya_res_0x7f0404f7">@dimen/admsoloraya_res_0x7f07001c</item>
+        <item name="admsoloraya_res_0x7f0404f8">@dimen/admsoloraya_res_0x7f07001d</item>
+        <item name="admsoloraya_res_0x7f0404f9">@dimen/admsoloraya_res_0x7f07001e</item>
+        <item name="admsoloraya_res_0x7f0404fa">@dimen/admsoloraya_res_0x7f07001f</item>
+    </style>
+    <style name="admsoloraya_res_0x7f130245" parent="@style/admsoloraya_res_0x7f130064">
+        <item name="admsoloraya_res_0x7f0404f7">@dimen/admsoloraya_res_0x7f07001c</item>
+        <item name="admsoloraya_res_0x7f0404f8">@dimen/admsoloraya_res_0x7f07001d</item>
+        <item name="admsoloraya_res_0x7f0404f9">@dimen/admsoloraya_res_0x7f07001e</item>
+        <item name="admsoloraya_res_0x7f0404fa">@dimen/admsoloraya_res_0x7f07001f</item>
+    </style>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <com.google.android.material.card.MaterialCardView android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a03be" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/admsoloraya_res_0x7f070187" app:cardCornerRadius="@dimen/admsoloraya_res_0x7f070119" style="@style/admsoloraya_res_0x7f130363">
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a027a" android:padding="@dimen/admsoloraya_res_0x7f07027b" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <ImageView android:layout_gravity="center" android:id="@+id/admsoloraya_res_0x7f0a020b" android:focusable="false" android:layout_width="@dimen/admsoloraya_res_0x7f07020d" android:layout_height="@dimen/admsoloraya_res_0x7f07020d" android:src="@drawable/admsoloraya_res_0x7f080099" android:scaleType="fitCenter"/>
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700a0" android:gravity="center_horizontal" android:layout_gravity="center" android:id="@+id/admsoloraya_res_0x7f0a04f7" android:padding="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TextView" android:lines="2"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <include layout="@layout/admsoloraya_res_0x7f0d0084"/>
+    <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a0397" android:layout_width="match_parent" android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView android:layout_gravity="center_horizontal" android:id="@+id/admsoloraya_res_0x7f0a0399" android:scrollbars="none" android:layout_width="wrap_content" android:layout_height="match_parent"/>
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0392" android:layout_width="wrap_content" android:layout_height="match_parent">
+            <include layout="@layout/admsoloraya_res_0x7f0d0080"/>
+            <include layout="@layout/admsoloraya_res_0x7f0d0085"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

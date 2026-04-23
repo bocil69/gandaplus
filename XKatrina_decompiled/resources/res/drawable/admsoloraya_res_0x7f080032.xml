@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:id="@+id/admsoloraya_res_0x7f0a03da" android:drawable="@drawable/admsoloraya_res_0x7f080083"/>
+    <item android:id="@+id/admsoloraya_res_0x7f0a03d9" android:drawable="@drawable/admsoloraya_res_0x7f080081"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f080084" android:toId="@+id/admsoloraya_res_0x7f0a03d9" android:fromId="@+id/admsoloraya_res_0x7f0a03da"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f080082" android:toId="@+id/admsoloraya_res_0x7f0a03da" android:fromId="@+id/admsoloraya_res_0x7f0a03d9"/>
+</animated-selector>

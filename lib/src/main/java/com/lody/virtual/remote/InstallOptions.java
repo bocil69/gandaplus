@@ -2,6 +2,7 @@ package com.lody.virtual.remote;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * @author Lody
@@ -16,6 +17,8 @@ public class InstallOptions implements Parcelable {
     public boolean useSourceLocationApk = false;
     public boolean notify = true;
     public UpdateStrategy updateStrategy = UpdateStrategy.COMPARE_VERSION;
+    public String installerPackageName;
+    public String installSourcePackageName;
 
     public enum UpdateStrategy {
         /**
@@ -61,6 +64,23 @@ public class InstallOptions implements Parcelable {
         return new InstallOptions(useSourceLocationFile, true, UpdateStrategy.COMPARE_VERSION);
     }
 
+    public InstallOptions setInstallerInfo(String installerPackageName) {
+        return setInstallerInfo(installerPackageName, installerPackageName);
+    }
+
+    public InstallOptions setInstallerInfo(String installerPackageName, String installSourcePackageName) {
+        this.installerPackageName = emptyToNull(installerPackageName);
+        this.installSourcePackageName = emptyToNull(installSourcePackageName);
+        if (this.installSourcePackageName == null) {
+            this.installSourcePackageName = this.installerPackageName;
+        }
+        return this;
+    }
+
+    private static String emptyToNull(String value) {
+        return TextUtils.isEmpty(value) ? null : value;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -71,6 +91,8 @@ public class InstallOptions implements Parcelable {
         dest.writeByte(this.useSourceLocationApk ? (byte) 1 : (byte) 0);
         dest.writeByte(this.notify ? (byte) 1 : (byte) 0);
         dest.writeInt(this.updateStrategy == null ? -1 : this.updateStrategy.ordinal());
+        dest.writeString(this.installerPackageName);
+        dest.writeString(this.installSourcePackageName);
     }
 
     protected InstallOptions(Parcel in) {
@@ -78,6 +100,15 @@ public class InstallOptions implements Parcelable {
         this.notify = in.readByte() != 0;
         int tmpUpdateStrategy = in.readInt();
         this.updateStrategy = tmpUpdateStrategy == -1 ? null : UpdateStrategy.values()[tmpUpdateStrategy];
+        if (in.dataAvail() > 0) {
+            this.installerPackageName = emptyToNull(in.readString());
+        }
+        if (in.dataAvail() > 0) {
+            this.installSourcePackageName = emptyToNull(in.readString());
+        }
+        if (this.installSourcePackageName == null) {
+            this.installSourcePackageName = this.installerPackageName;
+        }
     }
 
     public static final Parcelable.Creator<InstallOptions> CREATOR = new Parcelable.Creator<InstallOptions>() {

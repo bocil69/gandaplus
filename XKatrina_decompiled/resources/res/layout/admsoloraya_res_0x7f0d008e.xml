@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:layout_gravity="top" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a039f" android:paddingLeft="@dimen/admsoloraya_res_0x7f07055d" android:paddingRight="@dimen/admsoloraya_res_0x7f07055d" android:baselineAligned="false" android:paddingStart="@dimen/admsoloraya_res_0x7f07055d" android:paddingEnd="@dimen/admsoloraya_res_0x7f07055d" style="?attr/admsoloraya_res_0x7f04030b">
+        <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a03a1" android:paddingLeft="@dimen/admsoloraya_res_0x7f070563" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:paddingStart="@dimen/admsoloraya_res_0x7f070563">
+            <include layout="@layout/admsoloraya_res_0x7f0d0091"/>
+            <include layout="@layout/admsoloraya_res_0x7f0d0090"/>
+        </FrameLayout>
+        <include layout="@layout/admsoloraya_res_0x7f0d0092"/>
+    </LinearLayout>
+    <View android:layout_gravity="bottom" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f07055f" style="?attr/admsoloraya_res_0x7f04030a"/>
+</merge>

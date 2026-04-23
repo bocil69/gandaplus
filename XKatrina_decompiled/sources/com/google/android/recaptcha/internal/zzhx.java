@@ -1,0 +1,10 @@
+package com.google.android.recaptcha.internal;
+/* compiled from: com.google.android.recaptcha:recaptcha@@18.1.2 */
+/* loaded from: classes.dex */
+public interface zzhx extends Cloneable, zzhz {
+    zzhx zzc(zzhy zzhyVar);
+
+    zzhy zzj();
+
+    zzhy zzk();
+}

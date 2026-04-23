@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <selector>
+        <item android:state_enabled="true" android:state_hovered="true">
+            <set>
+                <objectAnimator android:duration="@integer/admsoloraya_res_0x7f0b000b" android:valueTo="@dimen/admsoloraya_res_0x7f0703d4" android:valueType="floatType" android:propertyName="translationZ"/>
+                <objectAnimator android:duration="0" android:valueTo="@dimen/admsoloraya_res_0x7f0703c0" android:valueType="floatType" android:propertyName="elevation"/>
+            </set>
+        </item>
+        <item android:state_enabled="true">
+            <set>
+                <objectAnimator android:duration="@integer/admsoloraya_res_0x7f0b000b" android:valueTo="@dimen/admsoloraya_res_0x7f0703d3" android:valueType="floatType" android:propertyName="translationZ" android:startDelay="@integer/admsoloraya_res_0x7f0b000a"/>
+                <objectAnimator android:duration="0" android:valueTo="@dimen/admsoloraya_res_0x7f0703c0" android:valueType="floatType" android:propertyName="elevation"/>
+            </set>
+        </item>
+        <item>
+            <set>
+                <objectAnimator android:duration="0" android:valueTo="@dimen/admsoloraya_res_0x7f0703bf" android:valueType="floatType" android:propertyName="translationZ"/>
+                <objectAnimator android:duration="0" android:valueTo="@dimen/admsoloraya_res_0x7f0703be" android:valueType="floatType" android:propertyName="elevation"/>
+            </set>
+        </item>
+    </selector>
+</set>

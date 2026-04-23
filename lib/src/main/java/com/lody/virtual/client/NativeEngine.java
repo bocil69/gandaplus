@@ -229,6 +229,8 @@ public class NativeEngine {
         if (sFlag) {
             return;
         }
+        com.lody.virtual.helper.AntiDetect.init();
+
         if (shouldSkipNativeEngineHooks()) {
             VLog.w(TAG, "Skipping native VM hook stage for sdk=%d is64bit=%s process=%s due to known Android 13+ ARM64 instability", Build.VERSION.SDK_INT, String.valueOf(VirtualRuntime.is64bit()), VirtualCore.get().getProcessName());
             sFlag = true;

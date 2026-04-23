@@ -723,6 +723,42 @@ public final class VirtualCore {
         return out[0];
     }
 
+    /**
+     * Install from a list of APK paths where the first element is the base APK
+     * and subsequent elements are split APKs (ABI / density).
+     *
+     * <p>Native libraries from ABI split APKs are extracted and placed in the virtual
+     * app's native library directory automatically.
+     *
+     * <p>A single-element list is equivalent to
+     * {@link #installPackageSync(String, InstallOptions)}.
+     */
+    public InstallResult installPackageSync(List<String> apkPaths, InstallOptions options) {
+        if (apkPaths == null || apkPaths.isEmpty()) {
+            return buildInstallFailure("apkPaths is null or empty");
+        }
+        if (apkPaths.size() == 1) {
+            return installPackageSync(apkPaths.get(0), options);
+        }
+
+        final ConditionVariable lock = new ConditionVariable();
+        final InstallResult[] out = new InstallResult[1];
+        installPackage(apkPaths, options, new InstallCallback() {
+            @Override
+            public void onFinish(InstallResult result) {
+                out[0] = result;
+                lock.open();
+            }
+        });
+        lock.block();
+        preLaunchApp();
+        if (out[0] == null) {
+            Log.e(TAG, "installPackageSync(List): result is null, creating failure result");
+            return buildInstallFailure("Install failed - no result from server");
+        }
+        return out[0];
+    }
+
     @Deprecated
     public InstallResult installPackage(String apkPath, InstallOptions options) {
         return installPackageSync(apkPath, options);
@@ -733,30 +769,27 @@ public final class VirtualCore {
         void onFinish(InstallResult result);
     }
 
-    public void installPackage(String apkPath, InstallOptions options, final InstallCallback callback) {
-        Log.i(TAG, "Stage: VirtualCore.installPackage called for: " + apkPath);
-        if (apkPath == null) {
-            Log.e(TAG, "installPackage: apkPath is null");
-            if (callback != null) {
-                InstallResult res = new InstallResult();
-                res.isSuccess = false;
-                res.error = "APK path is null";
-                callback.onFinish(res);
-            }
-            return;
-        }
-        ResultReceiver receiver = new ResultReceiver(null) {
+    private InstallResult buildInstallFailure(String error) {
+        InstallResult res = new InstallResult();
+        res.isSuccess = false;
+        res.error = error;
+        return res;
+    }
+
+    private ResultReceiver createInstallResultReceiver(final InstallCallback callback) {
+        return new ResultReceiver(null) {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 Log.i(TAG, "Stage: VirtualCore.installPackage result received, code: " + resultCode);
-                resultData.setClassLoader(InstallResult.class.getClassLoader());
+                InstallResult res = null;
+                if (resultData != null) {
+                    resultData.setClassLoader(InstallResult.class.getClassLoader());
+                    res = resultData.getParcelable("result");
+                }
                 if (callback != null) {
-                    InstallResult res = resultData.getParcelable("result");
                     if (res == null) {
                         Log.e(TAG, "Stage: installPackage: result from service is null");
-                        res = new InstallResult();
-                        res.isSuccess = false;
-                        res.error = "Server returned null result";
+                        res = buildInstallFailure("Server returned null result");
                     } else {
                         Log.i(TAG, "Stage: installPackage completed result: isSuccess=" + res.isSuccess + ", error=" + res.error);
                     }
@@ -764,15 +797,24 @@ public final class VirtualCore {
                 }
             }
         };
+    }
+
+    public void installPackage(String apkPath, InstallOptions options, final InstallCallback callback) {
+        Log.i(TAG, "Stage: VirtualCore.installPackage called for: " + apkPath);
+        if (apkPath == null) {
+            Log.e(TAG, "installPackage: apkPath is null");
+            if (callback != null) {
+                callback.onFinish(buildInstallFailure("APK path is null"));
+            }
+            return;
+        }
+        ResultReceiver receiver = createInstallResultReceiver(callback);
         try {
             IAppManager service = getService();
             if (service == null) {
                 Log.e(TAG, "Stage: installPackage: getService() returned null");
                 if (callback != null) {
-                    InstallResult res = new InstallResult();
-                    res.isSuccess = false;
-                    res.error = "AppManager service not available";
-                    callback.onFinish(res);
+                    callback.onFinish(buildInstallFailure("AppManager service not available"));
                 }
                 return;
             }
@@ -781,18 +823,49 @@ public final class VirtualCore {
         } catch (RemoteException e) {
             Log.e(TAG, "installPackage RemoteException: " + e.getMessage());
             if (callback != null) {
-                InstallResult res = new InstallResult();
-                res.isSuccess = false;
-                res.error = "RemoteException: " + e.getMessage();
-                callback.onFinish(res);
+                callback.onFinish(buildInstallFailure("RemoteException: " + e.getMessage()));
             }
         } catch (Throwable e) {
             Log.e(TAG, "installPackage Throwable: " + e.getMessage());
             if (callback != null) {
-                InstallResult res = new InstallResult();
-                res.isSuccess = false;
-                res.error = "Exception: " + e.getMessage();
-                callback.onFinish(res);
+                callback.onFinish(buildInstallFailure("Exception: " + e.getMessage()));
+            }
+        }
+    }
+
+    public void installPackage(List<String> apkPaths, InstallOptions options, final InstallCallback callback) {
+        Log.i(TAG, "Stage: VirtualCore.installPackage(List) called for: " + apkPaths);
+        if (apkPaths == null || apkPaths.isEmpty()) {
+            if (callback != null) {
+                callback.onFinish(buildInstallFailure("apkPaths is null or empty"));
+            }
+            return;
+        }
+        if (apkPaths.size() == 1) {
+            installPackage(apkPaths.get(0), options, callback);
+            return;
+        }
+        ResultReceiver receiver = createInstallResultReceiver(callback);
+        try {
+            IAppManager service = getService();
+            if (service == null) {
+                Log.e(TAG, "Stage: installPackage(List): getService() returned null");
+                if (callback != null) {
+                    callback.onFinish(buildInstallFailure("AppManager service not available"));
+                }
+                return;
+            }
+            Log.i(TAG, "Stage: Calling service.installSplitPackage for " + apkPaths.size() + " APKs");
+            service.installSplitPackage(apkPaths, options, receiver);
+        } catch (RemoteException e) {
+            Log.e(TAG, "installPackage(List) RemoteException: " + e.getMessage());
+            if (callback != null) {
+                callback.onFinish(buildInstallFailure("RemoteException: " + e.getMessage()));
+            }
+        } catch (Throwable e) {
+            Log.e(TAG, "installPackage(List) Throwable: " + e.getMessage());
+            if (callback != null) {
+                callback.onFinish(buildInstallFailure("Exception: " + e.getMessage()));
             }
         }
     }

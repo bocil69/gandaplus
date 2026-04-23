@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/admsoloraya_res_0x7f06001c">
+    <item android:id="@android:id/mask">
+        <inset android:insetLeft="@dimen/admsoloraya_res_0x7f070056" android:insetRight="@dimen/admsoloraya_res_0x7f070056" android:insetTop="@dimen/admsoloraya_res_0x7f070057" android:insetBottom="@dimen/admsoloraya_res_0x7f070057">
+            <shape android:shape="rectangle">
+                <corners android:radius="@dimen/admsoloraya_res_0x7f07005a"/>
+                <solid android:color="@android:color/white"/>
+                <padding android:left="@dimen/admsoloraya_res_0x7f070058" android:top="@dimen/admsoloraya_res_0x7f070059" android:right="@dimen/admsoloraya_res_0x7f070058" android:bottom="@dimen/admsoloraya_res_0x7f070059"/>
+            </shape>
+        </inset>
+    </item>
+</ripple>

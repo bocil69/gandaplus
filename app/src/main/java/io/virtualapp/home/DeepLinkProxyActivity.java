@@ -52,7 +52,7 @@ public class DeepLinkProxyActivity extends Activity {
                 return "com.grab.driver";
             }
         }
-        if ("eskimo".equalsIgnoreCase(scheme)) {
+        if ("eskimo".equalsIgnoreCase(scheme) || (host != null && host.contains("eskimo"))) {
             return "travel.eskimo.esim";
         }
         return null;

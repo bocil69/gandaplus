@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AlertDialogLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:gravity="start|top" android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a03e2" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <include layout="@layout/admsoloraya_res_0x7f0d0064"/>
+    <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a0138" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp">
+        <ImageView android:layout_gravity="top" android:id="@+id/admsoloraya_res_0x7f0a041b" android:background="#1f000000" android:visibility="gone" android:layout_width="match_parent" android:layout_height="1dp" android:contentDescription="@null" app:backgroundTint="?android:attr/colorForeground"/>
+        <androidx.core.widget.NestedScrollView android:id="@+id/admsoloraya_res_0x7f0a041c" android:clipToPadding="false" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <android.widget.Space android:id="@+id/admsoloraya_res_0x7f0a048b" android:visibility="gone" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f070025"/>
+                <TextView android:id="@android:id/message" android:paddingLeft="?attr/admsoloraya_res_0x7f04017b" android:paddingRight="?attr/admsoloraya_res_0x7f04017b" android:layout_width="match_parent" android:layout_height="wrap_content" style="?attr/admsoloraya_res_0x7f0402fc"/>
+                <android.widget.Space android:id="@+id/admsoloraya_res_0x7f0a048a" android:visibility="gone" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f070025"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <ImageView android:layout_gravity="bottom" android:id="@+id/admsoloraya_res_0x7f0a041a" android:background="#1f000000" android:visibility="gone" android:layout_width="match_parent" android:layout_height="1dp" android:contentDescription="@null" app:backgroundTint="?android:attr/colorForeground"/>
+    </FrameLayout>
+    <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a0141" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp">
+        <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a0140" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <include android:layout_width="match_parent" android:layout_height="wrap_content" layout="@layout/admsoloraya_res_0x7f0d0063"/>
+</androidx.appcompat.widget.AlertDialogLayout>

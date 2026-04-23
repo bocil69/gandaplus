@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import androidx.annotation.Nullable;
 import android.widget.Toast;
 
@@ -17,6 +18,8 @@ import io.virtualapp.R;
  */
 @TargetApi(Build.VERSION_CODES.M)
 public class PermissionRequestActivity extends Activity {
+
+    private static final String TAG = "PermissionRequestAct";
 
     private final static int REQUEST_PERMISSION_CODE = 995;
     private static final String EXTRA_PERMISSIONS = "extra.permission";
@@ -45,6 +48,7 @@ public class PermissionRequestActivity extends Activity {
         appName = intent.getStringExtra(EXTRA_APP_NAME);
         packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
         userId = intent.getIntExtra(EXTRA_USER_ID, -1);
+        Log.d(TAG, "onCreate pkg=" + packageName + " userId=" + userId + " perms=" + java.util.Arrays.toString(permissions));
         requestPermissions(permissions, appName);
     }
 
@@ -55,12 +59,15 @@ public class PermissionRequestActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, "onRequestPermissionsResult pkg=" + packageName + " perms=" + java.util.Arrays.toString(permissions)
+                + " results=" + java.util.Arrays.toString(grantResults));
         if (PermissionCompat.isRequestGranted(grantResults)) {
             Intent data = new Intent();
             data.putExtra("pkg", packageName);
             data.putExtra("user_id", userId);
             setResult(RESULT_OK, data);
         } else {
+            setResult(RESULT_CANCELED);
             runOnUiThread(() -> {
                 Toast.makeText(this, getString(R.string.start_app_failed, appName),
                         Toast.LENGTH_SHORT).show();

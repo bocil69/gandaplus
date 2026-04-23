@@ -67,7 +67,9 @@ public class StorageDiagnosticActivity extends Activity {
 
         btnRestore.setOnClickListener(v -> {
             boolean restored = AppListBackupManager.get(this).restoreIfNeeded();
-            Toast.makeText(this, restored ? "Restore attempted" : "No backup to restore", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    restored ? "Unexpected restore path triggered" : "Metadata checked. Real clone restore depends on engine package state.",
+                    Toast.LENGTH_SHORT).show();
             runDiagnostics();
         });
 

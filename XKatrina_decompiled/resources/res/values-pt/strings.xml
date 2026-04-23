@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admsoloraya_res_0x7f120000">Navegar para a página inicial</string>
+    <string name="admsoloraya_res_0x7f120001">Navegar para cima</string>
+    <string name="admsoloraya_res_0x7f120002">Mais opções</string>
+    <string name="admsoloraya_res_0x7f120003">Concluído</string>
+    <string name="admsoloraya_res_0x7f120004">Ver tudo</string>
+    <string name="admsoloraya_res_0x7f120005">Selecionar um app</string>
+    <string name="admsoloraya_res_0x7f120006">DESATIVADO</string>
+    <string name="admsoloraya_res_0x7f120007">ATIVADO</string>
+    <string name="admsoloraya_res_0x7f120008">Alt+</string>
+    <string name="admsoloraya_res_0x7f120009">Ctrl+</string>
+    <string name="admsoloraya_res_0x7f12000a">delete</string>
+    <string name="admsoloraya_res_0x7f12000b">enter</string>
+    <string name="admsoloraya_res_0x7f12000c">Function+</string>
+    <string name="admsoloraya_res_0x7f12000d">Meta+</string>
+    <string name="admsoloraya_res_0x7f12000e">Shift+</string>
+    <string name="admsoloraya_res_0x7f12000f">espaço</string>
+    <string name="admsoloraya_res_0x7f120010">Sym+</string>
+    <string name="admsoloraya_res_0x7f120011">Menu+</string>
+    <string name="admsoloraya_res_0x7f120012">Pesquisar…</string>
+    <string name="admsoloraya_res_0x7f120013">Limpar consulta</string>
+    <string name="admsoloraya_res_0x7f120014">Consulta de pesquisa</string>
+    <string name="admsoloraya_res_0x7f120015">Pesquisar</string>
+    <string name="admsoloraya_res_0x7f120016">Enviar consulta</string>
+    <string name="admsoloraya_res_0x7f120017">Pesquisa por voz</string>
+    <string name="admsoloraya_res_0x7f120018">Compartilhar com</string>
+    <string name="admsoloraya_res_0x7f120019">Compartilhar com %s</string>
+    <string name="admsoloraya_res_0x7f12001a">Recolher</string>
+    <string name="admsoloraya_res_0x7f1200bd">Pesquisar</string>
+    <string name="admsoloraya_res_0x7f1200c7">999+</string>
+</resources>

@@ -27,7 +27,8 @@ public final class LegacyNetworkHookPolicy {
     }
 
     static boolean isReleaseBuild(String buildType) {
-        return "release".equalsIgnoreCase(buildType);
+        return "release".equalsIgnoreCase(buildType)
+                || "stable".equalsIgnoreCase(buildType);
     }
 
     private final SharedPreferences preferences;

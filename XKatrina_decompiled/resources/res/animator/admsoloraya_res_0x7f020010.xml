@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:interpolator="?attr/admsoloraya_res_0x7f040358" android:duration="?attr/admsoloraya_res_0x7f04034e" android:startOffset="0" android:propertyName="width"/>
+    <objectAnimator android:interpolator="?attr/admsoloraya_res_0x7f040358" android:duration="?attr/admsoloraya_res_0x7f04034e" android:startOffset="0" android:propertyName="height"/>
+    <objectAnimator android:interpolator="?attr/admsoloraya_res_0x7f040358" android:duration="?attr/admsoloraya_res_0x7f04034e" android:startOffset="0" android:propertyName="paddingStart"/>
+    <objectAnimator android:interpolator="?attr/admsoloraya_res_0x7f040358" android:duration="?attr/admsoloraya_res_0x7f04034e" android:startOffset="0" android:propertyName="paddingEnd"/>
+    <objectAnimator android:interpolator="?attr/admsoloraya_res_0x7f040358" android:duration="?attr/admsoloraya_res_0x7f040350" android:startOffset="?attr/admsoloraya_res_0x7f04034f" android:propertyName="labelOpacity"/>
+</set>

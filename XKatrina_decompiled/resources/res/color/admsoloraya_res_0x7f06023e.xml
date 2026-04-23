@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checkable="false" android:state_pressed="true" android:color="?attr/admsoloraya_res_0x7f040100" android:alpha="@dimen/admsoloraya_res_0x7f070482"/>
+    <item android:state_focused="true" android:state_checkable="false" android:color="?attr/admsoloraya_res_0x7f040100" android:alpha="@dimen/admsoloraya_res_0x7f070480"/>
+    <item android:state_checkable="false" android:color="?attr/admsoloraya_res_0x7f040100" android:alpha="@dimen/admsoloraya_res_0x7f070481" android:state_hovered="true"/>
+    <item android:state_checkable="false" android:color="?attr/admsoloraya_res_0x7f040100" android:alpha="@dimen/admsoloraya_res_0x7f0704b3"/>
+    <item android:state_checked="true" android:state_pressed="true" android:color="?attr/admsoloraya_res_0x7f04010d" android:alpha="@dimen/admsoloraya_res_0x7f070482"/>
+    <item android:state_focused="true" android:state_checked="true" android:color="?attr/admsoloraya_res_0x7f04010a" android:alpha="@dimen/admsoloraya_res_0x7f070480"/>
+    <item android:state_checked="true" android:color="?attr/admsoloraya_res_0x7f04010a" android:alpha="@dimen/admsoloraya_res_0x7f070481" android:state_hovered="true"/>
+    <item android:state_checked="true" android:color="?attr/admsoloraya_res_0x7f04010a" android:alpha="@dimen/admsoloraya_res_0x7f0704b3"/>
+    <item android:state_pressed="true" android:color="?attr/admsoloraya_res_0x7f04010a" android:alpha="@dimen/admsoloraya_res_0x7f070482"/>
+    <item android:state_focused="true" android:color="?attr/admsoloraya_res_0x7f04010d" android:alpha="@dimen/admsoloraya_res_0x7f070480"/>
+    <item android:color="?attr/admsoloraya_res_0x7f04010d" android:alpha="@dimen/admsoloraya_res_0x7f070481" android:state_hovered="true"/>
+    <item android:color="?attr/admsoloraya_res_0x7f04010d" android:alpha="@dimen/admsoloraya_res_0x7f0704b3"/>
+</selector>

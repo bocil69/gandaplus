@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:state_checked="true" android:id="@+id/admsoloraya_res_0x7f0a0117" android:drawable="@drawable/admsoloraya_res_0x7f0801aa"/>
+    <item android:id="@+id/admsoloraya_res_0x7f0a022e" android:drawable="@drawable/admsoloraya_res_0x7f0801ae" app:state_indeterminate="true"/>
+    <item android:state_checked="false" android:id="@+id/admsoloraya_res_0x7f0a05ae" android:drawable="@android:color/transparent"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f08019f" android:toId="@+id/admsoloraya_res_0x7f0a05ae" android:fromId="@+id/admsoloraya_res_0x7f0a0117"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801a2" android:toId="@+id/admsoloraya_res_0x7f0a0117" android:fromId="@+id/admsoloraya_res_0x7f0a05ae"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801a1" android:toId="@+id/admsoloraya_res_0x7f0a05ae" android:fromId="@+id/admsoloraya_res_0x7f0a022e"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801a3" android:toId="@+id/admsoloraya_res_0x7f0a022e" android:fromId="@+id/admsoloraya_res_0x7f0a05ae"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801a0" android:toId="@+id/admsoloraya_res_0x7f0a0117" android:fromId="@+id/admsoloraya_res_0x7f0a022e"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f08019e" android:toId="@+id/admsoloraya_res_0x7f0a022e" android:fromId="@+id/admsoloraya_res_0x7f0a0117"/>
+</animated-selector>

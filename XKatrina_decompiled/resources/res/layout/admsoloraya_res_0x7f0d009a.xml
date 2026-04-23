@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/admsoloraya_res_0x7f0a03d6" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <include android:layout_width="@dimen/admsoloraya_res_0x7f0705ee" android:layout_height="@dimen/admsoloraya_res_0x7f0705ed" layout="@layout/admsoloraya_res_0x7f0d009b"/>
+    <LinearLayout android:layout_gravity="top" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="@dimen/admsoloraya_res_0x7f0705ee">
+        <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a03d8" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="@dimen/admsoloraya_res_0x7f0705ed">
+            <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a03d7" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp" android:layout_weight="1" android:layout_marginEnd="8dp"/>
+            <FrameLayout android:id="@+id/admsoloraya_res_0x7f0a0407" android:paddingTop="@dimen/admsoloraya_res_0x7f0705f2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp">
+                <ViewStub android:layout_gravity="end|top" android:id="@+id/admsoloraya_res_0x7f0a04a9" android:visibility="gone" android:layout="@layout/admsoloraya_res_0x7f0d009d" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <ViewStub android:layout_gravity="end|top" android:id="@+id/admsoloraya_res_0x7f0a011b" android:visibility="gone" android:layout="@layout/admsoloraya_res_0x7f0d009c" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <TextView android:textAppearance="@style/admsoloraya_res_0x7f1301c6" android:layout_gravity="end|bottom" android:id="@+id/admsoloraya_res_0x7f0a022f" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:singleLine="true"/>
+            </FrameLayout>
+        </LinearLayout>
+        <ImageView android:id="@+id/admsoloraya_res_0x7f0a003e" android:background="#29000000" android:visibility="gone" android:layout_width="match_parent" android:layout_height="1dp"/>
+        <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a0046" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="-8dp"/>
+    </LinearLayout>
+</FrameLayout>

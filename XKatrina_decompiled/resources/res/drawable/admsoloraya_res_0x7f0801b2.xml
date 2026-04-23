@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:height="@dimen/admsoloraya_res_0x7f0705d6" android:width="@dimen/admsoloraya_res_0x7f0705d6">
+    <item android:state_pressed="true" android:id="@+id/admsoloraya_res_0x7f0a03fa" android:drawable="@drawable/admsoloraya_res_0x7f0801b6"/>
+    <item android:state_checked="true" android:id="@+id/admsoloraya_res_0x7f0a0117" android:drawable="@drawable/admsoloraya_res_0x7f0801b3"/>
+    <item android:id="@+id/admsoloraya_res_0x7f0a05ce" android:drawable="@drawable/admsoloraya_res_0x7f0801b3" app:state_with_icon="true"/>
+    <item android:id="@+id/admsoloraya_res_0x7f0a05ae" android:drawable="@drawable/admsoloraya_res_0x7f0801b9"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801b7" android:toId="@+id/admsoloraya_res_0x7f0a0117" android:fromId="@+id/admsoloraya_res_0x7f0a03fa"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801b7" android:toId="@+id/admsoloraya_res_0x7f0a05ce" android:fromId="@+id/admsoloraya_res_0x7f0a03fa"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801b8" android:toId="@+id/admsoloraya_res_0x7f0a05ae" android:fromId="@+id/admsoloraya_res_0x7f0a03fa"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801b4" android:toId="@+id/admsoloraya_res_0x7f0a03fa" android:fromId="@+id/admsoloraya_res_0x7f0a0117"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801b5" android:toId="@+id/admsoloraya_res_0x7f0a05ae" android:fromId="@+id/admsoloraya_res_0x7f0a0117"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801b4" android:toId="@+id/admsoloraya_res_0x7f0a03fa" android:fromId="@+id/admsoloraya_res_0x7f0a05ce"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801bb" android:toId="@+id/admsoloraya_res_0x7f0a03fa" android:fromId="@+id/admsoloraya_res_0x7f0a05ae"/>
+    <transition android:drawable="@drawable/admsoloraya_res_0x7f0801ba" android:toId="@+id/admsoloraya_res_0x7f0a0117" android:fromId="@+id/admsoloraya_res_0x7f0a05ae"/>
+</animated-selector>

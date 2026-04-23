@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent">
+    <androidx.drawerlayout.widget.DrawerLayout android:id="@+id/admsoloraya_res_0x7f0a016d" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_above="@+id/admsoloraya_res_0x7f0a05ba" android:layout_alignParentTop="true">
+        <com.termfu.view.TerminalView android:scrollbarThumbVertical="@drawable/admsoloraya_res_0x7f0801e1" android:id="@+id/admsoloraya_res_0x7f0a0486" android:focusableInTouchMode="true" android:scrollbars="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="3dp" android:layout_marginRight="3dp" android:autofillHints="password" android:importantForAutofill="no"/>
+        <LinearLayout android:layout_gravity="start" android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a023e" android:background="@android:color/white" android:descendantFocusability="blocksDescendants" android:layout_width="240dp" android:layout_height="match_parent" android:divider="@android:color/transparent" android:dividerHeight="0dp" android:choiceMode="singleChoice">
+            <ListView android:layout_gravity="top" android:id="@+id/admsoloraya_res_0x7f0a023f" android:longClickable="true" android:layout_width="match_parent" android:layout_height="0dp" android:choiceMode="singleChoice" android:layout_weight="1"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" style="?android:attr/buttonBarStyle">
+                <Button android:id="@+id/admsoloraya_res_0x7f0a04ae" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/admsoloraya_res_0x7f1200fd" android:layout_weight="1" style="?android:attr/buttonBarButtonStyle"/>
+                <Button android:id="@+id/admsoloraya_res_0x7f0a03d0" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/admsoloraya_res_0x7f1200dc" android:layout_weight="1" style="?android:attr/buttonBarButtonStyle"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+    <androidx.viewpager.widget.ViewPager android:id="@+id/admsoloraya_res_0x7f0a05ba" android:background="@android:drawable/screen_background_dark_transparent" android:visibility="gone" android:layout_width="match_parent" android:layout_height="37.5dp" android:layout_alignParentBottom="true"/>
+</RelativeLayout>

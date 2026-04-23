@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:padding="6dp" android:layout_width="match_parent" android:layout_height="?android:attr/listPreferredItemHeight">
+    <ImageView android:id="@+id/admsoloraya_res_0x7f0a01d8" android:padding="@dimen/admsoloraya_res_0x7f07027b" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/admsoloraya_res_0x7f080077" android:contentDescription="TODO"/>
+    <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="@dimen/admsoloraya_res_0x7f07027b" android:layout_marginRight="@dimen/admsoloraya_res_0x7f07027b" android:layout_weight="1">
+        <TextView android:textSize="12sp" android:ellipsize="marquee" android:id="@+id/admsoloraya_res_0x7f0a0437" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Description" android:singleLine="true"/>
+        <TextView android:textSize="16sp" android:gravity="center_vertical" android:id="@+id/admsoloraya_res_0x7f0a01a2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Example application"/>
+    </LinearLayout>
+    <CheckBox android:id="@+id/admsoloraya_res_0x7f0a0115" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/admsoloraya_res_0x7f07027b" android:layout_marginRight="@dimen/admsoloraya_res_0x7f07027b"/>
+</LinearLayout>

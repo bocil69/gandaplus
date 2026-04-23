@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0270" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a02ed" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f070324">
+            <com.google.android.material.textfield.TextInputLayout android:id="@+id/admsoloraya_res_0x7f0a04a4" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/admsoloraya_res_0x7f0702f5" style="@style/admsoloraya_res_0x7f13044a">
+                <com.google.android.material.textfield.TextInputEditText android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a0189" android:layout_width="match_parent" android:layout_height="match_parent" android:hint="BuatQRCode"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02cf" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+            <EditText android:textSize="@dimen/admsoloraya_res_0x7f0700dc" android:id="@+id/admsoloraya_res_0x7f0a053f" android:background="@android:color/transparent" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/admsoloraya_res_0x7f070338" android:hint="BuatNama" android:singleLine="true"/>
+            <com.google.android.material.card.MaterialCardView android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a035d" android:layout_width="wrap_content" android:layout_height="wrap_content" app:cardCornerRadius="20dp" app:cardElevation="@null" app:strokeColor="#00000000" app:strokeWidth="0dp">
+                <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a02ce" android:layout_width="match_parent" android:layout_height="match_parent">
+                    <ImageView android:id="@+id/admsoloraya_res_0x7f0a021e" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/admsoloraya_res_0x7f080099" android:scaleType="fitCenter"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

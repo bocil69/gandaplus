@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02b3" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a02ed" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700f4" android:textStyle="bold" android:id="@+id/admsoloraya_res_0x7f0a04ed" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Intent Firewall"/>
+            <com.google.android.material.button.MaterialButton android:textSize="@dimen/admsoloraya_res_0x7f0700a0" android:layout_gravity="right" android:id="@+id/admsoloraya_res_0x7f0a0081" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/admsoloraya_res_0x7f070338" android:text="Lihat Semua"/>
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_vertical" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a027e" android:paddingLeft="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <FrameLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a01b4" android:padding="@dimen/admsoloraya_res_0x7f070187" android:layout_width="@dimen/admsoloraya_res_0x7f0701f3" android:layout_height="@dimen/admsoloraya_res_0x7f0701f3" android:layout_margin="@dimen/admsoloraya_res_0x7f070187">
+                <ImageView android:id="@+id/admsoloraya_res_0x7f0a0222" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/admsoloraya_res_0x7f080099" android:scaleType="fitCenter"/>
+            </FrameLayout>
+            <LinearLayout android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a02f4" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="@dimen/admsoloraya_res_0x7f0702f5" android:layout_weight="1"/>
+            <com.google.android.material.button.MaterialButton android:textSize="@dimen/admsoloraya_res_0x7f0700a0" android:layout_gravity="right" android:id="@+id/admsoloraya_res_0x7f0a00e8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/admsoloraya_res_0x7f07027b" android:text="RESET" style="@style/admsoloraya_res_0x7f130359"/>
+            <com.google.android.material.button.MaterialButton android:textSize="@dimen/admsoloraya_res_0x7f0700a0" android:layout_gravity="right" android:id="@+id/admsoloraya_res_0x7f0a00ea" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/admsoloraya_res_0x7f070338" android:text="SIMPAN"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/admsoloraya_res_0x7f0a0410" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1"/>
+        <com.google.android.material.tabs.TabLayout android:id="@+id/admsoloraya_res_0x7f0a0478" android:layout_width="match_parent" android:layout_height="wrap_content" app:tabGravity="0" app:tabMode="1"/>
+        <ProgressBar android:id="@+id/admsoloraya_res_0x7f0a03ed" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" android:indeterminate="false" style="?android:attr/progressBarStyle"/>
+        <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0277" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <ListView android:id="@+id/admsoloraya_res_0x7f0a0313" android:layout_width="match_parent" android:layout_height="match_parent" android:divider="@null" android:dividerHeight="0dp" android:choiceMode="none" android:layout_weight="1"/>
+            <ListView android:id="@+id/admsoloraya_res_0x7f0a0315" android:layout_width="match_parent" android:layout_height="match_parent" android:divider="@null" android:dividerHeight="0dp" android:choiceMode="none" android:layout_weight="1"/>
+            <ListView android:id="@+id/admsoloraya_res_0x7f0a0314" android:layout_width="match_parent" android:layout_height="match_parent" android:divider="@null" android:dividerHeight="0dp" android:choiceMode="none" android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

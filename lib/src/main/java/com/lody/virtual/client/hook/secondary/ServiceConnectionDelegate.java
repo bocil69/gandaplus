@@ -61,10 +61,11 @@ public class ServiceConnectionDelegate extends IServiceConnection.Stub {
     }
 
     public void connected(ComponentName name, IBinder service, boolean dead) throws RemoteException {
+        IBinder deliveredService = GmsBridgeServiceBinder.maybeWrap(targetComponent != null ? targetComponent : name, service);
         if (BuildCompat.isOreo()) {
-            IServiceConnectionO.connected.call(mConn, targetComponent, service, dead);
+            IServiceConnectionO.connected.call(mConn, targetComponent, deliveredService, dead);
         } else {
-            mConn.connected(name, service);
+            mConn.connected(name, deliveredService);
         }
     }
 }

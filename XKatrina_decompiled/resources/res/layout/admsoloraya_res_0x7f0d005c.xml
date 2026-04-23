@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a0254" android:paddingLeft="@dimen/admsoloraya_res_0x7f070338" android:paddingTop="@dimen/admsoloraya_res_0x7f070338" android:paddingRight="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:textStyle="bold" android:id="@+id/admsoloraya_res_0x7f0a04bd" android:paddingLeft="@dimen/admsoloraya_res_0x7f070338" android:paddingTop="@dimen/admsoloraya_res_0x7f07027b" android:paddingRight="@dimen/admsoloraya_res_0x7f070338" android:paddingBottom="@dimen/admsoloraya_res_0x7f070187" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Title Prop"/>
+        <ProgressBar android:id="@+id/admsoloraya_res_0x7f0a03eb" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content" android:indeterminate="false" style="?android:attr/progressBarStyleHorizontal"/>
+        <com.google.android.material.textfield.TextInputLayout android:orientation="vertical" android:id="@+id/admsoloraya_res_0x7f0a049a" android:padding="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/admsoloraya_res_0x7f13044a">
+            <AutoCompleteTextView android:textSize="@dimen/admsoloraya_res_0x7f0700b8" android:id="@+id/admsoloraya_res_0x7f0a005c" android:padding="@dimen/admsoloraya_res_0x7f070338" android:focusable="false" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/admsoloraya_res_0x7f0a024a" android:paddingBottom="@dimen/admsoloraya_res_0x7f070338" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <Button android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a0086" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Batal" style="@style/admsoloraya_res_0x7f130359"/>
+            <Button android:textSize="@dimen/admsoloraya_res_0x7f0700ac" android:id="@+id/admsoloraya_res_0x7f0a00cc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Simpan" style="@style/admsoloraya_res_0x7f130359"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
