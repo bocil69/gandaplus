@@ -57,17 +57,18 @@ import mirror.android.content.pm.ApplicationInfoN;
 public class PackageParserEx {
 
     private static final String TAG = PackageParserEx.class.getSimpleName();
-    private static final int PACKAGE_CACHE_VERSION = 5;
+    private static final int PACKAGE_CACHE_VERSION = 6;
 
     private static final ArrayMap<String, String[]> sSharedLibCache = new ArrayMap<>();
 
     public static VPackage parsePackage(File packageFile) throws Throwable {
         com.lody.virtual.helper.compat.HiddenApiCompat.ensureExemptions();
-        if (Build.VERSION.SDK_INT >= 34) {
+        File fallbackTarget = resolvePackageArchiveFallbackTarget(packageFile);
+        if (Build.VERSION.SDK_INT >= 34 && fallbackTarget != null) {
             try {
-                PackageInfo pi = com.lody.virtual.helper.compat.PackageParserAndroid14Compat.parsePackageInfoFallback(packageFile, VirtualCore.get().getContext().getPackageManager());
+                PackageInfo pi = com.lody.virtual.helper.compat.PackageParserAndroid14Compat.parsePackageInfoFallback(fallbackTarget, VirtualCore.get().getContext().getPackageManager());
                 if (pi != null && pi.packageName != null) {
-                    VPackage pkg = buildPackageFromPackageInfo(pi, packageFile);
+                    VPackage pkg = buildPackageFromPackageInfo(pi, packageFile, fallbackTarget);
                     if (pkg != null) {
                         return pkg;
                     }
@@ -87,16 +88,16 @@ public class PackageParserEx {
         } catch (Throwable e) {
             VLog.w(TAG, "PackageParserCompat failed: " + e.getMessage() + ", trying fallback...");
             // Android 14+ may block PackageParser entirely; use fallback.
-            if (Build.VERSION.SDK_INT >= 28) {
+            if (Build.VERSION.SDK_INT >= 28 && fallbackTarget != null) {
                 android.content.pm.PackageInfo pi =
                         com.lody.virtual.helper.compat.PackageParserAndroid14Compat
-                                .parsePackageInfoFallback(packageFile, VirtualCore.get().getUnHookPackageManager());
+                                .parsePackageInfoFallback(fallbackTarget, VirtualCore.get().getUnHookPackageManager());
                 if (pi == null) {
                     throw new RuntimeException("PackageParser fallback failed for: " + packageFile.getAbsolutePath(), e);
                 }
                 VLog.i(TAG, "Using PackageInfo fallback for: " + pi.packageName);
                 // Build VPackage from PackageInfo
-                return buildPackageFromPackageInfo(pi, packageFile);
+                return buildPackageFromPackageInfo(pi, packageFile, fallbackTarget);
             }
             throw e;
         }
@@ -122,6 +123,32 @@ public class PackageParserEx {
         return buildPackageCache(p);
     }
 
+    private static boolean isSplitClusterTarget(File packageFile) {
+        return packageFile != null && packageFile.isDirectory();
+    }
+
+    private static File resolvePackageArchiveFallbackTarget(File packageFile) {
+        if (packageFile == null) {
+            return null;
+        }
+        if (packageFile.isFile()) {
+            return packageFile;
+        }
+        if (!packageFile.isDirectory()) {
+            return null;
+        }
+        File baseApk = new File(packageFile, "base.apk");
+        return baseApk.isFile() ? baseApk : null;
+    }
+
+    public static boolean hasComponentMetadata(VPackage pkg) {
+        return pkg != null
+                && ((pkg.activities != null && !pkg.activities.isEmpty())
+                || (pkg.services != null && !pkg.services.isEmpty())
+                || (pkg.receivers != null && !pkg.receivers.isEmpty())
+                || (pkg.providers != null && !pkg.providers.isEmpty()));
+    }
+
     public static Signature[] extractSignatures(PackageInfo pi) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && pi.signingInfo != null) {
             Signature[] signers = pi.signingInfo.getApkContentsSigners();
@@ -135,7 +162,7 @@ public class PackageParserEx {
     /**
      * Build VPackage from PackageInfo (fallback for Android 14+ where PackageParser is blocked)
      */
-    private static VPackage buildPackageFromPackageInfo(PackageInfo pi, File packageFile) {
+    private static VPackage buildPackageFromPackageInfo(PackageInfo pi, File packageFile, File archiveSource) {
         pi = enrichPackageInfoForFallback(pi);
         VPackage pkg = new VPackage();
         pkg.packageName = pi.packageName;
@@ -161,11 +188,13 @@ public class PackageParserEx {
                     ? new android.os.Bundle(pi.applicationInfo.metaData)
                     : null;
             // Fix paths
-            pkg.applicationInfo.sourceDir = packageFile.getAbsolutePath();
-            pkg.applicationInfo.publicSourceDir = packageFile.getAbsolutePath();
+            String archivePath = archiveSource != null ? archiveSource.getAbsolutePath() : packageFile.getAbsolutePath();
+            pkg.applicationInfo.sourceDir = archivePath;
+            pkg.applicationInfo.publicSourceDir = archivePath;
             if (pkg.applicationInfo.nativeLibraryDir == null) {
                 pkg.applicationInfo.nativeLibraryDir = new File(packageFile.getParentFile(), "lib").getAbsolutePath();
             }
+            applySplitMetadataForCluster(pkg.applicationInfo, packageFile, archiveSource);
         }
         
         // Requested permissions
@@ -227,6 +256,45 @@ public class PackageParserEx {
 
         addOwner(pkg);
         return pkg;
+    }
+
+    private static void applySplitMetadataForCluster(ApplicationInfo applicationInfo, File packageFile, File archiveSource) {
+        if (applicationInfo == null || packageFile == null || !packageFile.isDirectory()) {
+            return;
+        }
+        List<File> splitApks = new ArrayList<>();
+        File[] files = packageFile.listFiles();
+        if (files == null) {
+            return;
+        }
+        String baseName = archiveSource != null ? archiveSource.getName() : "base.apk";
+        for (File file : files) {
+            if (file == null || !file.isFile() || !file.getName().endsWith(".apk")) {
+                continue;
+            }
+            if (file.getName().equals(baseName)) {
+                continue;
+            }
+            splitApks.add(file);
+        }
+        if (splitApks.isEmpty()) {
+            applicationInfo.splitNames = null;
+            applicationInfo.splitSourceDirs = null;
+            applicationInfo.splitPublicSourceDirs = null;
+            return;
+        }
+        Collections.sort(splitApks, (left, right) -> left.getName().compareTo(right.getName()));
+        String[] splitPaths = new String[splitApks.size()];
+        String[] splitNames = new String[splitApks.size()];
+        for (int i = 0; i < splitApks.size(); i++) {
+            File splitApk = splitApks.get(i);
+            splitPaths[i] = splitApk.getAbsolutePath();
+            String fileName = splitApk.getName();
+            splitNames[i] = fileName.endsWith(".apk") ? fileName.substring(0, fileName.length() - 4) : fileName;
+        }
+        applicationInfo.splitNames = splitNames;
+        applicationInfo.splitSourceDirs = splitPaths;
+        applicationInfo.splitPublicSourceDirs = splitPaths;
     }
 
     private static PackageInfo enrichPackageInfoForFallback(PackageInfo archiveInfo) {

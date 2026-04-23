@@ -34,6 +34,11 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+            java {
+                exclude 'io/virtualapp/delegate/GmsHostBridgeService.java'
+                exclude 'io/virtualapp/delegate/SpoofedContext.java'
+                exclude 'io/virtualapp/delegate/PackageManagerWrapper.java'
+            }
         }
     }
 

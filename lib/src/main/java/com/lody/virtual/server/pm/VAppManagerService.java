@@ -464,6 +464,10 @@ public class VAppManagerService extends IAppManager.Stub {
             VLog.e(TAG, "Stage: Parsing package failed (null)");
             return InstallResult.makeFailure("Unable to parse the package.");
         }
+        if (installSource.parseTarget.isDirectory() && !PackageParserEx.hasComponentMetadata(pkg)) {
+            VLog.e(TAG, "Stage: Split package parsed without components: %s", installSource.parseTarget.getPath());
+            return InstallResult.makeFailure("Unable to parse split package metadata.");
+        }
         VLog.i(TAG, "Stage: Package parsed successfully: %s", pkg.packageName);
         if(!loadingApp) {
             BroadcastSystem.get().stopApp(pkg.packageName);
