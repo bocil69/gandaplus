@@ -939,8 +939,16 @@ public final class VirtualCore {
         if (info == null) {
             return false;
         }
-        int launchUserId = resolveLaunchUserId(info.getInstalledUsers());
-        return getLaunchIntent(packageName, launchUserId) != null;
+        int[] installedUsers = info.getInstalledUsers();
+        if (installedUsers == null || installedUsers.length == 0) {
+            return getLaunchIntent(packageName, 0) != null;
+        }
+        for (int userId : installedUsers) {
+            if (getLaunchIntent(packageName, userId) != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Intent getLaunchIntent(String packageName, int userId) {

@@ -74,19 +74,20 @@ public class AppRepository implements AppDataSource {
             List<AppData> models = new ArrayList<>();
             List<InstalledAppInfo> infos = VirtualCore.get().getInstalledApps(0);
             for (InstalledAppInfo info : infos) {
-                if (!VirtualCore.get().isPackageLaunchable(info.packageName)) {
-                    if (!InstallerSetting.PROVIDER_MEDIA_PKG.equals(info.packageName)
-                            && !InstallerSetting.PROVIDER_CONTACTS_PKG.equals(info.packageName)
-                            && !InstallerSetting.PROVIDER_TELEPHONY_PKG.equals(info.packageName)) {
-                        continue;
-                    }
-                }
+                boolean launchable = VirtualCore.get().isPackageLaunchable(info.packageName);
                 PackageAppData data = new PackageAppData(mContext, info);
+                int[] userIds = info.getInstalledUsers();
+                boolean hasInstalledUsers = userIds != null && userIds.length > 0;
+                if (!launchable && !hasInstalledUsers
+                        && !InstallerSetting.PROVIDER_MEDIA_PKG.equals(info.packageName)
+                        && !InstallerSetting.PROVIDER_CONTACTS_PKG.equals(info.packageName)
+                        && !InstallerSetting.PROVIDER_TELEPHONY_PKG.equals(info.packageName)) {
+                    continue;
+                }
                 if (VirtualCore.get().isAppInstalledAsUser(0, info.packageName)) {
                     models.add(data);
                 }
                 mLabels.put(info.packageName, data.name);
-                int[] userIds = info.getInstalledUsers();
                 for (int userId : userIds) {
                     if (userId != 0) {
                         models.add(new MultiplePackageAppData(data, userId));
